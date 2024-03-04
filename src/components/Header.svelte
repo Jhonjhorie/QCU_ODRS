@@ -13,7 +13,7 @@
       </a>
       <div>
         <h3 class=" text-2xl font-medium">Quezon City University</h3>
-        <p class="text-sm italic">Good Life Start Here!</p>
+        <p class="text-sm italic">Good Life asdasdStart Here!</p>
       </div>
     </div>
     <div class="flex gap-2">
