@@ -12,8 +12,8 @@
         </div>
       </a>
       <div>
-        <h3 class=" text-2xl font-medium">Quezon City University</h3>
-        <p class="text-sm italic">Good Life ftanginamoasdsadirst asdcommit Start Here!</p>
+        <h3 class=" text-2xl font-medium">Quezon Citysex BABY University</h3>
+        <p class="text-sm italic">Good Life Start Here!</p>
       </div>
     </div>
     <div class="flex gap-5 justify-center items-center">
