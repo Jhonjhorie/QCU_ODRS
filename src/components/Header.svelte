@@ -16,7 +16,7 @@
         <p class="text-sm italic">Good Life first commit Start Here!</p>
       </div>
     </div>
-    <div class="flex gap-2">``
+    <div class="flex gap-2">
       <button class="btn  btn-success btn-sm w-28 text-black h-10 drop-shadow-md rounded-[5px]">Login</button>
       <button class="btn btn-warning w-28 text-black btn-sm h-10 drop-shadow-md rounded-[5px]">Sign Up</button>
     </div>
