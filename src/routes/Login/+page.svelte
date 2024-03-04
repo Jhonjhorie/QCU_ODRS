@@ -1,7 +1,7 @@
 <script>
-    import Authenticate from "../../components/Authenticate.svelte"
+    import Login from "../../components/Login.svelte"
 </script>
 
 <main class="flex flex-col">
-    <Authenticate />
+    <Login />
 </main>

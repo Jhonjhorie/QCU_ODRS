@@ -1,12 +1,19 @@
-
 <script>
     import SectionWrapper from "./SectionWrapper.svelte";
     import Header from "./Header.svelte";
+    import { goto } from "$app/navigation";
+  function gotoRegister() {
+		goto('/SignUp');
+	}
 </script>
 
 <SectionWrapper>
     <Header />
-    <div class="flex justify-center items-center h-[70vh]">
+    <div class="flex flex-col justify-center items-center h-[70vh]">
+        <div role="tablist" class="tabs tabs-lifted">
+            <a role="tab" class="tab tab-active font-bold text-lg">Login</a>
+            <a role="tab" class="tab font-semibold" on:click={gotoRegister}>Register</a>
+          </div>
         <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form class="card-body">
               <div class="form-control">
@@ -28,5 +35,5 @@
               ">By using this service, you understood and agree to the QCU Online Services Terms of Use and Privacy Statement</p>
             </form>
           </div>
-    </div>
+      </div>
 </SectionWrapper>
