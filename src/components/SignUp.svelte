@@ -16,8 +16,10 @@
   let addr = "";
   let phn = "";
   let stdn = "";
-  let prog = "";
+  let prog = "Select Course";
   let status = "";
+
+  let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
 
 </script>
 
@@ -37,33 +39,31 @@
                 <label class="label">
                   <span class="label-text">Last Name:</span>
                 </label>
-                <input type="text" placeholder="Last Name" class="input input-bordered" required />
+                <input bind:value={ln} type="text" placeholder="Last Name" class="input input-bordered" required />
               </div>
               <div class="form-control mt-2">
                 <!-- svelte-ignore a11y-label-has-associated-control -->
                 <label class="label">
                   <span class="label-text">First Name:</span>
                 </label>
-                <input type="text" placeholder="Last Name" class="input input-bordered" required />
+                <input bind:value={fn} type="text" placeholder="First Name" class="input input-bordered" required />
               </div>
               <div class="form-control mt-2">
                 <!-- svelte-ignore a11y-label-has-associated-control -->
                 <label class="label">
                   <span class="label-text">Middle Name:</span>
                 </label>
-                <input type="text" placeholder="Last Name" class="input input-bordered" required />
+                <input bind:value={mn} type="text" placeholder="Middle Name" class="input input-bordered" required />
               </div>
               <div class="form-control mt-2">
                 <!-- svelte-ignore a11y-label-has-associated-control -->
                 <label class="label">
                   <span class="label-text">Address: </span>
                 </label>
-                <input type="text" placeholder="Address" class="input input-bordered" required />
+                <input bind:value={addr} type="text" placeholder="Address" class="input input-bordered" required />
                 <p class="label-text-alt text-right text-xs text-thin text-slate-500 mt-1">No. | Street | Barangay | City | Zip Code</p>
    
               </div>
-              
-            
               
             </div>
             <div class="flex flex-col gap-1">
@@ -73,7 +73,7 @@
                 <label class="label">
                   <span class="label-text">Phone Number:</span>
                 </label>
-                <input type="number" placeholder="Phone Number" class="input input-bordered no-arrow" required />
+                <input bind:value={phn} type="number" placeholder="Phone Number" class="input input-bordered no-arrow" required />
               </div>
             
               <div class="form-control mt-2">
@@ -81,7 +81,7 @@
                 <label class="label">
                   <span class="label-text">Student Number:</span>
                 </label>
-                <input type="number" placeholder="Student Number" class="input input-bordered" required />
+                <input bind:value={stdn} type="number" placeholder="Student Number" class="input input-bordered" required />
               </div>
               <div class="form-control mt-2">
               <div class="dropdown dropdown-top">
@@ -90,19 +90,13 @@
                 <label class="label">
                   <span class="label-text">Program: </span>
                 </label>
-                <div tabindex="0" role="button" class="btn w-96">Select One</div>
+                <div tabindex="0" role="button" class="btn w-96">{prog}</div>
              
                 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
-                  <li><a>Bachelor Of Early Childhood Education (BECEd)</a></li>
-                  <li><a>Bachelor Of Science In Industrial Engineering (IE) </a></li>
- 
-                  <li><a>Electronics Engineering (BSECE)</a></li>
-                  <li><a>Bachelor Of Science In Entrepreneurship (BS Entrep)</a></li>
-                  <li><a>Bachelor Of Science In Accountancy (BSA)</a></li>
-                  <li><a>Bachelor Of Science In Information Technology</a></li>
-                  <li><a>Bachelor Of Science In Information Systems</a></li>
-                  <li><a>Bachelor Of Science In Computer Science</a></li>
+                  {#each progs as progv}
+                  <li><a on:click={() => prog = progv}>{progv}</a></li>
+                  {/each}
                 </ul>
               </div>
               </div>
@@ -113,15 +107,16 @@
                 </label>
                 <label class="label cursor-pointer">
                   <span class="label-text">Not Graduate (Unfinished Degree)</span> 
-                  <input type="radio" name="radio-10" class="radio checked:bg-green-500" checked />
+                  <input type="radio" name="radio-10" class="radio checked:bg-blue-500" required checked value=0 bind:group={status}/>
                 </label>
               </div>
               <div class="form-control">
                 <label class="label cursor-pointer">
                   <span class="label-text">Graduated (Finished Degree)</span> 
-                  <input type="radio" name="radio-10" class="radio checked:bg-blue-500" checked />
+                  <input type="radio" name="radio-10" class="radio checked:bg-green-500" required checked value=1 bind:group={status} />
                 </label>
               </div>
+       
               
             </div>
             <div class="flex flex-col gap-1">
@@ -132,21 +127,21 @@
                 <label class="label">
                   <span class="label-text">Email</span>
                 </label>
-                <input type="email" placeholder="Email" class="input input-bordered" required />
+                <input bind:value={email} type="email" placeholder="Email" class="input input-bordered" required />
               </div>
               <div class="form-control mt-2">
                 <!-- svelte-ignore a11y-label-has-associated-control -->
                 <label class="label">
                   <span class="label-text">Password</span>
                 </label>
-                <input type="password" placeholder="Password" class="input input-bordered" required />
+                <input bind:value={pass} type="password" placeholder="Password" class="input input-bordered" required />
               </div>
               <div class="form-control mt-2">
                 <!-- svelte-ignore a11y-label-has-associated-control -->
                 <label class="label">
                   <span class="label-text">Confirm Password</span>
                 </label>
-                <input type="cpassword" placeholder="Confirm Password" class="input input-bordered" required />
+                <input bind:value={cpass} type="password" placeholder="Confirm Password" class="input input-bordered" required />
               </div>
               
               <div class="form-control mt-5">
