@@ -6,6 +6,19 @@
   function gotoLogin() {
 		goto('/Login');
 	}
+
+  let email = "";
+  let pass = "";
+  let cpass = "";
+  let ln = "";
+  let fn = "";
+  let mn = "";
+  let addr = "";
+  let phn = "";
+  let stdn = "";
+  let prog = "";
+  let status = "";
+
 </script>
 
 <SectionWrapper>

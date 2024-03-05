@@ -5,6 +5,12 @@
   function gotoRegister() {
 		goto('/SignUp');
 	}
+  function gotoForget() {
+		goto('/ForgotP');
+	}
+
+  
+
 </script>
 
 <SectionWrapper>
@@ -24,7 +30,8 @@
                 
                 <!-- svelte-ignore a11y-label-has-associated-control -->
                 <label class="label justify-end">
-                  <a href="/" class="label-text-alt link link-hover">Forgot password?</a>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <a class="label-text-alt link link-hover" on:click={gotoForget}>Forgot password?</a>
                 </label>
               </div>
               
