@@ -9,11 +9,8 @@
 		goto('/ForgotP');
 	}
   function gotoDashb() {
-		goto('/StudDashBoard');
+		goto('/StudentDashboard');
 	}
-
-
-  
 
 </script>
 
