@@ -5,6 +5,13 @@
   function gotoRegister() {
 		goto('/SignUp');
 	}
+  function gotoForget() {
+		goto('/ForgotP');
+	}
+  function gotoDashb() {
+		goto('/StudentDashboard');
+	}
+
 </script>
 
 <SectionWrapper>
