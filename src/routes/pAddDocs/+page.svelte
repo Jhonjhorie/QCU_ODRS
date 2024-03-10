@@ -2,10 +2,9 @@
  import PHeader from '../../components/pHeader2.svelte';
     import Psidebar from '../../components/psidebar.svelte';
     import { goto } from '$app/navigation';
-    import Livetime from '../../components/pLivetime.svelte';
 
     function gotoDocuments (){
-                goto('/pDocuments')
+                goto('/pDocumentss')
     }
 
 </script>
@@ -18,14 +17,14 @@
     <h1 class="pl-0 text-[30px] text-black font-bold">MANAGE DOCUMENT</h1>
 
         <div class="pt-2 pb-3">
-        <button on:click={gotoDocuments}  class="btn w-[200px] bg-slate-900 hover:bg-slate-800">BACK</button>
+        <button on:click={gotoDocuments}  class="btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200">BACK</button>
         </div>
 
     <div class="mx-auto pl-31  w-full">
 
         <div class="w-[750px] h-96 bg-slate-100 shadow-md rounded-md pl-10 pt-5">
                 <div class="">
-                    <h1 class="text-slate-800 font-bold text-[25px]">ADD DOCUMENT</h1>
+                    <h1 class="text-slate-800 font-bold text-[25px]  ">ADD DOCUMENT</h1>
                 </div>
                 <div class="flex gap-x-[10vh] w-full pl-[3vw]">
                     <div class="">
@@ -55,7 +54,7 @@
                 </div>
                 <div class="pt-5 pr-[75px] p-10 w-full">
                     <div class="float-right">
-                        <button  onclick="my_modal_1.showModal()" class="h-10 rounded-md w-[20vh] bg-slate-900 hover:bg-slate-800">SUBMIT</button>
+                        <button  onclick="my_modal_1.showModal()" class="h-10 rounded-md w-[20vh] bg-slate-900 hover:bg-slate-800 text-slate-200">SUBMIT</button>
                     
                         <dialog id="my_modal_1" class="modal">
                             <div class="modal-box">

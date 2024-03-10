@@ -2,11 +2,8 @@
     import { goto } from "$app/navigation";
     import PHeader from '../../components/pHeader2.svelte';
     import Psidebar from '../../components/psidebar.svelte';
-    import PBoxesaccounts from '../../components/pBoxesaccounts.svelte';
-    import PRegistrar from '../../components/pRegistrar.svelte';
-    import PUseracs from '../../components/pUseracs.svelte';
       function gotoDocuments () {
-                  goto('/pDocuments')
+                  goto('/pDocumentss')
       }
   </script>
   <style>
