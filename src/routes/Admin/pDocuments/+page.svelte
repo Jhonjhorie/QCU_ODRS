@@ -1,9 +1,7 @@
 <script>
   import PHeader from '../../components/pHeader2.svelte';
   import Psidebar from '../../components/psidebar.svelte';
-  import PBoxesaccounts from '../../components/pBoxesaccounts.svelte';
-  import PRegistrar from '../../components/pRegistrar.svelte';
-  import PUseracs from '../../components/pUseracs.svelte';
+
 
     import { goto } from "$app/navigation";
 
@@ -32,7 +30,7 @@
       <h1 class="pl-0 text-[30px] text-black font-bold">MANAGE DOCUMENT</h1>
 
         <div class="pt-2 pb-3">
-          <button on:click={gotoAdds} class="btn w-[200px] bg-slate-900 hover:bg-slate-800">ADD DOCUMENT</button>
+          <button on:click={gotoAdds} class="btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200">ADD DOCUMENT</button>
         </div>
 
      

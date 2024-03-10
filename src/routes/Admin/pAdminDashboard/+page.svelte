@@ -2,9 +2,9 @@
    
     import PHeader from '../../components/pHeader2.svelte';
     import Psidebar from '../../components/psidebar.svelte';
-    import { goto } from '$app/navigation';
+
     import Livetime from '../../components/pLivetime.svelte';
-    import Cute from '../../image/cute.jpg';
+
 
 </script>
 

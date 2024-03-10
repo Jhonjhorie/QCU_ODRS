@@ -1,5 +1,5 @@
 <script>
-    import QCU from '../../image/QCULOGO.png';
+
     import { goto } from '$app/navigation';
     import Header from '../../../components/pHeader.svelte';
 
