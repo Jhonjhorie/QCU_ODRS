@@ -11,20 +11,20 @@
 
     <ul class="  justify-end ">
         <li class="pt-3 text-center">
-            <button class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900  ">DASHBOARD</button> 
+            <button class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900  ">DASHBOARD</button> 
         </li>
         <li class="pt-2 text-center">
-            <button class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900">DOCUMENTS</button>
+            <button class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900">DOCUMENTS</button>
         </li> 
         <li class="pt-2 text-center">
-            <button  class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900">ACCOUNTS</button>
+            <button  class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900">ACCOUNTS</button>
         </li>
         <li class="pt-2 text-center">
-            <button class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900">HISTORY</button>
+            <button class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900">HISTORY</button>
         </li> 
        
         <li class="fixed pl-5 pb-5 bottom-0 text-center">
-            <button  class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900">LOGOUT</button>
+            <button  class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900">LOGOUT</button>
         </li> 
     </ul>
     

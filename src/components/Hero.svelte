@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import SectionWrapper from "./SectionWrapper.svelte";
   function goToLog() {
-		goto('/Login');
+		goto('/Student/Login');
 	}
 </script>
 

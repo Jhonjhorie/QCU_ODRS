@@ -1,5 +1,5 @@
 <script>
-    import DocReq from "../../components/DocReq.svelte";
+    import DocReq from "../../../components/DocReq.svelte";
 </script>
 
 <main class="flex flex-col">
