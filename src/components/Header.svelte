@@ -9,6 +9,14 @@
   function gotoDashR() {
 		goto('/Student/DocumentRequest');
 	}
+
+  function gotoLogin() {
+    goto('/Student/Login');
+  }
+
+  function gotoAcc() {
+    goto('/Student/Account');
+  }
 </script>
 
 <header class="flex flex-col relative z-20 bg-white w-full">
@@ -37,8 +45,8 @@
       <div class="dropdown dropdown-bottom dropdown-end">
         <div tabindex="1" role="button" class="btn p-2"><box-icon name='user-circle' class="h-full w-full"></box-icon></div>
         <ul tabindex="1" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box">
-          <li><a><box-icon name='user-detail' type='solid' ></box-icon>Account</a></li>
-          <li><a><box-icon name='log-out' ></box-icon>Log Out</a></li>
+          <li><a on:click={gotoAcc}><box-icon name='user-detail' type='solid' ></box-icon>Account</a></li>
+          <li><a on:click={gotoLogin}><box-icon name='log-out' ></box-icon>Log Out</a></li>
         </ul>
       </div>
     </div>
