@@ -23,7 +23,7 @@
 
 <div class=" h-full w-[300px] bg-white z-20 shadow-xl fixed " >
     <div class="pt-7">
-        <img src={Userpic} class="w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
+        <img src={Userpic} class="w-[130px] h-[130px]  rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
     </div>
        
     
@@ -34,20 +34,20 @@
 
     <ul class="  justify-end ">
         <li class="pt-3 text-center">
-            <button on:click={gotoAdmin} class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900  duration-200">DASHBOARD</button> 
+            <button on:click={gotoAdmin} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900  duration-200">DASHBOARD</button> 
         </li>
         <li class="pt-2 text-center">
-            <button on:click={gotoDocuments} class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900 duration-200">DOCUMENTS</button>
+            <button on:click={gotoDocuments} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900 duration-200">DOCUMENTS</button>
         </li> 
         <li class="pt-2 text-center">
-            <button on:click={gotoAccount} class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900 duration-200">ACCOUNTS</button>
+            <button on:click={gotoAccount} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900 duration-200">ACCOUNTS</button>
         </li>
         <li class="pt-2 text-center">
-            <button on:click={gotoHistory} class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900 duration-200">HISTORY</button>
+            <button on:click={gotoHistory} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95 btn-wide bg-slate-900 duration-200">HISTORY</button>
         </li> 
        
         <li class="fixed pl-5 pb-5 bottom-0 text-center">
-            <button on:click={gotoALogin} class="h-[40px] rounded-[10px] hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900 duration-200">LOGOUT</button>
+            <button on:click={gotoALogin} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900 duration-200">LOGOUT</button>
         </li> 
     </ul>
     

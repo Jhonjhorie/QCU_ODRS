@@ -1,6 +1,6 @@
 <script>
-    import SectionWrapper from "./../../components/SectionWrapper.svelte";
-    import Header from "./../../components/Header.svelte";
+    import SectionWrapper from "../../../../../components/SectionWrapper.svelte";
+    import Header from "../../../../../components/Header.svelte";
 
 
 </script>

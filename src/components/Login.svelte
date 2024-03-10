@@ -3,13 +3,13 @@
     import Header from "./Header.svelte";
     import { goto } from "$app/navigation";
   function gotoRegister() {
-		goto('/SignUp');
+		goto('/Student/SignUp');
 	}
   function gotoForget() {
-		goto('/ForgotP');
+		goto('/Student/Login/ForgotP');
 	}
   function gotoDashb() {
-		goto('/StudentDashboard');
+		goto('/Student/StudentDashboard');
 	}
 
 </script>

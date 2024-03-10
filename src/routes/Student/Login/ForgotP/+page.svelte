@@ -1,11 +1,11 @@
 <script>
-    import SectionWrapper from "./../../components/SectionWrapper.svelte";
-    import Header from "./../../components/Header.svelte";
+    import SectionWrapper from "../../../../components/SectionWrapper.svelte";
+    import Header from "../../../../components/Header.svelte";
     import { goto } from "$app/navigation";
 
 
     function gotoLogin() {
-		goto('/Login');
+		goto('/Student/Login');
 	}
 </script>
 

@@ -4,10 +4,10 @@
   let userName = "Childish Reymark";
   
   function gotoDashb() {
-		goto('/StudentDashboard');
+		goto('/Student/StudentDashboard');
 	}
   function gotoDashR() {
-		goto('/DocumentRequest');
+		goto('/Student/DocumentRequest');
 	}
 </script>
 
@@ -18,11 +18,11 @@
     <div class="flex justify-center items-center gap-5">
       <a href="/">
         <div class="h-[70px] w-[70px]">
-          <img class="bg-contain" src="QCULOGO.png" alt="Quezon City University" />
+          <img class="bg-contain" src="/QCULOGO.png" alt="Quezon City University" />
         </div>
       </a>
       <div>
-        <h3 class=" text-2xl font-medium">Quezon City University</h3>
+        <h3 class="text-2xl font-medium">Quezon City University</h3>
         <p class="text-sm italic">Good Life Start Here!</p>
       </div>
     </div>

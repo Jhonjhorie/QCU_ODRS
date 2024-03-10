@@ -4,7 +4,7 @@
     import Header from "./Header.svelte";
     import { goto } from "$app/navigation";
   function gotoLogin() {
-		goto('/Login');
+		goto('/Student/Login');
 	}
 
   let email = "";
