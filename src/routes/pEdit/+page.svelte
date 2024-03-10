@@ -3,7 +3,7 @@
     import PHeader from '../../components/pHeader2.svelte';
     import Psidebar from '../../components/psidebar.svelte';
       function gotoDocuments () {
-                  goto('/pDocumentss')
+                  goto('/pDocuments')
       }
   </script>
   <style>

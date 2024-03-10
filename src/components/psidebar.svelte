@@ -12,7 +12,7 @@
                 goto('/pHistory')
     }
     function gotoDocuments () {
-                goto('/pDocumentss')
+                goto('/pDocuments')
     }
     function gotoALogin () {
                 goto('/pAdminLogin')

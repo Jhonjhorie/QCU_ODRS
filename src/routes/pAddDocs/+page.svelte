@@ -4,7 +4,7 @@
     import { goto } from '$app/navigation';
 
     function gotoDocuments (){
-                goto('/pDocumentss')
+                goto('/pDocuments')
     }
 
 </script>

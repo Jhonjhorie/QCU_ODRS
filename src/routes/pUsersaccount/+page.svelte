@@ -23,7 +23,7 @@
               <thead class="top-0 sticky bg-slate-900 z-30">
                 <tr>
                
-                  <th class="text-slate-200 text-[15px]">FULL NAME</th>
+                  <th class="text-slate-200 text-[15px]">FULL NAME</th> 
                   <th class="text-slate-200 text-[15px]">COURSE</th>
                   <th class="text-slate-200 text-[15px]">STUDENT ID</th>
                 </tr>
