@@ -1,11 +1,11 @@
 <script>
-  import PHeader from '../../components/pHeader2.svelte';
-  import Psidebar from '../../components/psidebar.svelte';
-  import PBoxesaccounts from '../../components/pBoxesaccounts.svelte';
+  import PHeader from '../../../components/pHeader2.svelte';
+  import Psidebar from '../../../components/psidebar.svelte';
+  import PBoxesaccounts from '../../../components/pBoxesaccounts.svelte';
   import { goto } from '$app/navigation';
 
   function gotoRegis () {
-              goto('/pAccounts')
+              goto('/Admin/pAccounts')
   }
 
 

@@ -3,19 +3,19 @@
     import { goto } from '$app/navigation';
 
     function gotoAccount () {
-                goto('/pAccounts')
+                goto('/Admin/pAccounts')
     }
     function gotoAdmin () {
-                goto('/pAdminDashboard')
+                goto('/Admin/pAdminDashboard')
     }
     function gotoHistory () {
-                goto('/pHistory')
+                goto('/Admin/pHistory')
     }
     function gotoDocuments () {
-                goto('/pDocuments')
+                goto('/Admin/pDocuments')
     }
     function gotoALogin () {
-                goto('/pAdminLogin')
+                goto('/Admin/pAdminLogin')
     }
     
 

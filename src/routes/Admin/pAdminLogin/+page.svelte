@@ -9,7 +9,7 @@
     }
 
     function gotoAdmin () {
-                goto('/pAdminDashboard');
+                goto('/Admin/pAdminDashboard');
     }
 
     // Static variables for email and password

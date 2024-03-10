@@ -1,10 +1,10 @@
 <script>
- import PHeader from '../../components/pHeader2.svelte';
-    import Psidebar from '../../components/psidebar.svelte';
+ import PHeader from '../../../components/pHeader2.svelte';
+    import Psidebar from '../../../components/psidebar.svelte';
     import { goto } from '$app/navigation';
 
     function gotoDocuments (){
-                goto('/pDocuments')
+                goto('/Admin/pDocuments')
     }
 
 </script>
