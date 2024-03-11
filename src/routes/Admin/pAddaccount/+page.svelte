@@ -5,7 +5,7 @@
   import { goto } from '$app/navigation';
 
   function gotoRegis () {
-              goto('/pAccounts')
+              goto('/Admin/pAccounts')
   }
 
 
