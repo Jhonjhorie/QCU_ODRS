@@ -2,7 +2,7 @@
     
 </script>
 
-<header class="z-20 top-0 bg-[#E8E8E8] h-[100px] border-b-[10px] border-[#000450] shadow-lg sticky ">
+<header class="z-20 top-0 bg-white h-[100px] border-b-[10px] border-[#000450] shadow-lg sticky ">
     <div class="flex ">
         <img src="/QCULOGO.png" alt="logo" class="h-[70px] w-[70px] ml-10 mt-3">
         <div class="ml-5">

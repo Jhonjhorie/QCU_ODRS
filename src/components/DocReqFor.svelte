@@ -26,6 +26,8 @@
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
     let copy ="";
 
+    
+
 </script>
 
 <SectionWrapper>
@@ -111,7 +113,7 @@
                       
                       <!-- svelte-ignore a11y-label-has-associated-control -->
                       <label class="label">
-                        <span class="label-text">Year: </span>
+                        <span class="label-text">Certification: </span>
                       </label>
                       <div tabindex="0" role="button" class="btn w-full">{certt}</div>
                    

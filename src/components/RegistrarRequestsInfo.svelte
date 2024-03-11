@@ -9,6 +9,10 @@
       function gotoHistory() {
           goto('/Registrar/RegistrarHistory');
       }
+
+      let status = "select"
+
+      
   </script>
   
 
@@ -69,14 +73,14 @@
                             <span class="label-text">Select Status</span>
                             </div>
                             <details class="dropdown">
-                                <summary class="m-1 btn btn-wide ">Status</summary>
+                                <summary class="m-1 btn btn-wide ">{status}</summary>
                                 <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                                   <!-- svelte-ignore a11y-missing-attribute -->
-                                  <li><a>Complete</a></li>
+                                  <li><a on:click={() => status = "Complete"}>Complete</a></li>
                                   <!-- svelte-ignore a11y-missing-attribute -->
-                                  <li><a>Pending</a></li>
+                                  <li><a on:click={() => status = "Pending"}>Pending</a></li>
                                   <!-- svelte-ignore a11y-missing-attribute -->
-                                  <li><a>Error</a></li>
+                                  <li><a on:click={() => status = "Error"}>Error</a></li>
 
                                 </ul>
                               </details>                        

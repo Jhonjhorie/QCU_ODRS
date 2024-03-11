@@ -66,21 +66,21 @@
                             <td>
                             {#if doc.status == 2}
                             <ul class="steps w-full">
-                                <li class="step step-success">Confirmation</li>
-                                <li class="step step-success">Claiming</li>
+                                <li class="step step-success"></li>
+                                <li class="step step-success"></li>
                                 <li class="step step-success font-bold">Completed</li>
                             </ul>
                             {:else if doc.status == 1}
                             <ul class="steps w-full">
-                                <li class="step step-warning">Confirmation</li>
+                                <li class="step step-warning"></li>
                                 <li class="step step-warning font-bold">Claiming</li>
-                                <li class="step">Completed</li>
+                                <li class="step"></li>
                             </ul>
                             {:else}
                             <ul class="steps w-full">
                                 <li class="step step-info font-bold">Confirmation</li>
-                                <li class="step">Claiming</li>
-                                <li class="step">Completed</li>
+                                <li class="step"></li>
+                                <li class="step"></li>
                             </ul>
                             {/if}
                             </td>

@@ -4,6 +4,12 @@
   function goToLog() {
 		goto('/Student/Login');
 	}
+  function goToLog2() {
+		goto('/Registrar/Login');
+	}
+  function goToLog3() {
+		goto('/Admin/pAdminLogin');
+	}
 </script>
 
 <SectionWrapper>
@@ -13,11 +19,13 @@
     <div class="hero-content text-center text-neutral-content gap-10">
       <img src="QCULOGO.png" class=" w-52 rounded-lg shadow-2xl" alt="" />
       <div class="text-left max-w-xl">
-        <h1 class="mb-5 text-5xl font-bold">QCU Online Document Request System</h1>
+        <h1 class="mb-5 text-5xl font-bold">I LOVE YOU MAAM MACEH</h1>
         <p class="mb-5">For Students and Graduates of QCU San Bartolomeo (Main) <br />
           (Bachelor Degree / Traditional Undergrad) <br/>
           For Concerns, email us at registrar@qcu.edu.ph</p>
-        <button class="btn btn-outline btn-error" on:click={goToLog}>Get Started</button>
+        <button class="btn btn-outline btn-error" on:click={goToLog}>Student Page</button>
+        <button class="btn btn-outline btn-error" on:click={goToLog2}>Registrar Page</button>
+        <button class="btn btn-outline btn-error" on:click={goToLog3}>Admin Page</button>
       </div>
     </div>
   </div>
