@@ -3,20 +3,21 @@
         
 import { goto } from "$app/navigation";
   function gotoDashboard() {
-		goto('/RegistrarDashboard');
+		goto('/Registrar/RegistrarDashboard');
 	}
   function gotoRequests() {
-		goto('/RegistrarRequests');
+		goto('/Registrar/RegistrarRequests');
 	}
   function gotoHistory() {
-		goto('/RegistrarHistory');
+		goto('/Registrar/RegistrarHistory');
 	}
-    function gotoLogin() {
+  function gotoLogin() {
 		goto('/Login');
 	}
 
 </script>
-<div class="h-full w-[300px] bg-white z-20 shadow-xl " >
+
+<div class="h-full w-[300px] bg-white z-20 shadow-xl" >
     <div class="pt-7">
         <img class="w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="" />
     </div>

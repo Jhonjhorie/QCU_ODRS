@@ -1,13 +1,13 @@
 <script>
-    import Header from "./Header.svelte";
+    import Header from "./pHeader2.svelte";
     import Sidebar from "./RegistrarSidebar.svelte";
     import { goto } from "$app/navigation";
     import SectionWrapper from "./SectionWrapper.svelte";
     function gotoRequests() {
-          goto('/RegistrarRequests');
+          goto('/Registrar/RegistrarRequests');
       }
       function gotoHistory() {
-          goto('/RegistrarHistory');
+          goto('/Registrar/RegistrarHistory');
       }
   </script>
   

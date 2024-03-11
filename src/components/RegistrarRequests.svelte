@@ -1,19 +1,32 @@
 <script>
     import SectionWrapper from "./SectionWrapper.svelte";
-    import Header from "./Header.svelte";
+    import Header from "./pHeader2.svelte";
     import Sidebar from "./RegistrarSidebar.svelte";
     import { goto } from "$app/navigation";
 
     function gotoInfo() {
-		goto('/RegistrarRequestInfo');
+		goto('/Registrar/RegistrarRequestInfo');
 	}
 </script>
+<style>
+
+th {
+font-weight: 400;
+font-size: 15px;
+padding: 10px;
+color: black
+
+}
+td {
+color: black
+}
+</style>
 <SectionWrapper>
     <Header />
     <div class="flex flex-row gap-5 mx-auto w-full">
         <Sidebar />
         <div class="flex flex-col flex-1  mx-auto w-full">
-            <h1 class="mt-2 text-2xl font-bold text-slate-900">REQUESTS</h1>
+            <h1 class="pl-0 text-[30px] text-black font-bold">REQUESTS</h1>
             <div class="overflow-x-auto">
                 <table class="table">
                   <!-- head -->
@@ -30,7 +43,7 @@
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <tbody on:click={gotoInfo}>
                     <!-- row 1 -->
-                    <tr class="hover">
+                    <tr class="hover:bg-blue-700">
                       <th>1</th>
                       <td>10002321</td>
                       <td>Diploma</td>
@@ -38,7 +51,7 @@
                       <td>For Validation</td>
                     </tr>
                     <!-- row 2 -->
-                    <tr class="hover">
+                    <tr class="hover:bg-blue-700">
                       <th>2</th>
                       <td>12022781</td>
                       <td>TOR</td>
@@ -46,7 +59,7 @@
                       <td>For Release</td>
                     </tr>
                     <!-- row 3 -->
-                    <tr class="hover">
+                    <tr class="hover:bg-blue-700">
                       <th>3</th>
                       <td>10092643</td>
                       <td>Diploma</td>
