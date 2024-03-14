@@ -1,9 +1,9 @@
 <script>
    
-    import PHeader from '../../../components/pHeader2.svelte';
-    import Psidebar from '../../../components/psidebar.svelte';
+    import PHeader from '../../../components/Admin/pHeader2.svelte';
+    import Psidebar from '../../../components/Admin/psidebar.svelte';
 
-    import Livetime from '../../../components/pLivetime.svelte';
+    import Livetime from '../../../components/Admin/pLivetime.svelte';
 
 
 </script>

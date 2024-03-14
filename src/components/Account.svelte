@@ -3,7 +3,7 @@
     import SectionWrapper from "./SectionWrapper.svelte";
     import { goto } from "$app/navigation";
   import Header from "./Header.svelte";
-  import StudDbBtn from "./StudDbBtn.svelte";
+  import StudDbBtn from "./Student/StudDbBtn.svelte";
   function gotoLogin() {
 		goto('/Student/Login');
 	}

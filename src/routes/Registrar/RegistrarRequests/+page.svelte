@@ -1,5 +1,5 @@
 <script>
-    import RegistrarRequests from "../../../components/RegistrarRequests.svelte";
+    import RegistrarRequests from "../../../components/Registrar/RegistrarRequests.svelte";
 </script>
 
 <main class="flex flex-col">

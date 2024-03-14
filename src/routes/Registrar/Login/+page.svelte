@@ -1,7 +1,7 @@
 <script>
 
     import { goto } from '$app/navigation';
-    import Header from '../../../components/pHeader.svelte';
+    import Header from '../../../components/Admin/pHeader.svelte';
 
     //Goto pages
     function gotoForgot  () {

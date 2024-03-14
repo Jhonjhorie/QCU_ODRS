@@ -1,5 +1,5 @@
 <script>
-    import Dashboard from "../../../components/StudDashboard.svelte";
+    import Dashboard from "../../../components/Student/StudDashboard.svelte";
 </script>
 
 <main class="flex flex-col">

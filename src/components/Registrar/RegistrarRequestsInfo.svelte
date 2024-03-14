@@ -1,8 +1,8 @@
 <script>
-    import Header from "./pHeader2.svelte";
-    import Sidebar from "./RegistrarSidebar.svelte";
+    import Header from "../Admin/pHeader2.svelte";
+    import Sidebar from "../Registrar/RegistrarSidebar.svelte";
     import { goto } from "$app/navigation";
-    import SectionWrapper from "./SectionWrapper.svelte";
+    import SectionWrapper from "../SectionWrapper.svelte";
     function gotoRequests() {
           goto('/Registrar/RegistrarRequests');
       }

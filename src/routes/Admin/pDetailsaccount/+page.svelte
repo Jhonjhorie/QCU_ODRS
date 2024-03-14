@@ -1,8 +1,8 @@
 <script>
     import { goto } from '$app/navigation';
-    import PHeader from '../../../components/pHeader2.svelte';
-    import Psidebar from '../../../components/psidebar.svelte';
-    import PBoxesaccounts from '../../../components/pBoxesaccounts.svelte';
+    import PHeader from '../../../components/Admin/pHeader2.svelte';
+    import Psidebar from '../../../components/Admin/psidebar.svelte';
+    import PBoxesaccounts from '../../../components/Admin/pBoxesaccounts.svelte';
   
 
     function gotoAccs () {

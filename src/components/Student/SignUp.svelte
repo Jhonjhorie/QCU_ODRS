@@ -1,6 +1,6 @@
 
 <script>
-    import SectionWrapper from "./SectionWrapper.svelte";
+    import SectionWrapper from "../SectionWrapper.svelte";
     import { goto } from "$app/navigation";
   function gotoLogin() {
 		goto('/Student/Login');

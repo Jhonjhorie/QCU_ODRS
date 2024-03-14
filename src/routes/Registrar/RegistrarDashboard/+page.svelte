@@ -1,5 +1,5 @@
 <script>
-    import RegistrarDashboard from "../../../components/RegistrarDashboard.svelte";
+    import RegistrarDashboard from "../../../components/Registrar/RegistrarDashboard.svelte";
 </script>
 
 <main class="flex flex-col">

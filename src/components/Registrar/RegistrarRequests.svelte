@@ -1,6 +1,6 @@
 <script>
-    import SectionWrapper from "./SectionWrapper.svelte";
-    import Header from "./pHeader2.svelte";
+    import SectionWrapper from "../SectionWrapper.svelte";
+    import Header from "../Admin/pHeader2.svelte";
     import Sidebar from "./RegistrarSidebar.svelte";
     import { goto } from "$app/navigation";
 

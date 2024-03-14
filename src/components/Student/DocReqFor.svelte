@@ -1,6 +1,6 @@
 <script>
-    import SectionWrapper from "./SectionWrapper.svelte";
-    import Header from "./Header.svelte";
+    import SectionWrapper from "../SectionWrapper.svelte";
+    import Header from "../Header.svelte";
   import { page } from "$app/stores";
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";

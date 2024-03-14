@@ -1,7 +1,7 @@
 <script>
     import { goto } from "$app/navigation";
-    import PHeader from '../../../components/pHeader2.svelte';
-    import Psidebar from '../../../components/psidebar.svelte';
+    import PHeader from '../../../components/Admin/pHeader2.svelte';
+    import Psidebar from '../../../components/Admin/psidebar.svelte';
       function gotoDocuments () {
                   goto('/Admin/pDocuments')
       }
@@ -79,7 +79,7 @@
                   </dialog>
                 </div>
                 <div class="pt-8 float-right">
-                  <button   onclick="my_modal_4.showModal()" class="btn btn-active shadow-md hover:bg-green-800">UPDATE</button>
+                  <button onclick="my_modal_4.showModal()" class="btn btn-active shadow-md hover:bg-green-800">UPDATE</button>
                   <dialog id="my_modal_4" class="modal modal-bottom sm:modal-middle">
                     <div class="modal-box">
                       <h3 class="font-bold text-lg text-green-700">Update</h3>

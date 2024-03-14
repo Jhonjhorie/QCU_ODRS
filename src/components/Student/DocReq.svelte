@@ -1,8 +1,8 @@
 <script>
 // @ts-nocheck
 
-    import SectionWrapper from "./SectionWrapper.svelte";
-    import Header from "./Header.svelte";
+    import SectionWrapper from "../SectionWrapper.svelte";
+    import Header from "../Header.svelte";
   import { goto } from "$app/navigation";
   import StudDbBtn from "./StudDbBtn.svelte";
 
