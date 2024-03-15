@@ -8,12 +8,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APIKEY,
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID
+  apiKey: "AIzaSyBOq4sLU4bb07wwSX4OftyndDKYo93GzHw",
+  authDomain: "qcu-odrs.firebaseapp.com",
+  projectId: "qcu-odrs",
+  storageBucket: "qcu-odrs.appspot.com",
+  messagingSenderId: "1021314388420",
+  appId: "1:1021314388420:web:6715d2f4deb7524e1c5491"
 };
 
 // Initialize Firebase
