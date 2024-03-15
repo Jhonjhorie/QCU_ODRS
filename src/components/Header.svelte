@@ -4,7 +4,7 @@
   let userName = "Childish Reymark";
   
   function gotoDashb() {
-		goto('/Student/StudentDashboard');
+		goto('/Student/Dashboard');
 	}
   function gotoDashR() {
 		goto('/Student/DocumentRequest');
