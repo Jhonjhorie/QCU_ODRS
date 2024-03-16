@@ -1,13 +1,14 @@
 <script>
    
     import { goto } from '$app/navigation';
+  import { authHandlers } from '../../store/store';
 
     function gotoAccount () {
                 goto('/Admin/pUsersaccount')
 
     }
     function gotoAdmin () {
-                goto('/Admin/pAdminDashboard')
+                goto('/Admin/Dashboard')
     }
     function gotoHistory () {
                 goto('/Admin/pHistory')
@@ -48,7 +49,7 @@
         </li> 
        
         <li class="fixed pl-5 pb-5 bottom-0 text-center">
-            <button on:click={gotoALogin} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900 duration-200">LOGOUT</button>
+            <button on:click={authHandlers.logout} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900 duration-200">LOGOUT</button>
         </li> 
     </ul>
     

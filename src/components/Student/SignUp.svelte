@@ -17,8 +17,17 @@
   let stdn = "";
   let prog = "Select Course";
   let status = "";
+  let error = false;
+  let register = false;
 
   let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
+
+  function handleAuthenticate() {
+    if(!email || !pass || (register && !cpass)) {
+      error = true;
+      return;
+    }
+  }
 
 </script>
 

@@ -1,0 +1,15 @@
+import { c as create_ssr_component, v as validate_component } from "../../../../chunks/ssr.js";
+import { P as PHeader2 } from "../../../../chunks/pHeader2.js";
+import { P as Psidebar } from "../../../../chunks/psidebar.js";
+import "../../../../chunks/client.js";
+const css = {
+  code: "td.svelte-muwcx0{color:black;font-weight:500}th.svelte-muwcx0{font-size:15px}",
+  map: null
+};
+const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css);
+  return `<div class="h-[105vh] w-full bg-slate-300">${validate_component(PHeader2, "PHeader").$$render($$result, {}, {}, {})} ${validate_component(Psidebar, "Psidebar").$$render($$result, {}, {}, {})} <div class="ml-[300px] p-5 "><h1 class="pl-0 text-[30px] text-black font-bold" data-svelte-h="svelte-xaunwl">MANAGE DOCUMENT</h1> <div class="pt-2 pb-3"><button class="btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200" data-svelte-h="svelte-qkfat1">ADD DOCUMENT</button></div> <div class="w-[100%] h-[65vh] bg-slate-100 shadow-md rounded-md "><div class="overflow-x-auto"><table class="table"> <thead class="sticky top-0 bg-slate-900" data-svelte-h="svelte-1gomg5"><tr><th class="text-white font-light svelte-muwcx0">Documents</th> <th class="text-white font-light svelte-muwcx0">Requirement</th> <th class="text-white font-light svelte-muwcx0">Manage</th></tr></thead> <tbody><tr><td class="svelte-muwcx0" data-svelte-h="svelte-19d4kwl">Transcript of Records (TOR)</td> <td class="svelte-muwcx0" data-svelte-h="svelte-12u1gc4">Year Graduated and complete address</td> <td class="svelte-muwcx0"><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md " data-svelte-h="svelte-12n2qxj">Edit</button></td></tr> <tr><td class="svelte-muwcx0" data-svelte-h="svelte-1v7r5jo">Diploma</td> <td class="svelte-muwcx0" data-svelte-h="svelte-12u1gc4">Year Graduated and complete address</td> <td class="svelte-muwcx0"><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md " data-svelte-h="svelte-12n2qxj">Edit</button></td></tr> <tr data-svelte-h="svelte-a82kq"><td class="svelte-muwcx0">Transcript of Records (TOR) - Undergraduate</td> <td class="svelte-muwcx0">Last Academic Year Attended and complete address</td> <td class="svelte-muwcx0"><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td></tr> <tr data-svelte-h="svelte-1lo6dai"><td class="svelte-muwcx0">Grade Slip</td> <td class="svelte-muwcx0">Academic Year and Semester</td> <td class="svelte-muwcx0"><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td></tr> <tr data-svelte-h="svelte-11o8gyq"><td class="svelte-muwcx0">Authentication / Certified True Copy</td> <td class="svelte-muwcx0">Send a clear copy of the document and bring the Original Copy upon claiming</td> <td class="svelte-muwcx0"><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-sm ">Edit</button></td></tr></tbody></table></div></div></div></div>`;
+});
+export {
+  Page as default
+};

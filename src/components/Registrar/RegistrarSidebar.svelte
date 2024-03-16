@@ -2,8 +2,9 @@
 <script>
         
 import { goto } from "$app/navigation";
+  import { authHandlers } from "../../store/store";
   function gotoDashboard() {
-		goto('/Registrar/RegistrarDashboard');
+		goto('/Registrar/Dashboard');
 	}
   function gotoRequests() {
 		goto('/Registrar/RegistrarRequests');
@@ -40,7 +41,7 @@ import { goto } from "$app/navigation";
         </li> 
        
         <li class="pt-20 mt-16 pb-5 text-center">
-            <button  class="h-[40px] rounded-[10px] hover:bg-slate-800 text-white hover:scale-95  btn-wide bg-slate-900" on:click={gotoLogin}>LOGOUT</button>
+            <button  class="h-[40px] rounded-[10px] hover:bg-slate-800 text-white hover:scale-95  btn-wide bg-slate-900" on:click={authHandlers.logout}>LOGOUT</button>
         </li> 
     </ul>
     

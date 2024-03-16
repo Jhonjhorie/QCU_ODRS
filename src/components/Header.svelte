@@ -1,5 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
+  import { authHandlers } from "../store/store.js";
 
   let userName = "Childish Reymark";
   
@@ -46,7 +47,7 @@
         <div tabindex="1" role="button" class="btn p-2"><box-icon name='user-circle' class="h-full w-full"></box-icon></div>
         <ul tabindex="1" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box">
           <li><a on:click={gotoAcc}><box-icon name='user-detail' type='solid' ></box-icon>Account</a></li>
-          <li><a on:click={gotoLogin}><box-icon name='log-out' ></box-icon>Log Out</a></li>
+          <li><a on:click={authHandlers.logout}><box-icon name='log-out' ></box-icon>Log Out</a></li>
         </ul>
       </div>
     </div>

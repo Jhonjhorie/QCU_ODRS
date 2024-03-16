@@ -3,8 +3,9 @@
 
     import SectionWrapper from "../SectionWrapper.svelte";
     import Header from "../Header.svelte";
-    import { goto } from "$app/navigation";
+
   import StudRfBtn from "./StudRFBtn.svelte";
+
 
     let docsStatus = [{tnum: 109098284, name:"TOR / Diploma", status:0},
     {tnum: 219098284, name:"TOR / Diploma", status:0},{tnum: 119098284, name:"Grade Slip", status:1},
@@ -34,6 +35,7 @@
 		docsStatus = docsStatus.sort(sort);
     }
     
+    
 </script>
 
 <SectionWrapper>
@@ -42,7 +44,7 @@
     <main class="flex flex-col
     items-center mt-5">
         <div class="card card-compact w-3/4 shadow-xl items-center bg-white">
-        
+            <p></p>
             <h2 class="card-title text-4xl w-full bg-slate-700 rounded-t-xl p-5 text-white glass">DASHBOARD</h2>
             
                 <div class="px-2 pb-3 overflow-x-auto w-full">
