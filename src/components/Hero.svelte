@@ -2,14 +2,9 @@
   import { goto } from "$app/navigation";
   import SectionWrapper from "./SectionWrapper.svelte";
   function goToLog() {
-		goto('/Student/Login');
+		goto('/Login');
 	}
-  function goToLog2() {
-		goto('/Registrar/Login');
-	}
-  function goToLog3() {
-		goto('/Admin/pAdminLogin');
-	}
+
 </script>
 
 <SectionWrapper>
@@ -23,9 +18,7 @@
         <p class="mb-5">For Students and Graduates of QCU San Bartolomeo (Main) <br />
           (Bachelor Degree / Traditional Undergrad) <br/>
           For Concerns, email us at registrar@qcu.edu.ph</p>
-        <button class="btn btn-outline btn-error" on:click={goToLog}>Student Page</button>
-        <button class="btn btn-outline btn-error" on:click={goToLog2}>Registrar Page</button>
-        <button class="btn btn-outline btn-error" on:click={goToLog3}>Admin Page</button>
+        <button class="btn btn-outline btn-error" on:click={goToLog}>Go to Login</button>
       </div>
     </div>
   </div>
