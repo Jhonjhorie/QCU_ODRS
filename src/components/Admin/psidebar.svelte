@@ -4,7 +4,7 @@
   import { authHandlers } from '../../store/store';
 
     function gotoAccount () {
-                goto('/Admin/pUsersaccount')
+                goto('/Admin/pAccounts')
 
     }
     function gotoAdmin () {
@@ -19,13 +19,16 @@
     function gotoALogin () {
                 goto('/Admin/pAdminLogin')
     }
+    function gotoAdminEdit () {
+                goto('/Admin/pAccedit')
+    }
     
 
 </script>
 
 <div class=" h-full w-[300px] bg-white z-20 shadow-xl fixed " >
     <div class="pt-7">
-        <img src="/cute.jpg" class="w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
+        <img src="/cute.jpg" class=" w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
     </div>
        
     
