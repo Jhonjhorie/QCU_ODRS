@@ -2,8 +2,7 @@
 <script>
 // @ts-nocheck
 
-    import SectionWrapper from "../SectionWrapper.svelte";
-    
+  import SectionWrapper from "../SectionWrapper.svelte";
   import Header from "../Header.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
   import { getAuth } from "firebase/auth";
