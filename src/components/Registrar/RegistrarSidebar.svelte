@@ -1,8 +1,12 @@
-
-<script>
-        
+<script>        
 import { goto } from "$app/navigation";
   import { authHandlers } from "../../store/store";
+ 
+  
+
+
+
+
   function gotoDashboard() {
 		goto('/Registrar/Dashboard');
 	}
@@ -16,7 +20,15 @@ import { goto } from "$app/navigation";
 		goto('/Student/Login');
 	}
 
+
+    let Fullname = 'Registrar';
+    let Department = 'Department';
+    
+ 
 </script>
+
+
+
 
 <div class="h-screen fixed w-[300px] bg-white z-20 shadow-xl" >
     <div class="pt-7">
@@ -24,9 +36,10 @@ import { goto } from "$app/navigation";
     </div>
        
     
-    <h1 class="text-black font-semibold text-[25px] text-center pt-2" > Registrar </h1>
-    <h1 class="text-black font-semibold text-[15px] text-center pb-2 pt-0" > Rieluminous </h1>
+    <h1 class="text-black font-semibold text-[25px] text-center pt-2" > {Fullname}</h1>
+    <h1 class="text-black font-semibold text-[15px] text-center pb-2 pt-0" > {Department}</h1>
 
+ 
     <div class="h-1 w-[250px] bg-[#2f2f2ff0] mx-auto "> </div>
 
     <ul class="justify-end ">

@@ -46,7 +46,7 @@ color: black
                     <!-- row 1 -->
                     <tr  class="hover:bg-blue-700 cursor-pointer">
                       <th>1</th>
-                      <td on:click={gotoInfo} on:dblclick={gotoInfo} >10002321</td>
+                      <td on:click={gotoInfo} on:dblclick={gotoInfo} class="hover:text-slate-100 " >10002321</td>
                       <td>Diploma</td>
                       <td>2/10/2024</td>
                       <td  >For Validation</td>

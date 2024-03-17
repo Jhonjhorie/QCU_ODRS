@@ -4,12 +4,12 @@
 
     import SectionWrapper from "../SectionWrapper.svelte";
     import { goto } from "$app/navigation";
-  import { authHandlers } from "../../store/store";
-  import { doc, setDoc } from 'firebase/firestore';
-  import { db } from "$lib/firebase/firebase";
-  function gotoLogin() {
-		goto('/Login');
-	}
+    import { authHandlers } from "../../store/store";
+    import { doc, setDoc } from 'firebase/firestore';
+    import { db } from "$lib/firebase/firebase";
+    function gotoLogin() {
+      goto('/Login');
+	  }
 
   let email = "";
   let pass = "";
