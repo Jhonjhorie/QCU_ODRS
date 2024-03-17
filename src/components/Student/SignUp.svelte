@@ -28,24 +28,21 @@
   let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
 
   async function handleAuthentication() {
-    if(!email || !pass || !cpass) {
-      error = true;
-      return;
-    }
+    
+
     if(authenticating){
       return;
     }
     authenticating = true; 
-
+    if(pass === cpass){
     try {
-      await authHandlers.signup(email, pass).then(async userCredential => {
-        const user = userCredential.user;
-        await setDoc(doc(db, 'users', user.uid), {
+      const userCredential = await authHandlers.signup(email, pass);
+      console.log("userCredential:", userCredential); // Log userCredential object
+      const user = userCredential.user;
+        setDoc(doc(db,'user', user.uid), {
           role: "student"
-        });
-
-        // Store student information in the 'students' table and link to user by UID
-        await setDoc(doc(db, 'students', user.uid), {
+        })
+        setDoc(doc(db, 'students', user.uid), {
           fname: fn,
           lname: ln,
           mname: mn,
@@ -54,16 +51,15 @@
           stud_no: stdn,
           prog: prog,
           status: status,
-          // Optionally store user UID to maintain the connection
           uid: user.uid
         });
-      });
     } catch (err) {
       console.log("There was an auth error", err);
       error = true;
     } finally {
       authenticating = false;
     }
+  }
   }
 
 </script>
@@ -136,7 +132,7 @@
                 <label class="label">
                   <span class="label-text">Phone Number:</span>
                 </label>
-                <input bind:value={phn} type="number" placeholder="Phone Number" class="input input-bordered no-arrow" required />
+                <input bind:value={phn} type="text" placeholder="Phone Number" class="input input-bordered no-arrow" required />
               </div>
             
               <div class="form-control mt-2">
