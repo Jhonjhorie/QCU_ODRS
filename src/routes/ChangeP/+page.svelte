@@ -1,5 +1,5 @@
 <script>
-    import SectionWrapper from "../../../../components/SectionWrapper.svelte";
+    import SectionWrapper from "../../components/SectionWrapper.svelte";
 </script>
 
 <main class="flex flex-col">

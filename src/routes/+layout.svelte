@@ -7,7 +7,7 @@
   import { onMount } from "svelte";
   import { authStore } from "../store/store";
 
-  const nonAuthRoutes = ['/', "/Login"]
+  const nonAuthRoutes = ['/', "/Login", "/Student/SignUp"]
 
   onMount(() => {
     console.log(`Mounting`)
@@ -20,7 +20,7 @@
         return
       }
 
-      if (user && currentPath == '/Login') {
+      if (user && currentPath == '/Login' || "/Student/SignUp") {
     const userDocRef = doc(db, 'user', user.uid);
     const userDocSnap = await getDoc(userDocRef);
     if (userDocSnap.exists()) {

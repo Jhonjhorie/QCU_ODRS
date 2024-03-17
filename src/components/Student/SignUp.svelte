@@ -1,9 +1,13 @@
 
 <script>
+// @ts-nocheck
+
     import SectionWrapper from "../SectionWrapper.svelte";
     import { goto } from "$app/navigation";
+  import { authHandlers } from "../../store/store";
+  import { db } from "$lib/firebase/firebase";
   function gotoLogin() {
-		goto('/Student/Login');
+		goto('/Login');
 	}
 
   let email = "";
@@ -19,13 +23,38 @@
   let status = "";
   let error = false;
   let register = false;
+  let authenticating = false;
 
   let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
 
-  function handleAuthenticate() {
+  async function handleAuthentication() {
     if(!email || !pass || (register && !cpass)) {
       error = true;
       return;
+    }
+    if(authenticating){
+      return;
+    }
+    authenticating = true; 
+
+    try {
+      await authHandlers.signup(email, pass).then(cred => {
+        return db.collection('users').doc(cred.user.uid).set({
+          role: "student",
+          lname: ln,
+          fname: fn,
+          mname: mn,
+          addr: addr,
+          phone_no: phn,
+          stud_no: stdn,
+          prog: prog,
+          status: status,
+        })
+      });
+    }catch (err) {
+      console.log("There was an auth error", err);
+      error = true;
+      authenticating = false;
     }
   }
 
@@ -107,7 +136,7 @@
                 <label class="label">
                   <span class="label-text">Student Number:</span>
                 </label>
-                <input bind:value={stdn} type="number" placeholder="Student Number" class="input input-bordered" required />
+                <input bind:value={stdn} type="text" placeholder="Student Number" class="input input-bordered" required />
               </div>
               <div class="form-control mt-2">
               <div class="dropdown dropdown-top">
@@ -171,7 +200,12 @@
               </div>
               
               <div class="form-control mt-5">
-                <button class="btn bg-blue-900 text-white hover:text-black text-lg">Register</button>
+                <button class="btn bg-blue-900 text-white hover:text-black text-lg" on:click={handleAuthentication}>
+                  {#if authenticating}
+                  <span class="loading loading-dots loading-md"></span>
+                  {:else}
+                  Register
+                  {/if}</button>
               </div>
               <p class="text-xs text-thin text-slate-500 mt-2
               ">By using this service, you understood and agree to the QCU Online Services Terms of Use and Privacy Statement</p>
