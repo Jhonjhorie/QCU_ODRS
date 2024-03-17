@@ -18,12 +18,8 @@
     
       <div class="ml-[300px] p-5 ">
         <h1 class="pl-0 text-[30px] text-black font-bold">MANAGE DOCUMENT</h1>
-          <div class="mx-auto ">
-              <div class="pt-2 pb-3">
-                  <button on:click={gotoDocuments}  class="btn w-[200px] bg-slate-900 hover:bg-slate-800">BACK</button>
-                  </div>
-          </div>
-          <div class="h-[60vh] w-[80%] bg-slate-100  mt-3 rounded-md shadow-md p-5">
+          
+          <div class="h-[60vh] w-[67%] bg-slate-100  rounded-md shadow-md p-5 mx-auto mt-10">
               <div class="w-full pl-10 ">
                 <h1 class=" text-slate-900 text-[25px]  font-bold ">DOCUMENT INFORMATION</h1>
               </div>
@@ -45,17 +41,25 @@
                   </div>
   
                   <div class="">
-                      <label class="form-control w-full max-w-xs pt-5">
-                          <div class="label">
-                          <span class="label-text text-black font-medium text-[15px]">Requirements</span>
-                          </div>
-                          <textarea class="textarea textarea-bordered bg-slate-300 h-[25vh] w-[18vw] border-slate-400 text-black" placeholder="Year Graduated and complete address"></textarea>  
-                      </label>
+                    <label class="form-control w-full max-w-xs pt-5">
+                      <div class="label">
+                      <span class="label-text text-black font-medium text-[15px]">Price</span>
+                      </div>
+                      <input type="number" placeholder="310" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                  </label>
+                  <label class="form-control w-full max-w-xs pt-5">
+                      <div class="label">
+                      <span class="label-text text-black font-medium text-[15px]">Requirements</span>
+                      </div>
+                      <textarea class="textarea textarea-bordered bg-slate-300 h-[10vh] w-[18vw] border-slate-400 text-black" placeholder="Year Graduated and complete address"></textarea>  
+                  </label>
                   
                   </div>
               </div>
-              <div class="p-8 pr-14 float-right">
-                  <button onclick="my_modal_5.showModal()" class="btn btn-active shadow-md hover:bg-red-800 ">DELETE</button>
+              <div class="pt-8 pl-2  float-right">
+                 
+                  <button onclick="my_modal_5.showModal()" class=" btn btn-active shadow-md hover:bg-red-800 ">DELETE</button>
+                  <button on:click={gotoDocuments} class="ml-1 mr-14 btn btn-active shadow-md  ">BACK</button>
                   <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
                     <div class="modal-box">
                       <h3 class="font-bold text-lg text-red-700">Delete</h3>

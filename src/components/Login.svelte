@@ -14,7 +14,7 @@
   let email = "";
   let pass = "";
   let error = false;
-  let authenticating = false;
+  let authenticating = false; 
 
   async function handleAuthentication() {
     if(authenticating){

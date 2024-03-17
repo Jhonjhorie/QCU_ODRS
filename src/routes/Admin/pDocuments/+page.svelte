@@ -42,6 +42,7 @@
               <tr>
                 <th class="text-white font-light">Documents</th>
                 <th class="text-white font-light">Requirement</th>
+                <th class="text-white font-light">Price</th>
                 <th class="text-white font-light">Manage</th>
               </tr>
             </thead>
@@ -49,26 +50,31 @@
               <tr>
                 <td>Transcript of Records (TOR)</td>
                 <td>Year Graduated and complete address</td>
+                <td>310</td>
                 <td><button on:click={gotoEdit} class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
               </tr>
               <tr>
                 <td>Diploma</td>
                 <td>Year Graduated and complete address</td>
+                <td>310</td>
                 <td><button on:click={gotoEdit} class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
               </tr>
               <tr>
                 <td>Transcript of Records (TOR) - Undergraduate</td>
                 <td>Last Academic Year Attended and complete address</td>
+                <td>110</td>
                 <td><button  class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
               </tr>
               <tr>
                 <td>Grade Slip</td>
                 <td>Academic Year and Semester</td>
+                <td>310</td>
                 <td><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
               </tr>
               <tr>
                 <td>Authentication / Certified True Copy</td>
                 <td>Send a clear copy of the document and bring the Original Copy upon claiming</td>
+                <td>410</td>
                 <td><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-sm  ">Edit</button></td>
               </tr>
             </tbody>
