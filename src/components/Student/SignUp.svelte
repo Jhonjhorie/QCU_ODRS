@@ -5,6 +5,7 @@
     import SectionWrapper from "../SectionWrapper.svelte";
     import { goto } from "$app/navigation";
   import { authHandlers } from "../../store/store";
+  import { doc, setDoc } from 'firebase/firestore';
   import { db } from "$lib/firebase/firebase";
   function gotoLogin() {
 		goto('/Login');
@@ -22,13 +23,12 @@
   let prog = "Select Course";
   let status = "";
   let error = false;
-  let register = false;
   let authenticating = false;
 
   let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
 
   async function handleAuthentication() {
-    if(!email || !pass || (register && !cpass)) {
+    if(!email || !pass || !cpass) {
       error = true;
       return;
     }
@@ -38,22 +38,30 @@
     authenticating = true; 
 
     try {
-      await authHandlers.signup(email, pass).then(cred => {
-        return db.collection('users').doc(cred.user.uid).set({
-          role: "student",
-          lname: ln,
+      await authHandlers.signup(email, pass).then(async userCredential => {
+        const user = userCredential.user;
+        await setDoc(doc(db, 'users', user.uid), {
+          role: "student"
+        });
+
+        // Store student information in the 'students' table and link to user by UID
+        await setDoc(doc(db, 'students', user.uid), {
           fname: fn,
+          lname: ln,
           mname: mn,
           addr: addr,
           phone_no: phn,
           stud_no: stdn,
           prog: prog,
           status: status,
-        })
+          // Optionally store user UID to maintain the connection
+          uid: user.uid
+        });
       });
-    }catch (err) {
+    } catch (err) {
       console.log("There was an auth error", err);
       error = true;
+    } finally {
       authenticating = false;
     }
   }
