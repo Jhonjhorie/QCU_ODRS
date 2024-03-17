@@ -19,10 +19,11 @@ td {
 color: black
 }
 </style>
-<SectionWrapper>
+
+<div class="h-[100vh] bg-slate-300  " >
     <Header />
-    <div class="flex flex-row gap-5 mx-auto w-full">
         <Sidebar />
+        <div class="ml-[300px] p-5 h-[70vh] ">
         <div class="flex flex-col flex-1  mx-auto w-full">
           <h1 class="pl-0 text-[30px] text-black font-bold">HISTORY</h1>
           <div class="overflow-x-auto">
@@ -52,4 +53,4 @@ color: black
               </div>
         </div>
     </div>
-</SectionWrapper>
+  </div>
