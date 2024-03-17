@@ -31,43 +31,43 @@
 
 
   
-<SectionWrapper>
-    <Header />
-    <div class="flex flex-row gap-5 mx-auto w-full">
-        <Sidebar />
 
-        <div class="flex flex-col flex-1  mx-auto w-full">
-            <h1 class="pl-0 text-[30px] text-black font-bold">DASHBOARD</h1>
-        <div class="text-[90px] text-black font-bold text-center">  
-            {currentTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
-        </div>
-        <div class="text-[30px] text-black font-semibold text-center" >
-            {currentDate.toLocaleDateString([], { month: 'long', day: 'numeric', year: 'numeric' })}
-        </div>
-        <div class="text-[30px] text-black font-semibold text-center" >
-            {currentYear.toLocaleDateString([], { weekday: 'long'  })}
-        </div>
-            <div class="flex flex-row gap-5  mt-5">
-                <div class="card w-96 bg-base-100 shadow-xl">
-                    <div class="card-body items-center text-center">
-                    <h2 class="card-title">Pending Request</h2>
-                    <p>10</p>
+    <div class="h-[100vh] bg-slate-300  " >
+    <Header />
+        <Sidebar />
+        <div class="ml-[300px] p-5 h-[70vh] ">
+            <div class="flex flex-col flex-1  mx-auto w-full">
+                <h1 class="pl-0 text-[30px] text-black font-bold">DASHBOARD</h1>
+            <div class="text-[90px] text-black font-bold text-center">  
+                {currentTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
+            </div>
+            <div class="text-[30px] text-black font-semibold text-center" >
+                {currentDate.toLocaleDateString([], { month: 'long', day: 'numeric', year: 'numeric' })}
+            </div>
+            <div class="text-[30px] text-black font-semibold text-center" >
+                {currentYear.toLocaleDateString([], { weekday: 'long'  })}
+            </div>
+                <div class="flex flex-row gap-5  mt-10 mx-auto ">
+                    <div class="card w-50 bg-base-100 shadow-xl">
+                        <div class="card-body items-center text-center">
+                        <h2 class="card-title">Pending Request</h2>
+                        <p>10</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card w-96 bg-base-100 shadow-xl">
-                    <div class="card-body items-center text-center">
-                    <h2 class="card-title">Completed Request</h2>
-                    <p>10</p>
+                    <div class="card w-50 bg-base-100 shadow-xl">
+                        <div class="card-body items-center text-center">
+                        <h2 class="card-title">Completed Request</h2>
+                        <p>10</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card w-96 bg-base-100 shadow-xl">
-                    <div class="card-body items-center text-center">
-                    <h2 class="card-title">Scheduled Request</h2>
-                    <p>10</p>
+                    <div class="card w-50 bg-base-100 shadow-xl">
+                        <div class="card-body items-center text-center">
+                        <h2 class="card-title">Scheduled Request</h2>
+                        <p>10</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-</SectionWrapper>

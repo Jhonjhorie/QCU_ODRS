@@ -4,23 +4,23 @@
   import { authHandlers } from '../../store/store';
 
     function gotoAccount () {
-                goto('/Admin/pAccounts')
+                goto('/Admin/Accounts')
 
     }
     function gotoAdmin () {
                 goto('/Admin/Dashboard')
     }
     function gotoHistory () {
-                goto('/Admin/pHistory')
+                goto('/Admin/History')
     }
     function gotoDocuments () {
-                goto('/Admin/pDocuments')
+                goto('/Admin/Documents')
     }
     function gotoALogin () {
-                goto('/Admin/pAdminLogin')
+                goto('/Admin/AdminLogin')
     }
     function gotoAdminEdit () {
-                goto('/Admin/pAccedit')
+                goto('/Admin/Accedit')
     }
     
 
@@ -28,7 +28,7 @@
 
 <div class=" h-full w-[300px] bg-white z-20 shadow-xl fixed " >
     <div class="pt-7">
-        <img src="/cute.jpg" class=" w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
+        <img src="/cute.jpg" on:click={gotoAdminEdit} class="cursor-pointer w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
     </div>
        
     
@@ -52,7 +52,7 @@
         </li> 
        
         <li class="fixed pl-5 pb-5 bottom-0 text-center">
-            <button on:click={authHandlers.logout} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900 duration-200">LOGOUT</button>
+            <button  on:click={authHandlers.logout} class="h-[40px] rounded-[10px] text-white hover:bg-slate-800 hover:scale-95  btn-wide bg-slate-900 duration-200">LOGOUT</button>
         </li> 
     </ul>
     
