@@ -1,7 +1,7 @@
 <script>
   import RegistrarRequestsInfo from "../../../components/Registrar/RegistrarRequestsInfo.svelte";
 
-  import Header from "../../../components/Admin/pHeader2.svelte";
+  import Header from "../../../components/Registrar/RegistrarHeader.svelte";
   import { goto } from "$app/navigation";
   import SectionWrapper from "../../../components/SectionWrapper.svelte";
   function gotoRequests() {
