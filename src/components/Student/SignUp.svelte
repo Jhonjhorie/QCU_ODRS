@@ -2,14 +2,18 @@
 <script>
 // @ts-nocheck
 
-    import SectionWrapper from "../SectionWrapper.svelte";
-    import { goto } from "$app/navigation";
-    import { authHandlers } from "../../store/store";
-    import { doc, setDoc } from 'firebase/firestore';
-    import { db } from "$lib/firebase/firebase";
-    function gotoLogin() {
-      goto('/Login');
-	  }
+
+  import SectionWrapper from "../SectionWrapper.svelte";
+  import { goto } from "$app/navigation";
+  import { auth } from "$lib/firebase/firebase";
+  import { createUserWithEmailAndPassword } from "firebase/auth";
+  import { doc, setDoc } from 'firebase/firestore';
+  import { db } from "$lib/firebase/firebase";
+  
+  function gotoLogin() {
+		goto('/Login');
+	}
+
 
   let email = "";
   let pass = "";
@@ -27,19 +31,17 @@
 
   let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
 
-  async function handleAuthentication() {
-    
-
+  async function handleAuthentication() {  
     if(authenticating){
       return;
     }
     authenticating = true; 
-    if(pass === cpass){
+    
     try {
-      const userCredential = await authHandlers.signup(email, pass);
-      console.log("userCredential:", userCredential); // Log userCredential object
-      const user = userCredential.user;
+      await createUserWithEmailAndPassword(auth,email, pass).then((userCredential) => {
+        const user = userCredential.user;
         setDoc(doc(db,'user', user.uid), {
+          email: email,
           role: "student"
         })
         setDoc(doc(db, 'students', user.uid), {
@@ -53,13 +55,14 @@
           status: status,
           uid: user.uid
         });
+      });
     } catch (err) {
       console.log("There was an auth error", err);
       error = true;
     } finally {
       authenticating = false;
     }
-  }
+  
   }
 
 </script>
