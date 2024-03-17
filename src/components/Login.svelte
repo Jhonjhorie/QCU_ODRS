@@ -14,7 +14,7 @@
   let email = "";
   let pass = "";
   let error = false;
-  let authenticating = false;
+  let authenticating = false; 
 
   async function handleAuthentication() {
     if(authenticating){
@@ -66,7 +66,6 @@
                 <input bind:value={email} type="email" placeholder="Email" class="input input-bordered"  />
               </div>
               <div class="form-control mt-2">
-                
                 <input bind:value={pass} type="password" placeholder="Password" class="input input-bordered"  />
                 
                 <!-- svelte-ignore a11y-label-has-associated-control -->

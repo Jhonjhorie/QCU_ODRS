@@ -19,17 +19,14 @@
     <div class="ml-[300px] p-5 ">
     <h1 class="pl-0 text-[30px] text-black font-bold">MANAGE DOCUMENT</h1>
 
-        <div class="pt-2 pb-3">
-        <button on:click={gotoDocuments}  class="btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200">BACK</button>
-        </div>
 
-    <div class="mx-auto pl-31  w-full">
+    <div class="mx-auto pl-31  w-full pt-10">
 
-        <div class="w-[750px] h-96 bg-slate-100 shadow-md rounded-md pl-10 pt-5">
+        <div class="w-[750px] mx-auto h-96 bg-slate-100 shadow-md rounded-md pl-10 pt-5">
                 <div class="">
                     <h1 class="text-slate-800 font-bold text-[25px]  ">ADD DOCUMENT</h1>
                 </div>
-                <div class="flex gap-x-[10vh] w-full pl-[3vw]">
+                <div class="flex gap-x-[10vh] w-full pl-[3vw] ">
                     <div class="">
                     <label class="form-control w-full max-w-xs pt-5">
                         <div class="label">
@@ -48,21 +45,28 @@
                     <div class="">
                         <label class="form-control w-full max-w-xs pt-5">
                             <div class="label">
+                            <span class="label-text text-black font-medium text-[15px]">Price</span>
+                            </div>
+                            <input type="number" placeholder="Type here" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                        </label>
+                        <label class="form-control w-full max-w-xs pt-5">
+                            <div class="label">
                             <span class="label-text text-black font-medium text-[15px]">Requirements</span>
                             </div>
-                            <textarea class="textarea textarea-bordered bg-slate-300 h-[25vh] w-[18vw] border-slate-400 text-black" placeholder="Bio"></textarea>  
+                            <textarea class="textarea textarea-bordered bg-slate-300 h-[10vh] w-[18vw] border-slate-400 text-black" placeholder="Bio"></textarea>  
                         </label>
                     
                     </div>
                 </div>
-                <div class="pt-5 pr-[75px] p-10 w-full">
-                    <div class="float-right">
-                        <button  onclick="my_modal_1.showModal()" class="h-10 rounded-md w-[20vh] bg-slate-900 hover:bg-slate-800 text-slate-200">SUBMIT</button>
+                <div class="pt-5 pr-[75px] p-10 ">
+                    <div class="float-right ">
+                        <button  on:click={gotoDocuments} class="h-10 rounded-md w-[15vh] bg-slate-900 hover:bg-slate-800 text-slate-200">BACK</button>
+                        <button  onclick="my_modal_1.showModal()" class="ml-4 h-10 rounded-md w-[15vh] bg-slate-900 hover:bg-slate-800 text-slate-200">SUBMIT</button>
                     
                         <dialog id="my_modal_1" class="modal">
                             <div class="modal-box">
-                            <h3 class="font-bold text-lg">Hello!</h3>
-                            <p class="py-4">Press ESC key or click the button below to close</p>
+                            <h3 class="font-bold text-lg">ADD</h3>
+                            <p class="py-4">Are you sure to add this document?</p>
                             <div class="modal-action">
                                 <form method="dialog">
                                 <!-- if there is a button in form, it will close the modal -->

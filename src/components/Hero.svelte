@@ -4,7 +4,6 @@
   function goToLog() {
 		goto('/Login');
 	}
-
 </script>
 
 <SectionWrapper>
@@ -18,7 +17,7 @@
         <p class="mb-5">For Students and Graduates of QCU San Bartolomeo (Main) <br />
           (Bachelor Degree / Traditional Undergrad) <br/>
           For Concerns, email us at registrar@qcu.edu.ph</p>
-        <button class="btn btn-outline btn-error" on:click={goToLog}>Go to Login</button>
+
       </div>
     </div>
   </div>

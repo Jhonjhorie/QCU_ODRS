@@ -7,7 +7,7 @@
   import { onMount } from "svelte";
   import { authStore } from "../store/store";
 
-  const nonAuthRoutes = ['/', "/Login"]
+  const nonAuthRoutes = ['/', "/Login", "/Student/SignUp"]
 
   onMount(() => {
     console.log(`Mounting`)
