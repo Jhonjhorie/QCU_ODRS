@@ -6,7 +6,7 @@
   
 
     function gotoAccs () {
-              goto('/Admin/pAccounts');
+              goto('/Admin/Accounts');
     }
 </script>
 <style>

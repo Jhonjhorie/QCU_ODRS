@@ -18,7 +18,7 @@ import { goto } from "$app/navigation";
 
 </script>
 
-<div class="h-full w-[300px] bg-white z-20 shadow-xl" >
+<div class="h-screen fixed w-[300px] bg-white z-20 shadow-xl" >
     <div class="pt-7">
         <img src="/cute.jpg" class="w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="" />
     </div>
@@ -40,7 +40,7 @@ import { goto } from "$app/navigation";
             <button class="h-[40px] rounded-[10px] hover:bg-slate-800 text-white hover:scale-95 btn-wide bg-slate-900" on:click={gotoHistory}>HISTORY</button>
         </li> 
        
-        <li class="pt-20 mt-16 pb-5 text-center">
+        <li class="fixed pl-5 pb-5 bottom-0">
             <button  class="h-[40px] rounded-[10px] hover:bg-slate-800 text-white hover:scale-95  btn-wide bg-slate-900" on:click={authHandlers.logout}>LOGOUT</button>
         </li> 
     </ul>

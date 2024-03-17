@@ -6,10 +6,10 @@
     import { goto } from "$app/navigation";
 
     function gotoAdds (){
-              goto('/Admin/pAddDocs')
+              goto('/Admin/AddDocs')
     }
     function gotoEdit (){
-              goto('/Admin/pEdit')
+              goto('/Admin/Edit')
     }
 </script>
 <style>

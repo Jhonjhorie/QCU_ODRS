@@ -2,13 +2,13 @@
     import { goto } from '$app/navigation';
 
       function gotoAccount () {
-                  goto('/Admin/pAddaccount');
+                  goto('/Admin/Addaccount');
       }
       function gotoRegis () {
-                  goto('/Admin/pAccounts');
+                  goto('/Admin/Accounts');
       }
       function gotoAccs () {
-                  goto('/Admin/pUsersaccount');
+                  goto('/Admin/Usersaccount');
       }
 
 </script>
