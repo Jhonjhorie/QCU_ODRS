@@ -20,7 +20,7 @@
         return
       }
 
-      if (user && currentPath == '/Login' || "/Student/SignUp") {
+      if (user && (currentPath === '/Login' || currentPath === '/Student/SignUp')) {
     const userDocRef = doc(db, 'user', user.uid);
     const userDocSnap = await getDoc(userDocRef);
     if (userDocSnap.exists()) {
