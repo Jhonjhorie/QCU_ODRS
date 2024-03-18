@@ -2,10 +2,13 @@
 <script>
 // @ts-nocheck
 
-    import SectionWrapper from "../SectionWrapper.svelte";
-    import { goto } from "$app/navigation";
-  import { authHandlers } from "../../store/store";
+  import SectionWrapper from "../SectionWrapper.svelte";
+  import { goto } from "$app/navigation";
+  import { auth } from "$lib/firebase/firebase";
+  import { createUserWithEmailAndPassword } from "firebase/auth";
+  import { doc, setDoc } from 'firebase/firestore';
   import { db } from "$lib/firebase/firebase";
+  
   function gotoLogin() {
 		goto('/Login');
 	}
@@ -22,40 +25,42 @@
   let prog = "Select Course";
   let status = "";
   let error = false;
-  let register = false;
   let authenticating = false;
 
   let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
 
-  async function handleAuthentication() {
-    if(!email || !pass || (register && !cpass)) {
-      error = true;
-      return;
-    }
+  async function handleAuthentication() {  
     if(authenticating){
       return;
     }
     authenticating = true; 
-
+    
     try {
-      await authHandlers.signup(email, pass).then(cred => {
-        return db.collection('users').doc(cred.user.uid).set({
-          role: "student",
-          lname: ln,
+      await createUserWithEmailAndPassword(auth,email, pass).then((userCredential) => {
+        const user = userCredential.user;
+        setDoc(doc(db,'user', user.uid), {
+          email: email,
+          role: "student"
+        })
+        setDoc(doc(db, 'students', user.uid), {
           fname: fn,
+          lname: ln,
           mname: mn,
           addr: addr,
           phone_no: phn,
           stud_no: stdn,
           prog: prog,
           status: status,
-        })
+          uid: user.uid
+        });
       });
-    }catch (err) {
+    } catch (err) {
       console.log("There was an auth error", err);
       error = true;
+    } finally {
       authenticating = false;
     }
+  
   }
 
 </script>
@@ -128,7 +133,7 @@
                 <label class="label">
                   <span class="label-text">Phone Number:</span>
                 </label>
-                <input bind:value={phn} type="number" placeholder="Phone Number" class="input input-bordered no-arrow" required />
+                <input bind:value={phn} type="text" placeholder="Phone Number" class="input input-bordered no-arrow" required />
               </div>
             
               <div class="form-control mt-2">

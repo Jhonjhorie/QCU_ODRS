@@ -1,23 +1,56 @@
 
 <script>
-    import SectionWrapper from "./SectionWrapper.svelte";
-    import { goto } from "$app/navigation";
-  import Header from "./Header.svelte";
-  import StudDbBtn from "./Student/StudDbBtn.svelte";
-  function gotoLogin() {
-		goto('/Student/Login');
-	}
+// @ts-nocheck
 
-  let email = "jolina@gmail.com";
-  let ln = "Salan";
-  let fn = "Jolina";
-  let mn = "Flores";
-  let addr = "RD. 5 Bagong Silangan Quezon City";
-  let phn = "09123456789";
-  let stdn = "21-1946";
-  let prog = "Bachelor of Science in Information Technology";
-  let status = "Student";
+  import SectionWrapper from "../SectionWrapper.svelte";
+  import Header from "../Header.svelte";
+  import StudDbBtn from "./StudDbBtn.svelte";
+  import { getAuth } from "firebase/auth";
+  import { doc, getDoc } from 'firebase/firestore';
+  import { db } from "$lib/firebase/firebase";
+  
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const docRef = doc(db, "students", user.uid);
+  let docSnap;
 
+  let email = "";
+  let ln = "";
+  let fn = "";
+  let mn = "";
+  let addr = "";
+  let phn = "";
+  let stdn = "";
+  let prog = "";
+  let status = "";
+
+  if (user !== null) {
+    email = user.email;
+  }
+
+  getDoc(docRef)
+    .then((snapshot) => {
+      docSnap = snapshot;
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        ln = data.lname;
+        fn = data.fname;
+        mn = data.mname;
+        addr = data.addr;
+        phn = data.phone_no;
+        stdn = data.stud_no;
+        prog = data.prog;
+        if(data.status == 0){
+          status = "Not Graduated";
+        }else{
+          status = "Graduated"
+        }
+        
+      }
+    })
+    .catch((error) => {
+      console.error("Error getting document:", error);
+    });
 </script>
 
 <SectionWrapper>

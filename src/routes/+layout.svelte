@@ -32,12 +32,13 @@
         }
       if (userRole === 'registrar') {
             window.location.href = '/Registrar/Dashboard';    
-           return;
+              return;
         }
       if (userRole === 'admin') {
             window.location.href = '/Admin/Dashboard';
            return;
       } 
+      return;
     } 
     
   }

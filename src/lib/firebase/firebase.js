@@ -1,12 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { deleteApp, getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import firebase from "firebase/compat/app";
 import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBOq4sLU4bb07wwSX4OftyndDKYo93GzHw",
   authDomain: "qcu-odrs.firebaseapp.com",

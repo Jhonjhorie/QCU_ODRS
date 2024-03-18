@@ -1,7 +1,10 @@
 <script>
+// @ts-nocheck
+
     import SectionWrapper from "../SectionWrapper.svelte";
     import Header from "../Header.svelte";
   import { page } from "$app/stores";
+  import DatePicker from "./schedpicker/DatePicker.svelte";
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
     
@@ -18,13 +21,20 @@
     }else if(ReqDoc == "Authentication"){
         req = "Authentication"
     }
+
+    let currentDate = new Date();
+
+    const onDateChange = d => {
+    currentDate = d.detail;
+    };
     let yearr = "Select Year";
     let semm = "Select Semester";
     let certt = "Select Certification"
+    let sched;
     const Year = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
     const Sem = ["1st Sem", "2nd Sem"]
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
-    let copy ="";
+    const calendar = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17 1c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-12 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2zm13 5v10h-16v-10h16zm2-6h-2v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-8v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-2v18h20v-18zm4 3v19h-22v-2h20v-17h2zm-17 7h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`;
 
     
 
@@ -130,14 +140,20 @@
                 {#if req == "Authentication"}
                 {/if}
                 <div class="form-control mt-2 flex flex-row gap-2">
-                  <label class="label cursor-pointer gap-5">
-                    <input type="radio" name="radio-10" class="radio checked:bg-blue-500" required checked value=0 bind:group={copy}/>
-                    <span class="label-text">Soft Copy</span> 
+                  <label class="label">
+                    <span class="label-text">Date to Claim: </span>
                   </label>
-                  <label class="label cursor-pointer gap-5">   
-                      <input type="radio" name="radio-10" class="radio checked:bg-green-500" required checked value=1 bind:group={copy} />
-                      <span class="label-text">Hard Copy</span> 
-                  </label>
+                  <div class="input bordered w-3/4  items-center flex">
+                  <DatePicker
+                    on:datechange={onDateChange}
+                    selected={currentDate}
+                    isAllowed={date => {
+                      const millisecs = date.getTime();
+                      if (millisecs + 25 * 3600 * 1000 < Date.now()) return false;
+                      if (millisecs > Date.now() + 3600 * 24 * 45 * 1000) return false;
+                      return true;
+                    }} />
+                    </div>
                 </div>
                 <div class="form-control my-5 items-end">
                   <button class="btn bg-blue-900 w-60 text-white hover:text-black text-xl glass">Submit</button>
