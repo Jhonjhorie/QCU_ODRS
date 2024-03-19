@@ -5,6 +5,7 @@
     import Header from "../Header.svelte";
 
   import StudRfBtn from "./StudRFBtn.svelte";
+  import { deleteDoc } from "firebase/firestore";
 
 
     let docsStatus = [{tnum: 109098284, name:"TOR / Diploma", status:0},
@@ -34,7 +35,6 @@
 		
 		docsStatus = docsStatus.sort(sort);
     }
-    
     
 </script>
 
@@ -91,7 +91,8 @@
                       </tbody>
                     </table>
                   </div>
-            
+
+
         </div>
     </main>
     </SectionWrapper>

@@ -4,7 +4,6 @@
     import SectionWrapper from "../SectionWrapper.svelte";
     import Header from "../Header.svelte";
   import { page } from "$app/stores";
-  import DatePicker from "./schedpicker/DatePicker.svelte";
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
     
@@ -34,8 +33,13 @@
     const Year = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
     const Sem = ["1st Sem", "2nd Sem"]
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
-    const calendar = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17 1c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-12 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2zm13 5v10h-16v-10h16zm2-6h-2v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-8v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-2v18h20v-18zm4 3v19h-22v-2h20v-17h2zm-17 7h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`;
-
+    const today = new Date().toISOString().split("T")[0];
+    const datearr = String(today).split('-');
+    const month = parseInt(datearr[1]) + 1;
+    let maxx = '';
+    if(month < 10) maxx = datearr[0] + '-' + '0' + month + '-' + datearr[2]
+    else maxx = datearr[0] + '-' + month + '-' + datearr[2]
+    
     
 
 </script>
@@ -144,15 +148,7 @@
                     <span class="label-text">Date to Claim: </span>
                   </label>
                   <div class="input bordered w-3/4  items-center flex">
-                  <DatePicker
-                    on:datechange={onDateChange}
-                    selected={currentDate}
-                    isAllowed={date => {
-                      const millisecs = date.getTime();
-                      if (millisecs + 25 * 3600 * 1000 < Date.now()) return false;
-                      if (millisecs > Date.now() + 3600 * 24 * 45 * 1000) return false;
-                      return true;
-                    }} />
+                    <input type="date" min={today} max={maxx} value={today}/>
                     </div>
                 </div>
                 <div class="form-control my-5 items-end">
