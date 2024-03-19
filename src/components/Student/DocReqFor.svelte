@@ -21,21 +21,19 @@
         req = "Authentication"
     }
 
-    let currentDate = new Date();
-
-    const onDateChange = d => {
-    currentDate = d.detail;
-    };
+    
     let yearr = "Select Year";
     let semm = "Select Semester";
     let certt = "Select Certification"
-    let sched;
+    
     const Year = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
     const Sem = ["1st Sem", "2nd Sem"]
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
     const today = new Date().toISOString().split("T")[0];
+    let sched;
     const datearr = String(today).split('-');
     const month = parseInt(datearr[1]) + 1;
+
     let maxx = '';
     if(month < 10) maxx = datearr[0] + '-' + '0' + month + '-' + datearr[2]
     else maxx = datearr[0] + '-' + month + '-' + datearr[2]
@@ -147,9 +145,9 @@
                   <label class="label">
                     <span class="label-text">Date to Claim: </span>
                   </label>
-                  <div class="input bordered w-3/4  items-center flex">
-                    <input type="date" min={today} max={maxx} value={today}/>
-                    </div>
+         
+                    <input type="date" min={today} class="input bordered w-3/4  items-center flex" max={maxx} bind:value={sched}/>
+                    
                 </div>
                 <div class="form-control my-5 items-end">
                   <button class="btn bg-blue-900 w-60 text-white hover:text-black text-xl glass">Submit</button>
