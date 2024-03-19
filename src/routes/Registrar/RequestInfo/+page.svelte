@@ -1,5 +1,5 @@
 <script>
-  import RegistrarRequestsInfo from "../../../components/Registrar/RegistrarRequestsInfo.svelte";
+
 
   import Header from "../../../components/Registrar/RegistrarHeader.svelte";
   import { goto } from "$app/navigation";

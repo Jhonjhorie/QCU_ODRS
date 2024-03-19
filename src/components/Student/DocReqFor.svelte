@@ -38,7 +38,7 @@
     if(month < 10) maxx = datearr[0] + '-' + '0' + month + '-' + datearr[2]
     else maxx = datearr[0] + '-' + month + '-' + datearr[2]
     
-    
+    let stud
 
 </script>
 
