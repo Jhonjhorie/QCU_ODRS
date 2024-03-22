@@ -8,12 +8,6 @@
   import { getAuth } from "firebase/auth";
   import { doc, getDoc } from 'firebase/firestore';
   import { db } from "$lib/firebase/firebase";
-  
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const docRef = doc(db, "students", user.uid);
-  let docSnap;
-
   let email = "";
   let ln = "";
   let fn = "";
@@ -23,15 +17,20 @@
   let stdn = "";
   let prog = "";
   let status = "";
-
-  if (user !== null) {
-    email = user.email;
-  }
-
-  getDoc(docRef)
+  
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if(user !== null){
+  console.log('user exist:' + user.uid + user.email)
+  
+  const docRef = doc(db, "students", user.uid);
+    if(docRef !== null){
+      email = user.email;
+      getDoc(docRef)
     .then((snapshot) => {
-      docSnap = snapshot;
+      let docSnap = snapshot;
       if (docSnap.exists()) {
+        console.log('user existt doc')
         const data = docSnap.data();
         ln = data.lname;
         fn = data.fname;
@@ -46,11 +45,23 @@
           status = "Graduated"
         }
         
+      }else{
+        console.log('no doc refasd')
       }
     })
     .catch((error) => {
       console.error("Error getting document:", error);
     });
+    }
+  }else{
+    console.log('no user')
+  }
+  // let docSnap;
+
+  // if (user !== null) {
+  //   email = user.email;
+  // }
+
 </script>
 
 <SectionWrapper>
