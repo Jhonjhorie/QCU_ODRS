@@ -5,11 +5,16 @@
   import SectionWrapper from "../SectionWrapper.svelte";
   import Header from "../Header.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
-  import { getAuth } from "firebase/auth";
+  import { getAuth, updateEmail, updatePassword } from "firebase/auth";
   import { doc, getDoc, updateDoc } from 'firebase/firestore';
   import { db } from "$lib/firebase/firebase";
   import { error, text } from "@sveltejs/kit";
-  let email = "Loading...";
+  import { authHandlers } from "../../store/store";
+
+  let email;
+  let pass;
+  let cpass;
+  let emailc;
   let ln = "Loading...";
   let fn = "Loading...";
   let mn = "Loading...";
@@ -18,7 +23,6 @@
   let stdn = "Loading...";
   let prog = "Loading...";
   let status = "Loading...";
-  let emailc = "Loading...";
   let lnc = "";
   let fnc = "";
   let mnc = "";
@@ -31,6 +35,12 @@
   let bg = edit ? 'bg-white' : 'bg-blue-900'
   let color = edit ? 'text-black' : 'text-white';
   let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
+  let oldpass;
+  let errorA = false;
+  let authenticating = false; 
+  let succF = false;
+
+ 
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -39,7 +49,7 @@
   
   const docRef = doc(db, "students", user.uid);
     if(docRef !== null){
-      email = user.email;
+      emailc = user.email;
       getDoc(docRef)
     .then((snapshot) => {
       let docSnap = snapshot;
@@ -76,7 +86,35 @@
     });
     }
   
-
+    async function handleOldPass() {
+    if(authenticating){
+      return;
+    }
+    authenticating = true;
+    if(pass != null && cpass != null && pass == cpass){
+    try {
+      errorA = false;
+      await authHandlers.login(user.email, oldpass);
+        updatePassword(auth.currentUser, pass).catch((err) => {
+          console.log("there was an change password error", err)
+        });
+      
+      succF = true;
+    }catch (err) {
+      console.log("There was an auth error", err);
+      errorA = true;
+      authenticating = false;
+    }finally{
+      authenticating = false;
+      oldpass ="";
+      pass ="";
+      cpass ="";
+    }
+    }else{
+      errorA = true;
+      authenticating = false;
+    }
+    }
   function edits() {
     edit = !edit
     bg = edit ? 'bg-white' : 'bg-blue-900'
@@ -118,14 +156,11 @@
     }
   }
 
-  function ChangeLogin(){
-
-  }
 </script>
-
 <SectionWrapper>
   <Header />
   <StudDbBtn/>
+
   <main class="flex flex-col
   items-center mt-5">
         <div class="card card-compact justify-center w-3/4 bg-slate-200 mt-3 ">
@@ -238,7 +273,7 @@
                     </div>
                     <div class="form-control justify-center mt-8 ml-5 items-end">
                       <!-- svelte-ignore a11y-label-has-associated-control -->
-                      <div class="btn bg-blue-800 glass   text-white group hover:text-black w-60" on:click={ChangeLogin}>
+                      <div class="btn bg-blue-800 glass   text-white group hover:text-black w-60" onclick="my_modal_1.showModal()">
                         <box-icon name='edit' type='solid' color='#ffffff' class="bg-transparent group-hover:bg-black p-1 w-8 h-8 rounded transition duration-300" ></box-icon>
                          Edit Login Credentials
                      </div>
@@ -257,3 +292,68 @@
     </div>
 </main>
 </SectionWrapper>
+
+
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box">
+    <div class="absolute right-5 p-0 w-10 flex items-center btn" onclick="my_modal_1.close()"><box-icon name='x' type='solid' size='sm'></box-icon></div>
+          <form class="card-body flex flex-col gap-3">
+            
+            <h3>Change Login Credentials</h3>
+            <label class="label">
+              <span class="label-text">Old Password:</span>
+            </label>
+            <div class="form-control">
+              <input bind:value={oldpass} type="password" placeholder="Current Password" class="input input-bordered"  /> 
+            </div>
+            
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">New Password:</span>
+              </label>
+              <input bind:value={pass} type="password" placeholder="New Password" class="input input-bordered"  />
+              
+              
+            </div> 
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Confirm New Password:</span>
+              </label>
+              <input bind:value={cpass} type="password" placeholder="Confirm New Password" class="input input-bordered"  />
+              
+              
+            </div>
+            
+            <div class="form-control mt-2">
+              <button class="btn bg-blue-900 text-white hover:text-black text-xl" on:click={handleOldPass}>
+                {#if authenticating}
+                <span class="loading loading-dots loading-md"></span>
+                {:else}
+                Change Login Credentials
+                {/if}
+              </button>
+            </div>
+        </form>
+       
+        
+    </div>
+    {#if errorA}
+    <div class="absolute bottom-10 w-full flex items-center justify-center">
+    <div role="alert" class="alert alert-warning w-1/2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+      <span>The Information you have entered is not correct!</span>
+    </div>
+  </div>
+    {/if}
+    {#if succF}
+    <div class="absolute bottom-10 w-full flex items-center justify-center">
+    <div role="alert" class="alert alert-success w-1/2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+      <span>Login Credentials Successfully updated</span>
+      <button class="btn" onclick="my_modal_1.close()" on:click={() => succF = false}>Close</button>
+    </div>
+  </div>
+    {/if}
+
+</dialog>
+
