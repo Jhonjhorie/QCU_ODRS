@@ -21,13 +21,12 @@
         req = "Authentication"
     }
 
-    
-    let yearr = "Select Year";
-    let semm = "Select Semester";
+    let studNum = "Loading...";
+    let fullName = "Loading..."
+    let reqValue = "Select";
     let certt = "Select Certification"
     
-    const Year = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
-    const Sem = ["1st Sem", "2nd Sem"]
+    const Year = ["1st Year, 1st Sem","1st Year, 2nd Sem", "2nd Year, 1st Sem", "2nd Year, 2nd Sem", "3rd Year, 1st Sem","3rd Year, 2nd Sem", "4th Year, 1st Sem", "4th Year, 2nd Sem", "Irregular"];
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
     const today = new Date().toISOString().split("T")[0];
     let sched;
@@ -38,7 +37,6 @@
     if(month < 10) maxx = datearr[0] + '-' + '0' + month + '-' + datearr[2]
     else maxx = datearr[0] + '-' + month + '-' + datearr[2]
     
-    let stud
 
 </script>
 
@@ -57,13 +55,13 @@
                     <label class="label">
                         <span class="label-text">Student ID:</span>
                       </label>
-                  <input type="number" placeholder="Student ID" class="input input-bordered"  />
+                  <input type="number" bind:value={studNum} placeholder="Student ID" class="input input-bordered"  />
                 </div>
                 <div class="form-control mt-2">
                     <label class="label">
                         <span class="label-text">Full Name:</span>
                       </label>
-                    <input type="text" placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered"  />
+                    <input type="text" bind:value={fullName} placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered"  />
                 </div>
 
                 {#if req == "Graduated"}
@@ -71,7 +69,7 @@
                         <label class="label">
                             <span class="label-text">Year Graduated:</span>
                         </label>
-                        <input type="number" placeholder="ex: 2020" class="input input-bordered"  />
+                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered"  />
                     </div>
                   
                 {/if}
@@ -80,42 +78,27 @@
                         <label class="label">
                             <span class="label-text">Last Academic Year Attended:</span>
                         </label>
-                        <input type="number" placeholder="ex: 2020" class="input input-bordered"  />
+                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered"  />
                     </div>
                  
                 {/if}
                 {#if req == "YearSem"}
-                <div class="form-control mt-2 flex flex-row w-full gap-2">
-                    <div class="dropdown dropdown-top w-1/2">
+                <div class="form-control mt-2 flex">
+                    <div class="dropdown dropdown-top">
                       
                       <!-- svelte-ignore a11y-label-has-associated-control -->
                       <label class="label">
-                        <span class="label-text">Year: </span>
+                        <span class="label-text">Year and Sem: </span>
                       </label>
-                      <div tabindex="0" role="button" class="btn w-full">{yearr}</div>
+                      <div tabindex="0" role="button" class="btn w-full">{reqValue}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
                         {#each Year as item}
-                        <li><a on:click={() => yearr = item}>{item}</a></li>
+                        <li><a on:click={() => reqValue = item}>{item}</a></li>
                         {/each}
                       </ul>
                     </div>
-                    <div class="dropdown dropdown-top w-1/2">
-                      
-                        <!-- svelte-ignore a11y-label-has-associated-control -->
-                        <label class="label">
-                          <span class="label-text">Semester: </span>
-                        </label>
-                        <div tabindex="0" role="button" class="btn w-full">{semm}</div>
-                     
-                        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
-                          {#each Sem as item}
-                          <li><a on:click={() => semm = item}>{item}</a></li>
-                          {/each}
-                        </ul>
-                      </div>
                 </div>
                 
                 {/if}
@@ -127,12 +110,12 @@
                       <label class="label">
                         <span class="label-text">Certification: </span>
                       </label>
-                      <div tabindex="0" role="button" class="btn w-full">{certt}</div>
+                      <div tabindex="0" role="button" class="btn w-full">{reqValue}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
                         {#each Cert as item}
-                        <li><a on:click={() => certt = item}>{item}</a></li>
+                        <li><a on:click={() => reqValue = item}>{item}</a></li>
                         {/each}
                       </ul>
                     </div>
