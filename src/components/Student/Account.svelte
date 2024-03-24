@@ -73,8 +73,10 @@
         prog = progc;
         if(data.status == 0){
           statusc = "Not Graduated";
+        }else if(data.status == 1){
+          statusc = "Graduated";
         }else{
-          statusc = "Graduated"
+          statusc = data.status;
         }
         status = statusc;
       }else{
@@ -298,7 +300,6 @@
   <div class="modal-box">
     <div class="absolute right-5 p-0 w-10 flex items-center btn" onclick="my_modal_1.close()"><box-icon name='x' type='solid' size='sm'></box-icon></div>
           <form class="card-body flex flex-col gap-3">
-            
             <h3>Change Login Credentials</h3>
             <label class="label">
               <span class="label-text">Old Password:</span>
@@ -306,24 +307,18 @@
             <div class="form-control">
               <input bind:value={oldpass} type="password" placeholder="Current Password" class="input input-bordered"  /> 
             </div>
-            
             <div class="form-control">
               <label class="label">
                 <span class="label-text">New Password:</span>
               </label>
-              <input bind:value={pass} type="password" placeholder="New Password" class="input input-bordered"  />
-              
-              
+              <input bind:value={pass} type="password" placeholder="New Password" class="input input-bordered"  />   
             </div> 
             <div class="form-control">
               <label class="label">
                 <span class="label-text">Confirm New Password:</span>
               </label>
               <input bind:value={cpass} type="password" placeholder="Confirm New Password" class="input input-bordered"  />
-              
-              
             </div>
-            
             <div class="form-control mt-2">
               <button class="btn bg-blue-900 text-white hover:text-black text-xl" on:click={handleOldPass}>
                 {#if authenticating}

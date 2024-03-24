@@ -169,13 +169,13 @@
                 </label>
                 <label class="label cursor-pointer">
                   <span class="label-text">Not Graduate (Unfinished Degree)</span> 
-                  <input type="radio" name="radio-10" class="radio checked:bg-blue-500" required checked value=0 bind:group={status}/>
+                  <input type="radio" name="radio-10" class="radio checked:bg-blue-500" required checked value="Not Graduated" bind:group={status}/>
                 </label>
               </div>
               <div class="form-control">
                 <label class="label cursor-pointer">
                   <span class="label-text">Graduated (Finished Degree)</span> 
-                  <input type="radio" name="radio-10" class="radio checked:bg-green-500" required checked value=1 bind:group={status} />
+                  <input type="radio" name="radio-10" class="radio checked:bg-green-500" required checked value="Graduated" bind:group={status} />
                 </label>
               </div>
        
