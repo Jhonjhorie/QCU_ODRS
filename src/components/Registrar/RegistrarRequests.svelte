@@ -5,7 +5,7 @@
     import { goto } from "$app/navigation";
 
     function gotoInfo() {
-		goto('/Registrar/RegistrarRequestInfo');
+		goto('/Registrar/RequestInfo');
 	}
 </script>
 <style>

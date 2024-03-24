@@ -4,7 +4,6 @@
     import SectionWrapper from "../SectionWrapper.svelte";
     import Header from "../Header.svelte";
   import { page } from "$app/stores";
-  import DatePicker from "./schedpicker/DatePicker.svelte";
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
     
@@ -22,20 +21,21 @@
         req = "Authentication"
     }
 
-    let currentDate = new Date();
-
-    const onDateChange = d => {
-    currentDate = d.detail;
-    };
-    let yearr = "Select Year";
-    let semm = "Select Semester";
+    let studNum = "Loading...";
+    let fullName = "Loading..."
+    let reqValue = "Select";
     let certt = "Select Certification"
-    let sched;
-    const Year = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
-    const Sem = ["1st Sem", "2nd Sem"]
+    
+    const Year = ["1st Year, 1st Sem","1st Year, 2nd Sem", "2nd Year, 1st Sem", "2nd Year, 2nd Sem", "3rd Year, 1st Sem","3rd Year, 2nd Sem", "4th Year, 1st Sem", "4th Year, 2nd Sem", "Irregular"];
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
-    const calendar = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17 1c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-12 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2zm13 5v10h-16v-10h16zm2-6h-2v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-8v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-2v18h20v-18zm4 3v19h-22v-2h20v-17h2zm-17 7h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`;
+    const today = new Date().toISOString().split("T")[0];
+    let sched;
+    const datearr = String(today).split('-');
+    const month = parseInt(datearr[1]) + 1;
 
+    let maxx = '';
+    if(month < 10) maxx = datearr[0] + '-' + '0' + month + '-' + datearr[2]
+    else maxx = datearr[0] + '-' + month + '-' + datearr[2]
     
 
 </script>
@@ -55,13 +55,13 @@
                     <label class="label">
                         <span class="label-text">Student ID:</span>
                       </label>
-                  <input type="number" placeholder="Student ID" class="input input-bordered"  />
+                  <input type="number" bind:value={studNum} placeholder="Student ID" class="input input-bordered"  />
                 </div>
                 <div class="form-control mt-2">
                     <label class="label">
                         <span class="label-text">Full Name:</span>
                       </label>
-                    <input type="text" placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered"  />
+                    <input type="text" bind:value={fullName} placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered"  />
                 </div>
 
                 {#if req == "Graduated"}
@@ -69,7 +69,7 @@
                         <label class="label">
                             <span class="label-text">Year Graduated:</span>
                         </label>
-                        <input type="number" placeholder="ex: 2020" class="input input-bordered"  />
+                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered"  />
                     </div>
                   
                 {/if}
@@ -78,42 +78,27 @@
                         <label class="label">
                             <span class="label-text">Last Academic Year Attended:</span>
                         </label>
-                        <input type="number" placeholder="ex: 2020" class="input input-bordered"  />
+                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered"  />
                     </div>
                  
                 {/if}
                 {#if req == "YearSem"}
-                <div class="form-control mt-2 flex flex-row w-full gap-2">
-                    <div class="dropdown dropdown-top w-1/2">
+                <div class="form-control mt-2 flex">
+                    <div class="dropdown dropdown-top">
                       
                       <!-- svelte-ignore a11y-label-has-associated-control -->
                       <label class="label">
-                        <span class="label-text">Year: </span>
+                        <span class="label-text">Year and Sem: </span>
                       </label>
-                      <div tabindex="0" role="button" class="btn w-full">{yearr}</div>
+                      <div tabindex="0" role="button" class="btn w-full">{reqValue}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
                         {#each Year as item}
-                        <li><a on:click={() => yearr = item}>{item}</a></li>
+                        <li><a on:click={() => reqValue = item}>{item}</a></li>
                         {/each}
                       </ul>
                     </div>
-                    <div class="dropdown dropdown-top w-1/2">
-                      
-                        <!-- svelte-ignore a11y-label-has-associated-control -->
-                        <label class="label">
-                          <span class="label-text">Semester: </span>
-                        </label>
-                        <div tabindex="0" role="button" class="btn w-full">{semm}</div>
-                     
-                        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
-                          {#each Sem as item}
-                          <li><a on:click={() => semm = item}>{item}</a></li>
-                          {/each}
-                        </ul>
-                      </div>
                 </div>
                 
                 {/if}
@@ -125,12 +110,12 @@
                       <label class="label">
                         <span class="label-text">Certification: </span>
                       </label>
-                      <div tabindex="0" role="button" class="btn w-full">{certt}</div>
+                      <div tabindex="0" role="button" class="btn w-full">{reqValue}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
                         {#each Cert as item}
-                        <li><a on:click={() => certt = item}>{item}</a></li>
+                        <li><a on:click={() => reqValue = item}>{item}</a></li>
                         {/each}
                       </ul>
                     </div>
@@ -143,17 +128,9 @@
                   <label class="label">
                     <span class="label-text">Date to Claim: </span>
                   </label>
-                  <div class="input bordered w-3/4  items-center flex">
-                  <DatePicker
-                    on:datechange={onDateChange}
-                    selected={currentDate}
-                    isAllowed={date => {
-                      const millisecs = date.getTime();
-                      if (millisecs + 25 * 3600 * 1000 < Date.now()) return false;
-                      if (millisecs > Date.now() + 3600 * 24 * 45 * 1000) return false;
-                      return true;
-                    }} />
-                    </div>
+         
+                    <input type="date" min={today} class="input bordered w-3/4  items-center flex" max={maxx} bind:value={sched}/>
+                    
                 </div>
                 <div class="form-control my-5 items-end">
                   <button class="btn bg-blue-900 w-60 text-white hover:text-black text-xl glass">Submit</button>
