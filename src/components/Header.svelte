@@ -41,6 +41,7 @@
         <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box">
           <li><a on:click={gotoDashb}><box-icon name='dashboard' type='solid' ></box-icon>Dashboard</a></li>
           <li><a on:click={gotoDashR}><box-icon name='notepad'></box-icon>Document Request</a></li>
+          <li><a on:click={gotoDashR}><box-icon name='help-circle'></box-icon>Tutorial</a></li>
         </ul>
       </div>
       <div class="dropdown dropdown-bottom dropdown-end">

@@ -5,6 +5,7 @@
     import Header from "../Header.svelte";
   import { goto } from "$app/navigation";
   import StudDbBtn from "./StudDbBtn.svelte";
+  import StudToBtn from "./StudToBtn.svelte";
 
     let docs = [{id:"Diploma", name:"TOR / Diploma", req:"Graduated and Complete Address"},{id:"TOR(Undergrad)", name:"TOR (Under Graduate)", req:"Last Academic Year Attended and Complete Address"},{id:"GradeSlip", name:"Grade Slip", req:"Academic Year and Semester"},{id:"Certification", name:"Other Certifications", req:"Office requesting the document (e.g., DSWD, CHED)"},{id:"Authentication",name:"Authentication / Certified True Copy", req:"Clear copy of the Document and bring the Original Copy upon Claiming"}]
 
@@ -13,6 +14,7 @@
 <SectionWrapper>
     <Header />
     <StudDbBtn />
+    <StudToBtn />
     <main class="flex flex-col
     items-center mt-5">
         <div class="card w-3/4 h-28 shadow-xl image-full">

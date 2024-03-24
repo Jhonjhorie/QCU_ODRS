@@ -6,6 +6,7 @@
 
   import StudRfBtn from "./StudRFBtn.svelte";
   import { deleteDoc } from "firebase/firestore";
+  import StudToBtn from "./StudToBtn.svelte";
 
 
     let docsStatus = [{tnum: 109098284, name:"TOR / Diploma", status:0},
@@ -41,6 +42,7 @@
 <SectionWrapper>
     <Header />  
    <StudRfBtn />
+   <StudToBtn />
     <main class="flex flex-col
     items-center mt-5">
         <div class="card card-compact w-3/4 shadow-xl items-center bg-white">
