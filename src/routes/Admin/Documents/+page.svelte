@@ -1,8 +1,9 @@
 <script>
+// @ts-nocheck
   import PHeader from '../../../components/Admin/pHeader2.svelte';
   import Psidebar from '../../../components/Admin/psidebar.svelte';
   import { db } from "$lib/firebase/firebase";
-  import { collection, getDocs, deleteDoc, doc }  from "firebase/firestore"; 
+  import { collection, getDocs, deleteDoc, doc, updateDoc }  from "firebase/firestore"; 
   import { onMount } from 'svelte';
   import { goto } from "$app/navigation";
 
@@ -10,16 +11,27 @@
               goto('/Admin/AddDocs')
     }
     function gotoEdit (){
-              goto('/Admin/Edit')
+              goto('/Admin/Edit') 
     }
 
+    //local variables
     /**
    * @type {any[]}
    */
     let documents = [];
     let deleting = false;
+    let updating = false;
     let documentToDelete = null;
+    /**
+   * @type {{ id: any; doc_ID: any; price: any; description: any; requirements: any; } | null}
+   */
+    let documentToUpdate = null;
+    let showModal = false;
+    let authenticating = false;
+    let updated = false;
+    
 
+    //display data ahahah
     const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, 'document'));
     documents = querySnapshot.docs.map(doc => ({
@@ -27,6 +39,57 @@
       ...doc.data()
     }));
     };
+    
+    //onclick edit ahahah
+    const editDocument = (/** 
+    @type {{ id: any; doc_ID: any; price: any; description: any; requirements: any; } | null}
+    */ document) => {
+    documentToUpdate = document; 
+    showModal = true; 
+   };
+
+    //onclick update ahahah
+    // @ts-ignore
+    const updateDocument = async (id, newData) => {
+    updating = true;
+    if(authenticating){
+      return;
+    }
+    authenticating = true; 
+    
+    try {
+        await updateDoc(doc(db, 'document', id), newData);
+        documents = documents.map(document => {
+    
+          if (document.id === id) {
+                return {
+                    ...document,
+                    ...newData
+                };
+            }
+            else {
+                return document;
+            }
+           
+
+        });
+        console.log('Document Updated!');
+        showModal = false;
+        updated = true;
+        
+    } catch (error) {
+        console.error('Error updating document:', error);
+    } finally {
+        updating = false;
+        authenticating = false;
+    }
+    setTimeout(() => {
+          updated = false;
+        }, 3000);
+
+       
+};
+
 
     // @ts-ignore
     const deleteDocument = async (id) => {
@@ -45,8 +108,8 @@
 
 
 
-
     onMount(fetchData);
+
 </script>
 <style>
     td {
@@ -64,12 +127,21 @@
   
     <div class="ml-[300px] p-5 ">
       <h1 class="pl-0 text-[30px] text-black font-bold">MANAGE DOCUMENT</h1>
-
-        <div class="pt-2 pb-3">
-          <button on:click={gotoAdds} class="btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200">ADD DOCUMENT</button>
+      
+        <div class="flex w-[100%] ">
+          <div class="pt-2 pb-3">
+            <button on:click={gotoAdds} class="btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200">ADD DOCUMENT</button>
+          </div>
+          {#if updated}
+          <div class="absolute w-[30%] right-5 ">
+            <div class="w-[100%] bg-green-600 rounded-md flex items-center p-2">
+              <box-icon name='check-circle' class="w-10 h-10 ml-2 fill-white bg-green-900 rounded-full  "></box-icon>
+              <span class="text-slate-100 text-[17px] font-semibold pl-3"> Document Updated!</span>
+            </div>
+          </div>
+          {/if}
+      
         </div>
-
-     
         <div class="w-[100%] h-[65vh] bg-slate-100 shadow-md rounded-md ">
           <div class="overflow-x-auto">
             <table class="table">
@@ -88,14 +160,74 @@
                   <td>{document.doc_ID}</td>
                   <td>{document.requirements}</td>
                   <td>{document.price}</td>
-                  <td><button class="hover:text-slate-100 hover:bg-green-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button>
+
+                  <td><button on:click={() => editDocument(document)} class="hover:text-slate-100 hover:bg-green-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button>
+                    {#if showModal && documentToUpdate.id === document.id}
+                      <dialog id="modal" class="modal" open>
+                        <div class="modal-box bg-slate-200">
+                          <h3 class="font-bold text-lg text-center w-full">EDIT DOCUMENT INFORMATION</h3>
+                          <div class="">
+                            <div class="">
+                              <label class="flex w-full max-w-xs pt-3">
+                                <div class="label">
+                                <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Title :</span>
+                                </div>
+                                <input bind:value={documentToUpdate.doc_ID}  type="text" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                              </label>
+                              <label class="flex w-full max-w-xs pt-3">
+                                <div class="label">
+                                <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Price :</span>
+                                </div>
+                                <input bind:value={documentToUpdate.price}  type="number" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                              </label>
+                            </div>
+
+                            <div class="">
+                              <label class="flex w-full max-w-xs pt-3">
+                                <div class="label">
+                                <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Description :</span>
+                                </div>
+                                <textarea bind:value={documentToUpdate.description} class="textarea textarea-bordered bg-slate-300   border-slate-400 text-black" placeholder=""></textarea>  
+                              </label>
+                              <label class="flex w-full max-w-xs pt-3">
+                                <div class="label">
+                                <span class="label-text text-black font-medium text-[15px] w-[8vw]  ">Requirements :</span>
+                                </div>
+                                <textarea  bind:value={documentToUpdate.requirements} class="textarea textarea-bordered bg-slate-300 h-[10vh] w-[18vw] border-slate-400 text-black" placeholder=""></textarea>  
+                              </label>
+                            </div>
+                          </div>
+                          <div class=" float-right mt-5 ">
+                          <button on:click={updateDocument(document.id, documentToUpdate)} class="w-[100px] h-[40px]  bg-slate-700 hover:text-slate-100 hover:bg-blue-600 p-1 px-2 rounded-sm duration-200 shadow-md ">
+                          {#if authenticating}
+                            <span class="loading loading-dots loading-sm bg-slate-300 w-[18px]  "></span>
+                          {:else}
+                            Update
+                          {/if}   
+                          </button>
+                          <button on:click={() => showModal = false} class="w-[100px]  bg-slate-700 hover:text-slate-100 hover:bg-slate-500 p-1 px-2 rounded-sm duration-200 shadow-md h-[40px] ">Cancel</button>
+                          </div>
+                        </div>
+                      </dialog>
+                    {/if}
                     {#if deleting}
                       <span>Loading...</span>
                      {:else}
-                    <button on:click={() => deleteDocument(document.id)} class="hover:text-slate-100 hover:bg-red-600 p-1 px-2 rounded-sm duration-200 shadow-md ">
+                     <button 
+                     on:click={() => {
+                       const confirmDelete = confirm("Are you sure you want to delete this document?");
+                       if (confirmDelete) {
+                         deleteDocument(document.id);
+                         showModal = false; // Close the modal after deletion
+                       }
+                     }} 
+                     class="hover:text-slate-100 hover:bg-red-600 p-1 px-2 rounded-sm duration-200 shadow-md "
+                    >
                       Delete
                     </button>
                      {/if}
+                   
+                      
                   </td>
                 </tr>
               {/each}
