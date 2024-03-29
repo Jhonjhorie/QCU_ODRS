@@ -1,9 +1,10 @@
 <script>
   import PHeader from '../../../components/Admin/pHeader2.svelte';
   import Psidebar from '../../../components/Admin/psidebar.svelte';
-
-
-    import { goto } from "$app/navigation";
+  import { db } from "$lib/firebase/firebase";
+  import { collection, getDocs, deleteDoc, doc }  from "firebase/firestore"; 
+  import { onMount } from 'svelte';
+  import { goto } from "$app/navigation";
 
     function gotoAdds (){
               goto('/Admin/AddDocs')
@@ -11,6 +12,41 @@
     function gotoEdit (){
               goto('/Admin/Edit')
     }
+
+    /**
+   * @type {any[]}
+   */
+    let documents = [];
+    let deleting = false;
+    let documentToDelete = null;
+
+    const fetchData = async () => {
+    const querySnapshot = await getDocs(collection(db, 'document'));
+    documents = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    };
+
+    // @ts-ignore
+    const deleteDocument = async (id) => {
+    deleting = true;
+    try {
+      await deleteDoc(doc(db, 'document', id));
+      documents = documents.filter(document => document.id !== id);
+      console.log('Document Deleted!');
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    } finally {
+      deleting = false; 
+      documentToDelete = null;
+    }
+   };
+
+
+
+
+    onMount(fetchData);
 </script>
 <style>
     td {
@@ -43,40 +79,26 @@
                 <th class="text-white font-light">Documents</th>
                 <th class="text-white font-light">Requirement</th>
                 <th class="text-white font-light">Price</th>
-                <th class="text-white font-light">Manage</th>
+                <th class="text-white font-light w-52  ">Manage</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Transcript of Records (TOR)</td>
-                <td>Year Graduated and complete address</td>
-                <td>310</td>
-                <td><button on:click={gotoEdit} class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
-              </tr>
-              <tr>
-                <td>Diploma</td>
-                <td>Year Graduated and complete address</td>
-                <td>310</td>
-                <td><button on:click={gotoEdit} class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
-              </tr>
-              <tr>
-                <td>Transcript of Records (TOR) - Undergraduate</td>
-                <td>Last Academic Year Attended and complete address</td>
-                <td>110</td>
-                <td><button  class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
-              </tr>
-              <tr>
-                <td>Grade Slip</td>
-                <td>Academic Year and Semester</td>
-                <td>310</td>
-                <td><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button></td>
-              </tr>
-              <tr>
-                <td>Authentication / Certified True Copy</td>
-                <td>Send a clear copy of the document and bring the Original Copy upon claiming</td>
-                <td>410</td>
-                <td><button class="hover:text-slate-100 hover:bg-slate-600 p-1 px-2 rounded-sm duration-200 shadow-sm  ">Edit</button></td>
-              </tr>
+              {#each documents as document}
+                <tr>
+                  <td>{document.doc_ID}</td>
+                  <td>{document.requirements}</td>
+                  <td>{document.price}</td>
+                  <td><button class="hover:text-slate-100 hover:bg-green-600 p-1 px-2 rounded-sm duration-200 shadow-md ">Edit</button>
+                    {#if deleting}
+                      <span>Loading...</span>
+                     {:else}
+                    <button on:click={() => deleteDocument(document.id)} class="hover:text-slate-100 hover:bg-red-600 p-1 px-2 rounded-sm duration-200 shadow-md ">
+                      Delete
+                    </button>
+                     {/if}
+                  </td>
+                </tr>
+              {/each}
             </tbody>
           </table>
         </div>

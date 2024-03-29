@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
    
     import PHeader from '../../../components/Admin/pHeader2.svelte';
     import Psidebar from '../../../components/Admin/psidebar.svelte';
@@ -14,93 +16,6 @@
               goto('/Admin/Accedit/editadmin')
     }
 
-    //View
-    let email = "loading...";
-    let fn = "loading...";
-    let pass = "hidden"
-    //Update
-    let submit = "UPDATE";
-    let isSubmitting = false; 
-    let newPassword = "";
-    let newFullName = "";
-    let oldPassword = "";
-    let oldPasswordError = "";
-
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    // @ts-ignore
-    onMount(async () => {
-        if (user) {
-            const docRef = doc(db, "user", user.uid);
-            const snapshot = await getDoc(docRef);
-            if (snapshot.exists()) {
-                const data = snapshot.data();
-                email = data.email;
-                fn = data.fullname;
-            }
-        }
-    });
-
-    async function updateUserPassword() {
-        try {
-          // @ts-ignore
-          const credential = EmailAuthProvider.credential(user.email, oldPassword);
-            // @ts-ignore
-            await reauthenticateWithCredential(user, credential);
-          // Tingen sa console kong may nagbabago pag wala bat kaya?
-          if (!newFullName.trim() && !newPassword.trim()) {
-                console.error("Nothing to update");
-                return;
-            }
-
-            isSubmitting = true;
-            if (newFullName) {
-                // @ts-ignore
-                const docRef = doc(db, "user", user.uid);
-                await updateDoc(docRef, {
-                    fullname: newFullName
-                });
-                console.log("Full name updated successfully!");
-            }
-            if (newPassword) {
-                if (!newPassword.trim()) {
-                    console.error("New password cannot be empty");
-                    return;
-                }
-
-                // @ts-ignore
-                await updatePassword(user, newPassword);
-                console.log("Password updated successfully!");
-            }
-
-            isSubmitting = false;
-            newFullName = "";
-            newPassword = "";
-            oldPassword = "";
-
-
-            const modal = document.getElementById("my_modal_3");
-            // @ts-ignore
-            modal.close();
-        
-           
-        } catch (error) {
-            console.error("Error updating password: ", error);
-            isSubmitting = false; 
-            // @ts-ignore
-            if (error.code === "auth/wrong-password") {
-                oldPasswordError = "An error occurred. Please try again later.";
-            } else {
-              oldPasswordError = "Incorrect old password";
-            }
-            setTimeout(() => {
-                oldPasswordError = "";
-            }, 3000);
-        }
-        
-        
-    }
 
 </script>
 <style>
@@ -124,8 +39,12 @@
     <div class="ml-[300px] p-5 h-[70vh] ">
         <h1 class="pl-0 text-[30px] text-black font-bold">ADMIN ACCOUNT</h1>
             <div class="  w-[100%] ">
-                <div class=" h-[64vh] w-[30vw] bg-slate-100 mx-auto mt-10 rounded-md shadow-xl ">
-                  <box-icon on:click={gotoEditadmin} class="float-right top-0 m-2 cursor-pointer hover:bg-slate-300  hover:rounded-sm edit hover:fill-sky-700   " name='share'></box-icon>
+
+                <!-- Alert if success -->
+        
+              
+                <div class=" h-[64vh] w-[30vw] bg-slate-100 mx-auto mt-10 rounded-md shadow-xl z-10">
+                 
                  
                   <!--MODAL-->
                   <button class=" float-right top-0 p-2 cursor-pointer  hover:rounded-sm edit hover:fill-primary" onclick="my_modal_3.showModal()"><box-icon type='solid' name='edit'></box-icon></button>
@@ -140,19 +59,19 @@
                           <div class="label">
                             <span class="label-text text-black text-[15px] font-medium ">New Fullname:</span>
                           </div>
-                          <input bind:value={newFullName} type="text" placeholder="type new fullname (optional)"  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" required />
+                          <input type="text" placeholder="type new fullname (optional)"  class=" text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" required />
                         </label>
                         <label class="form-control w-full max-w-xs ">
                           <div class="label">
                             <span class="label-text text-black text-[15px] font-medium  ">Old Password:</span>
                           </div>
-                          <input bind:value={oldPassword} type="password" placeholder="type old password (required)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
+                          <input  type="password" placeholder="type old password (required)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
                         </label>  
                         <label class="form-control w-full max-w-xs ">
                           <div class="label">
                             <span class="label-text text-black text-[15px] font-medium  ">New Password:</span>
                           </div>
-                          <input bind:value={newPassword} type="password" placeholder="type new password (optional)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
+                          <input  type="password" placeholder="type new password (optional)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
                         </label>   
                          
                         <div class="label">
@@ -160,7 +79,7 @@
                         </div>
                        
                           
-                          <button on:click={updateUserPassword} class="h-12 rounded-md w-[93%] bg-slate-900 hover:bg-slate-800 text-slate-200">
+                          <button  class="h-12 rounded-md w-[93%] bg-slate-900 hover:bg-slate-800 text-slate-200">
                             {#if isSubmitting}
                             <span class="loading loading-dots loading-sm bg-slate-300 w-[18px] "></span>
                         {:else}
@@ -177,7 +96,7 @@
                   </dialog>
                   <!--MODAL-->
 
-                    <div class="pt-7 pl-16 ">
+                    <div class="pt-7 pl-[10%]  ">
                         <img src="/cute.jpg" class=" w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto shadow-xl "  alt="pao" />
                     </div>
                     
@@ -188,21 +107,21 @@
                               <span class="label-text text-black text-[15px] font-medium ">Full name:</span>
                             </div>
                             <div ></div>
-                            <input bind:value={fn} type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" required />
+                            <input  type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" required />
                           </label>
             
                           <label class="form-control w-full max-w-xs pt-4 mx-auto">
                             <div class="label">
                               <span class="label-text text-black text-[15px] font-medium">Email:</span>
                             </div>
-                            <input bind:value={email}  type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b] " />
+                            <input  type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b] " />
                           </label>
 
                           <label class="form-control w-full max-w-xs  pt-4  mx-auto">
                             <div class="label">
                               <span class="label-text text-black text-[15px] font-medium ">Password: <span class="text-slate-400 font-medium text-[12px] ">(hidden)</span> </span>
                             </div>
-                            <input disabled bind:value={pass} type="password" placeholder="newpass"  class=" input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" />
+                            <input disabled  type="password" placeholder="newpass"  class=" input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" />
                           </label>      
                         </div>
                        
@@ -211,7 +130,12 @@
                 </div>
 
             </div>
-  
+            {#if updateSuccess} 
+            <div role="alert" class="alert alert-success w-[50%] mx-auto mt-3 z-20 " >
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>Account updated successfully!</span>
+            </div>
+            {/if}
         
     </div>
     

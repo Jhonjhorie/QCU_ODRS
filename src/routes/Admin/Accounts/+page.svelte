@@ -1,33 +1,33 @@
 <script>
+// @ts-nocheck
+
   import PHeader from '../../../components/Admin/pHeader2.svelte';
   import Psidebar from '../../../components/Admin/psidebar.svelte';
   import PBoxesaccounts from '../../../components/Admin/pBoxesaccounts.svelte';
+  import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import { db } from "$lib/firebase/firebase";
   import { collection, getDocs } from "firebase/firestore";
-  import { goto } from '$app/navigation';
+  import { setContext } from 'svelte';
 
-  
+
+
   function gotoDetails (){
               goto('/Admin/Detailsaccount')
     }
-    let selectedUser = [];
+  
+// Variable
+    /**0
+     * @type {any[]}
+     */
+     let data = [];
 
-  // Variable
-  /**
-   * @type {any[]}
-   */
-  let data = [];
-
-// Fetch data from Firestore collection
   const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, 'registrar'));
     data = querySnapshot.docs.map(doc => doc.data());
   };
 
   onMount(fetchData);
-
-  
 
 </script>
 
@@ -53,14 +53,14 @@
               <tr>
              
                 <th class="text-white text-[15px]">FULL NAME</th>
-                <th class="text-white text-[15px]">POSITION</th>
-                <th class="text-white text-[15px]">ID</th>
+                <th class="text-white text-[15px]">DEPARTMENT</th>
+                <th class="text-white text-[15px]">EMAIL</th>
                 <th class="text-white text-[15px]">MANAGE</th>
               </tr>
             </thead>
             <tbody> 
               <!-- row 1 -->
-              {#each data as item}
+              {#each data as registrar}
               <tr>
               
                 <td>
@@ -70,30 +70,31 @@
                         <img src="/ICON.png" alt=""/>
                       </div>
                     </div>
+                   
+                    <div>   
+                      
+                      <div class="text font-bold text-black">{registrar.fullname}</div>
                     
-                    <div>
-                     
-                      <div class="text font-bold text-black">{item.fname}</div>
                       <div class="text text-sm opacity-50 text-black font-bold">QCU</div>
                     </div>
                   </div>
                 </td>
                 <td>
-                  
-                  <span class="badge badge-ghost badge-sm h-7 ">{item.dept}</span>
+                
+                  <span class="badge badge-ghost badge-sm h-7 ">{registrar.department_name}</span>
+            
                 </td>
-                <td class="text-black">{item.uid}</td>
+                
+                <td class="text-black">{registrar.email}</td>
+              
                 <th>
-                  <button on:click={() => selectedUser = item} on:click={gotoDetails} class="text-black btn btn-ghost btn-xs hover:bg-[#000450] hover:text-teal-100">DETAILS</button>
+                 <button on:click={() => gotoDetails(registrar)} class="text-black btn btn-ghost btn-xs hover:bg-[#000450] hover:text-teal-100">DETAILS</button>
                 </th>
               </tr>
-              <!-- row 2 -->
-              
+     
               {/each}
             </tbody>
-            <!-- foot -->
-           
-            
+            <!-- foot -->     
           </table>
         </div>  
       </div>  

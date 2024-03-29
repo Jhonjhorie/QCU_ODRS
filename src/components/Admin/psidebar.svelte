@@ -4,30 +4,29 @@
     import { authHandlers } from '../../store/store';
     import { getAuth } from "firebase/auth";
     // @ts-ignore
-    import { doc, getDoc, updateDoc } from 'firebase/firestore';
+    import { doc, getDoc } from 'firebase/firestore';
     import { db } from "$lib/firebase/firebase";
     //Show user data 
 
     // @ts-ignore
-    let fn = "...";
+    let fns = "...";
 
     const auth = getAuth();
     const user = auth.currentUser;
 
     // @ts-ignore
     if(user) {
-        const docRef = doc(db, "user", user.uid);
+        const docRef = doc(db, "user", "eE9jR4SfvXVZ01Wh0gkprf5ErWv1");
         getDoc(docRef).then((snapshot) => {
             let docSnap = snapshot;
             if (docSnap.exists()) {
                 const data = docSnap.data();
-                fn = data.fullname;
+                fns = data.fullname;
             }
         }).catch((error) => {
             console.error("Error getting document:", error);
         });
     }
-
 
 
 
@@ -58,16 +57,16 @@
 
 <div class=" h-full w-[300px] bg-white z-20 shadow-xl fixed " >
     <div class="pt-7">
-        <img src="/cute.jpg" on:click={gotoAdminEdit} class="cursor-pointer w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
+        <img src="/cute.jpg"  class="cursor-pointer w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
     </div>
        
     
     <h1 class="text-black font-semibold text-[25px] text-center pt-2" > ADMIN </h1>
     <div class="text-center">
-    {#if fn === "..."}
+    {#if fns === "..."}
         <span class="loading loading-dots loading-sm bg-blue-900 w-[18px] "></span>
     {:else}
-        <h1 class="text-slate-700 font-semibold text-[15px] text-center pb-2 pt-0">{fn}</h1>
+        <h1 class="text-slate-700 font-semibold text-[15px] text-center pb-2 pt-0">{fns}</h1>
     {/if}
     </div>
 

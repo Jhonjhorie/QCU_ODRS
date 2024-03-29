@@ -1,13 +1,52 @@
 <script>
-// @ts-nocheck
-
-
- import PHeader from '../../../components/Admin/pHeader2.svelte';
+    import PHeader from '../../../components/Admin/pHeader2.svelte';
     import Psidebar from '../../../components/Admin/psidebar.svelte';
+    import { collection, addDoc } from "firebase/firestore"; 
     import { goto } from '$app/navigation';
+    import { db } from "$lib/firebase/firebase";
 
-    function gotoDocuments (){
-                goto('/Admin/Documents')
+
+    let doc_ID= '';
+    let description = '';
+    let price = '';
+    let requirements = '';
+    let authenticating = false;
+ 
+    let doc_iderror = false;
+
+    function gotoDocuments() {
+        goto('/Admin/Documents');
+    }
+
+    async function addDocument() {
+        if(authenticating){
+        return;
+        }
+        authenticating = true; 
+
+        if (!doc_ID.trim() || !description.trim() || !requirements.trim()) {
+            console.log("One or more fields are empty!");
+                doc_iderror = true;
+                authenticating = false;
+                setTimeout(() => {
+                    doc_iderror = false;
+                }, 3000); 
+             return;
+        }
+
+
+        try {
+            const docRef = await addDoc(collection(db, 'document'), {
+                doc_ID,
+                description,
+                price,
+                requirements
+            });
+                console.log('Document written with ID: ', docRef.id);
+                goto('/Admin/Documents');
+            } catch (e) {
+                console.error('Error adding document: ', e);
+            } 
     }
 
 </script>
@@ -32,13 +71,14 @@
                         <div class="label">
                         <span class="label-text text-black font-medium text-[15px]">Title</span>
                         </div>
-                        <input type="text" placeholder="Type here" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                        <input required bind:value={doc_ID} type="text" placeholder="Type here" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
                     </label>
+                  
                     <label class="form-control w-full max-w-xs pt-5">
                         <div class="label">
                         <span class="label-text text-black font-medium text-[15px]">Description</span>
                         </div>
-                        <textarea class="textarea textarea-bordered bg-slate-300 w-[18vw] border-slate-400 text-black" placeholder="Bio"></textarea>  
+                        <textarea bind:value={description} class="textarea textarea-bordered bg-slate-300 w-[18vw] border-slate-400 text-black" placeholder="Bio"></textarea>  
                     </label>
                     </div>
 
@@ -47,13 +87,13 @@
                             <div class="label">
                             <span class="label-text text-black font-medium text-[15px]">Price</span>
                             </div>
-                            <input type="number" placeholder="Type here" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                            <input bind:value={price} type="number" placeholder="Type here" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
                         </label>
                         <label class="form-control w-full max-w-xs pt-5">
                             <div class="label">
                             <span class="label-text text-black font-medium text-[15px]">Requirements</span>
                             </div>
-                            <textarea class="textarea textarea-bordered bg-slate-300 h-[10vh] w-[18vw] border-slate-400 text-black" placeholder="Bio"></textarea>  
+                            <textarea  bind:value={requirements} class="textarea textarea-bordered bg-slate-300 h-[10vh] w-[18vw] border-slate-400 text-black" placeholder="Bio"></textarea>  
                         </label>
                     
                     </div>
@@ -61,23 +101,18 @@
                 <div class="pt-5 pr-[75px] p-10 ">
                     <div class="float-right ">
                         <button  on:click={gotoDocuments} class="h-10 rounded-md w-[15vh] bg-slate-900 hover:bg-slate-800 text-slate-200">BACK</button>
-                        <button  onclick="my_modal_1.showModal()" class="ml-4 h-10 rounded-md w-[15vh] bg-slate-900 hover:bg-slate-800 text-slate-200">SUBMIT</button>
-                    
-                        <dialog id="my_modal_1" class="modal">
-                            <div class="modal-box">
-                            <h3 class="font-bold text-lg">ADD</h3>
-                            <p class="py-4">Are you sure to add this document?</p>
-                            <div class="modal-action">
-                                <form method="dialog">
-                                <!-- if there is a button in form, it will close the modal -->
-                                <button on:click={gotoDocuments} class="btn hover:bg-green-700">YES</button>
-                                <button class="btn ">No</button>
-                                </form>
-                            </div>
-                            </div>
-                        </dialog>
+                        <button  on:click={addDocument}  class="ml-4 h-10 rounded-md w-[15vh] bg-slate-900 hover:bg-slate-800 text-slate-200">
+                          {#if authenticating}
+                            <span class="loading loading-dots loading-sm bg-slate-300 w-[18px] "></span>
+                          {:else}
+                            SUBMIT
+                          {/if} 
+                        </button>
                     </div>
                 </div>
+                {#if doc_iderror}
+              <div class="pl-5 shadow-md  shadow-[#ff656583] text-slate-100 text-[15px] font-bold bg-red-600 w-[94.5%] mt-2 p-2 rounded-md ">"Fields cannot be empty"</div>
+              {/if}
             </div>
         </div>
         

@@ -2,9 +2,37 @@
     import { goto } from "$app/navigation";
     import PHeader from '../../../components/Admin/pHeader2.svelte';
     import Psidebar from '../../../components/Admin/psidebar.svelte';
+    import { onMount } from 'svelte';
+    import { db } from '$lib/firebase/firebase';
+    import { doc, getDoc, updateDoc } from 'firebase/firestore';
+
       function gotoDocuments () {
                   goto('/Admin/Documents')
       }
+    
+
+    /**
+   * @type {string}
+   */
+     export let documents;
+
+    let documentData = {};
+
+    async function fetchDocument() {
+        const documentRef = doc(db, 'document', documents); 
+        const documentSnapshot = await getDoc(documentRef);
+        if (documentSnapshot.exists()) {
+            documentData = documentSnapshot.data();
+        }
+    }
+
+    onMount(fetchDocument);
+
+    async function updateDocument() {
+        const documentRef = doc(db, 'document', documents);
+        await updateDoc(documentRef, documentData);
+        goto('/Admin/Documents');
+    }
   </script>
   <style>
     ::placeholder{
@@ -30,7 +58,7 @@
                       <div class="label">
                       <span class="label-text text-black font-medium text-[15px]">Title</span>
                       </div>
-                      <input type="text" placeholder="Transcript of Records (TOR)" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                      <input bind:value={documentData.doc_ID}> type="text" placeholder="Transcript of Records (TOR)" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
                   </label>
                   <label class="form-control w-full max-w-xs pt-5">
                       <div class="label">
