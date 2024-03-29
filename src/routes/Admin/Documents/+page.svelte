@@ -218,7 +218,7 @@
                        const confirmDelete = confirm("Are you sure you want to delete this document?");
                        if (confirmDelete) {
                          deleteDocument(document.id);
-                         showModal = false; // Close the modal after deletion
+                         showModal = false; 
                        }
                      }} 
                      class="hover:text-slate-100 hover:bg-red-600 p-1 px-2 rounded-sm duration-200 shadow-md "
