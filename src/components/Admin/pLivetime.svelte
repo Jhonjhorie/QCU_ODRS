@@ -10,7 +10,8 @@
     let currentTime = new Date();
     let currentYear = new Date();
     let studentCount = "...";
-    let regisCount = 0;
+    let regisCount = "...";
+    let docusCount = "...";
   
     //CALL REAL TIME
     const updateTime = () => {
@@ -33,13 +34,16 @@
           try {
           const usersCollectionRef = collection(db, 'students');
           const regisCollectionRef = collection(db, 'registrar');
+          const docusCollectionRef = collection(db, 'document');
 
           const userquerySnapshot = await getDocs(usersCollectionRef);
           const regisquerySnapshot = await getDocs(regisCollectionRef);
+          const docusquerySnapshot = await getDocs(docusCollectionRef);
           
-          // @ts-ignore
-          studentCount = userquerySnapshot.size;
-          regisCount = regisquerySnapshot.size;
+         
+          studentCount = userquerySnapshot.size.toString();
+          regisCount = regisquerySnapshot.size.toString();        
+          docusCount = docusquerySnapshot.size.toString();
         } catch (error) {
           console.error('Error fetching user count:', error);
         }
@@ -66,11 +70,15 @@ onMount(fetchUserCount);
       {:else}
        <h1 class="text-[#101010c4] font-semibold text-[100px]">{studentCount}</h1>
       {/if}
-        
         <h2 class="text-black font-bold text-[20px] ">Total User</h2>
     </div>
+
     <div class="h-[200px] w-[300px] bg-slate-100 rounded-lg shadow-lg p-5"> 
-        <h1 class="text-[#101010c4] font-semibold text-[100px]">6</h1>
+      {#if docusCount === "..."}
+      <span class="loading loading-ring loading-lg w-[105px] bg-blue-900  "></span>
+      {:else}
+        <h1 class="text-[#101010c4] font-semibold text-[100px]">{docusCount}</h1>
+      {/if}  
         <h2 class="text-black font-bold text-[20px] ">Documents</h2>
     </div>
     <div class="h-[200px] w-[300px] bg-slate-100 rounded-lg shadow-lg p-5">

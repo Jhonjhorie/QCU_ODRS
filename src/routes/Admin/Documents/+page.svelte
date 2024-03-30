@@ -90,7 +90,7 @@
        
 };
 
-
+    //onclick delete ahahaha
     // @ts-ignore
     const deleteDocument = async (id) => {
     deleting = true;

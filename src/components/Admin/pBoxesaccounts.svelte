@@ -17,6 +17,7 @@
 
       let studentCount = 0;
       let regisCount = 0;
+      let docusCount = "...";
       
       //CALL USER COUNT
     const fetchUserCount = async () => {

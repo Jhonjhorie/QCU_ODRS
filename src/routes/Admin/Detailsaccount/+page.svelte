@@ -1,20 +1,56 @@
-<script>
+<script context="module">
     import { goto } from '$app/navigation';
     import PHeader from '../../../components/Admin/pHeader2.svelte';
     import Psidebar from '../../../components/Admin/psidebar.svelte';
     import PBoxesaccounts from '../../../components/Admin/pBoxesaccounts.svelte';
+  import { onMount } from 'svelte';
   
 
     function gotoAccs () {
               goto('/Admin/Accounts');
     }
 
-
-
-
+    // @ts-ignore
+    export async function load({ page }) {
+    const registrar = page.params.registrar;
+    return {
+      props: {
+        registrar
+      }
+    };
+  }
 
 
     
+</script>
+<script>
+  // Extract registrar data from props
+  /**
+   * @type {{ fullname: any; email: any; }}
+   */
+   export let registrar;
+
+  // Define variables to store edited values
+  /**
+   * @type {any}
+   */
+  let editedFullname;
+  /**
+   * @type {any}
+   */
+  let editedEmail;
+
+  // Initialize edited values on component mount
+  onMount(() => {
+    editedFullname = registrar.fullname;
+    editedEmail = registrar.email;
+  });
+
+  // Function to update edited values
+  function updateValues() {
+    registrar.fullname = editedFullname;
+    registrar.email = editedEmail;
+  }
 </script>
 <style>
     input::placeholder {
@@ -47,14 +83,14 @@
                     <div class="label">
                       <span class="label-text text-black text-[15px] font-medium ">Full name:</span>
                     </div>
-                    <input type="text"  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" />
+                    <input bind:value={editedFullname} type="text"  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" />
                   </label>
     
                   <label class="form-control w-full max-w-xs pt-4 ">
                     <div class="label">
-                      <span class="label-text text-black text-[15px] font-medium">Username:</span>
+                      <span class="label-text text-black text-[15px] font-medium">Email:</span>
                     </div>
-                    <input type="text"   class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b] " />
+                    <input type="text"   class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b] " bind:value={editedEmail}  />
                   </label>
     
                   
@@ -62,18 +98,7 @@
 
 
                 <div class="w-full  p-1">
-                    <label class="form-control w-full max-w-xs ">
-                        <div class="label">
-                          <span class="label-text text-black text-[15px] font-medium">Position:</span>
-                        </div>
-                        <input type="text" class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b] " />
-                      </label>
-                  <label class="form-control w-full max-w-xs pt-4 ">
-                    <div class="label">
-                      <span class="label-text text-black text-[15px] font-medium ">Pasword:</span>
-                    </div>
-                    <input type="password"  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" />
-                  </label>   
+                 
                  
                  
                   
