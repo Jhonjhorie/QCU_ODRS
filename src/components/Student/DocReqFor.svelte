@@ -9,6 +9,7 @@
   import { page } from "$app/stores";
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
+  import { goto } from "$app/navigation";
     
     const ReqDoc = $page.params.document;
     let req = "";
@@ -83,7 +84,7 @@
         student_Name: fullName,
         phone_num: phone,
         req_data: reqValue,
-        status: "Confirmation",
+        status: 0,
         date_Req: Timestamp.fromDate(new Date()),
         sched_Claim: sched
         });
@@ -92,6 +93,7 @@
         error = true;
       } finally {
         authenticating = false;
+        goto(`/Student/Dashboard`);
       }
     }
 </script>

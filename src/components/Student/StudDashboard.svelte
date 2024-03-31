@@ -3,19 +3,56 @@
 
     import SectionWrapper from "../SectionWrapper.svelte";
     import Header from "../Header.svelte";
-
+    import { doc, collection, query, where, getDocs, getDoc } from "firebase/firestore";
   import StudRfBtn from "./StudRFBtn.svelte";
-  import { deleteDoc } from "firebase/firestore";
   import StudToBtn from "./StudToBtn.svelte";
+  import { getAuth } from "firebase/auth";
+  import { db } from "$lib/firebase/firebase";
 
-
-    let docsStatus = [{tnum: 109098284, name:"TOR / Diploma", status:0},
-    {tnum: 219098284, name:"TOR / Diploma", status:0},{tnum: 119098284, name:"Grade Slip", status:1},
-    {tnum: 519098284, name:"Other Certifications", status:1},{tnum: 329098284, name:"Authentication", status:2}
-    ];
+  let docsRequests = [];
     let sortBy = {col: "id", ascending: true};
-
-   // @ts-ignore
+    // Check if there is a current user before accessing their UID
+const auth = getAuth();
+const user = auth.currentUser;
+let authenticating = true;
+async function fetchData() {
+  
+  if (user !== null) {
+    let stud_no = "";
+    const docRef = doc(db, "students", user.uid);
+    if (docRef !== null) {
+      try {
+        const snapshot = await getDoc(docRef);
+        let docSnap = snapshot;
+        if (docSnap.exists()) {
+          console.log('user exists doc');
+          const data = docSnap.data();
+          stud_no = data.stud_no;
+          const q = query(collection(db, "docRequests"), where("student_Num", "==", stud_no));
+          const querySnapshot = await getDocs(q);
+          console.log('data user exists doc');
+          docsRequests = querySnapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            tnum: doc.id,
+            name: data.doc_ID,
+            status: data.status
+          };
+        });
+        } else {
+          console.log('no doc ref');
+        }
+      } catch (error) {
+        console.error("Error getting document:", error);
+      } finally {
+        authenticating = false;
+      }
+    }
+  } else {
+    console.log("No authenticated user found");
+  }
+}
+fetchData();
      $: sort = (column) => {
 		
 		if (sortBy.col == column) {
@@ -34,7 +71,7 @@
 			? 1 * sortModifier 
 			: 0;
 		
-		docsStatus = docsStatus.sort(sort);
+    docsRequests  = docsRequests.sort(sort);
     }
     
 </script>
@@ -62,36 +99,48 @@
                       </thead>
                       <tbody>
                         <!-- row 1 -->
-                        {#each docsStatus as doc, index}
-                        <tr class="hover:bg-slate-200">
-                            <td class="font-bold">{index + 1}</td>
-                            <td>{doc.tnum}</td>
-                            <td class="font-bold">{doc.name}</td>
-                            <td>
-                            {#if doc.status == 2}
-                            <ul class="steps w-full">
-                                <li class="step step-success"></li>
-                                <li class="step step-success"></li>
-                                <li class="step step-success font-bold">Completed</li>
-                            </ul>
-                            {:else if doc.status == 1}
-                            <ul class="steps w-full">
-                                <li class="step step-warning"></li>
-                                <li class="step step-warning font-bold">Claiming</li>
-                                <li class="step"></li>
-                            </ul>
-                            {:else}
-                            <ul class="steps w-full">
-                                <li class="step step-info font-bold">Confirmation</li>
-                                <li class="step"></li>
-                                <li class="step"></li>
-                            </ul>
-                            {/if}
-                            </td>
-                        </tr>
-                        {/each}
+                        {#if !authenticating}
+                        {#if docsRequests != null}
+                          {#each docsRequests as doc, index}
+                          <tr class="hover:bg-slate-200">
+                              <td class="font-bold">{index + 1}</td>
+                              <td>{doc.tnum}</td>
+                              <td class="font-bold">{doc.name}</td>
+                              <td>
+                              {#if doc.status == 2}
+                              <ul class="steps w-full">
+                                  <li class="step step-success"></li>
+                                  <li class="step step-success"></li>
+                                  <li class="step step-success font-bold">Completed</li>
+                              </ul>
+                              {:else if doc.status == 1}
+                              <ul class="steps w-full">
+                                  <li class="step step-warning"></li>
+                                  <li class="step step-warning font-bold">Claiming</li>
+                                  <li class="step"></li>
+                              </ul>
+                              {:else}
+                              <ul class="steps w-full">
+                                  <li class="step step-info font-bold">Confirmation</li>
+                                  <li class="step"></li>
+                                  <li class="step"></li>
+                              </ul>
+                              {/if}
+                              </td>
+                          </tr>
+                          {/each}
+                        {:else}
+                        <center>No Document Requests</center>
+                        {/if}
+                        {/if}
                       </tbody>
+                      
                     </table>
+                    {#if authenticating}
+                    <div class="h-full flex justify-center items-center">
+                      <span class="h-14 w-10 loading loading-dots loading-md "></span>
+                    </div>
+                    {/if}
                   </div>
 
 
