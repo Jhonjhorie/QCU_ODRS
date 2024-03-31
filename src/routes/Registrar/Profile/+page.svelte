@@ -1,8 +1,75 @@
 <script>
-  // @ts-nocheck
-  import SectionWrapper from "../../../components/SectionWrapper.svelte";
+    // @ts-nocheck
+    import SectionWrapper from "../../../components/SectionWrapper.svelte";
   import Header from "../../../components/Registrar/RegistrarHeader.svelte";
   import Sidebar from "../../../components/Registrar/RegistrarSidebar.svelte";
+  
+  import { goto } from "$app/navigation";
+  import { authHandlers, authStore } from "../../../store/store";
+  import { getAuth } from "firebase/auth";
+  import { db } from "$lib/firebase/firebase";
+  import { doc, getDoc } from 'firebase/firestore';
+
+  import { onMount } from "svelte";
+  
+  function gotoDashboard() {
+  goto('/Registrar/Dashboard');
+  }
+  function gotoRequests() {
+    goto('/Registrar/Requests');
+  }
+  function gotoHistory() {
+    goto('/Registrar/History');
+  }
+
+  /**
+ * @type {import("@firebase/auth").User | null}
+ */
+  let user;
+  /**
+ * @type {import("@firebase/firestore").DocumentData | null}
+ */
+  let userData = null;
+  /**
+ * @type {any}
+ */
+  let dept;
+  /**
+ * @type {any}
+ */
+  let name;
+  let email;
+  const auth = getAuth();
+
+  onMount(async () => {
+    user = auth.currentUser;
+    
+    if (user) {
+      console.log('User exists:', user.uid, user.email);
+      const docRef = doc(db, "registrar", user.uid);
+
+      try {
+        const snapshot = await getDoc(docRef);
+        if (snapshot.exists()) {
+          console.log('Document exists');
+          const data = snapshot.data();
+          console.log('User Department:', data.Dept);
+          userData = data;
+          dept = data.department_name;
+          name = data.fullname;
+          email = data.email;
+        } else {
+          console.log('Document does not exist');
+        }
+      } catch (error) {
+        console.error("Error getting document:", error);
+      }
+    } else {
+      console.log('User not logged in');
+    }
+  });
+
+
 </script>
 
 <main class="flex flex-col">
@@ -34,8 +101,9 @@
                     </div>
                     <input
                       type="text"
-                      placeholder="Haewon Mahal"
+                      placeholder="Name"
                       class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]"
+                      value={name}
                       required
                     />
                   </label>
@@ -50,8 +118,9 @@
                     <input
                       disabled
                       type="text"
-                      placeholder="registrar@example.com"
-                      class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]"
+                      placeholder="Email"
+                      class="text-white bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]"
+                      value="{email}"
                     />
                   </label>
                 </div>
@@ -65,7 +134,7 @@
                     </div>
                     <input
                       type="password"
-                      placeholder="admin123"
+                      placeholder=""
                       class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]"
                     />
                   </label>
