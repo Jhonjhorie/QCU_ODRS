@@ -38,7 +38,7 @@
       <Sidebar />
 
       <div class="flex flex-col flex-1 mx-auto w-full">
-        <h1 class="p-3 text-[30px] text-black font-bold">REQUESTS</h1>
+        <h1 class="p-3 text-[30px] text-black font-bold">HISTORY</h1>
       
         <div class="h-[70vh] w-auto p-2 bg-slate-100 rounded-md shadow-lg">
           <div class="overflow-x-auto w-auto h-[67.5vh] bg-slate-200">

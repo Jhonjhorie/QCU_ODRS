@@ -1,17 +1,59 @@
 <script>
-
-
+// @ts-nocheck
   import Header from "../../../components/Registrar/RegistrarHeader.svelte";
   import { goto } from "$app/navigation";
   import SectionWrapper from "../../../components/SectionWrapper.svelte";
+  import { onMount } from "svelte";
+  import { db } from "$lib/firebase/firebase";
+  import { doc, getDoc, updateDoc } from 'firebase/firestore';
+
+  let toastMessage = "";
+
   function gotoRequests() {
     goto("/Registrar/Requests");
   }
+
   function gotoHistory() {
     goto("/Registrar/History");
   }
 
   let status = "select";
+  let requestId;
+  let requestDetails = {};
+
+  onMount(async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    requestId = urlParams.get('id');
+
+    try {
+      const docRef = doc(db, "docRequests", requestId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        requestDetails = docSnap.data();
+        status = requestDetails.status || "select";
+      } else {
+        console.log("No such document exists!");
+      }
+    } catch (error) {
+      console.error("Error fetching document:", error);
+    }
+  });
+
+  async function editStatus(newStatus) {
+    try {
+      const docRef = doc(db, "docRequests", requestId);
+      await updateDoc(docRef, { status: newStatus });
+      status = newStatus;
+      toastMessage = "Status updated successfully!";
+      setTimeout(() => {
+        toastMessage = "";
+        gotoRequests();
+      }, 3000); // Hide toast after 3 seconds and redirect
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  }
 </script>
 
 <main class="flex flex-col">
@@ -31,9 +73,10 @@
                 </div>
                 <input
                   type="text"
-                  placeholder="21-2017"
+                  placeholder="Loading..."
                   class="input input-bordered w-full max-w-xs"
                   disabled
+                  value={requestDetails.student_Num || ''}
                 />
               </label>
               <label class="form-control w-full max-w-xs">
@@ -42,9 +85,10 @@
                 </div>
                 <input
                   type="text"
-                  placeholder="Quiling, Jhon Jhorie A."
+                  placeholder="Loading..."
                   class="input input-bordered w-full max-w-xs text-gray-50"
                   disabled
+                  value={requestDetails.student_Name || ''}
                 />
               </label>
             </div>
@@ -52,13 +96,14 @@
             <div class="flex flex-row gap-20">
               <label class="form-control w-full max-w-xs">
                 <div class="label">
-                  <span class="label-text">Year Graduated</span>
+                  <span class="label-text">Year</span>
                 </div>
                 <input
                   type="text"
-                  placeholder="2025"
+                  placeholder="Loading..."
                   class="input input-bordered w-full max-w-xs"
                   disabled
+                  value={requestDetails.req_data || ''}
                 />
               </label>
               <label class="form-control w-full max-w-xs">
@@ -67,9 +112,10 @@
                 </div>
                 <input
                   type="text"
-                  placeholder="Diploma"
+                  placeholder="Loading..."
                   class="input input-bordered w-full max-w-xs text-gray-50"
                   disabled
+                  value={requestDetails.doc_ID || ''}
                 />
               </label>
             </div>
@@ -77,38 +123,18 @@
             <hr />
 
             <div class="flex flex-row gap-20">
-              <label class="form-control w-full max-w-xs">
-                <div class="label">
-                  <span class="label-text">Upload Document</span>
-                </div>
-                <input
-                  type="file"
-                  class="file-input file-input-bordered w-full max-w-xs"
-                />
-              </label>
+
 
               <!-- svelte-ignore a11y-label-has-associated-control -->
-              <label class="form-control w-full max-w-xs">
+              <label class="form-control w-full max-w-xs ">
                 <div class="label">
                   <span class="label-text">Select Status</span>
+                </div>       
+                <div class="flex flex-row gap-20">
+                  <button class="btn btn-success hover" on:click={() => editStatus("Complete")}>Mark as Complete</button>
+                  <button class="btn btn-warning hover" on:click={() => editStatus("Pending")}>Mark as Pending</button>
+                  <button class="btn btn-error hover" on:click={() => editStatus("Error")}>Mark as Error</button>
                 </div>
-                <details class="dropdown">
-                  <summary class="m-1 btn btn-wide">{status}</summary>
-                  <ul
-                    class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52"
-                  >
-                    <!-- svelte-ignore a11y-missing-attribute -->
-                    <li>
-                      <a on:click={() => (status = "Complete")}>Complete</a>
-                    </li>
-                    <!-- svelte-ignore a11y-missing-attribute -->
-                    <li>
-                      <a on:click={() => (status = "Pending")}>Pending</a>
-                    </li>
-                    <!-- svelte-ignore a11y-missing-attribute -->
-                    <li><a on:click={() => (status = "Error")}>Error</a></li>
-                  </ul>
-                </details>
               </label>
             </div>
 
@@ -116,6 +142,11 @@
               <button class="btn hover" on:click={gotoHistory}>Submit</button>
               <button class="btn hover" on:click={gotoRequests}>Cancel</button>
             </div>
+            {#if toastMessage}
+            <div class="fixed bottom-5 left-5 bg-green-500 text-white p-3 rounded">
+              {toastMessage}
+            </div>
+          {/if}
           </div>
         </div>
       </div>

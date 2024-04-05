@@ -15,8 +15,8 @@
 const auth = getAuth();
 const user = auth.currentUser;
 let authenticating = true;
+
 async function fetchData() {
-  
   if (user !== null) {
     let stud_no = "";
     const docRef = doc(db, "students", user.uid);
