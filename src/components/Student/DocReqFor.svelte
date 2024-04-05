@@ -11,20 +11,39 @@
   import StudDbBtn from "./StudDbBtn.svelte";
   import { goto } from "$app/navigation";
     
-    const ReqDoc = $page.params.document;
+
+    let ReqDoc = "";
     let req = "";
-    let ReqDocc = ReqDoc;
-    if(ReqDoc == "Diploma"){
-        req = "Graduated";
-    }else if(ReqDoc == "TOR(Undergrad)"){
-        req = "Undergrad"
-    }else if(ReqDoc == "GradeSlip"){
-        req = "YearSem"
-    }else if(ReqDoc == "Certification"){
-        req = "Certification"
-    }else if(ReqDoc == "Authentication"){
-        req = "Authentication"
+    let price = "";
+    let authenticating2 = true;
+    async function fetchData() {
+      authenticating2 = true; 
+      try {
+    const docRef2 = doc(db, "document", $page.params.document);
+    if(docRef2 !== null){
+      getDoc(docRef2)
+    .then((snapshot) => {
+      let docSnap = snapshot;
+      if (docSnap.exists()) {
+        console.log('document existt')
+        const data = docSnap.data();
+        ReqDoc = data.doc_ID,
+        req = data.reqData
+        price = data.price
+      }else{
+        console.log('no doc refasd')
+      }
+    })
+    .catch((error) => {
+      console.error("Error getting document:", error);
+    });
+    }} catch (error) {
+        console.error("Error getting documents", error);
+      } finally {
+        authenticating2 = false;
+      }
     }
+    fetchData();
 
     let studNum = "Loading...";
     let fullName = "Loading...";
@@ -32,7 +51,9 @@
     let reqValue = "Select One";
     let phone = "Loading...";
     let error = false;
+ 
     let authenticating = false;
+    let mop = "";
     
     const Year = ["1st Year, 1st Sem","1st Year, 2nd Sem", "2nd Year, 1st Sem", "2nd Year, 2nd Sem", "3rd Year, 1st Sem","3rd Year, 2nd Sem", "4th Year, 1st Sem", "4th Year, 2nd Sem", "Irregular"];
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
@@ -86,7 +107,9 @@
         req_data: reqValue,
         status: 0,
         date_Req: Timestamp.fromDate(new Date()),
-        sched_Claim: sched
+        sched_Claim: sched,
+        payment: mop,
+        price:price,
         });
       } catch (err) {
         console.log("There was an auth error", err);
@@ -106,6 +129,7 @@
     <main class="flex flex-col
     items-center mt-5">
     <div class="card card-compact w-1/3 bg-slate-100 mt-3">
+      {#if !authenticating2}
         <h2 class="card-title bg-slate-900 rounded-md px-5 py-5 text-white glass">Request For {ReqDoc}</h2>
         
             <form class="card-body px-5 py-10">
@@ -131,7 +155,7 @@
                 </div>
                 
 
-                {#if req == "Graduated"}
+                {#if req == "yearGrad"}
                     <div class="form-control mt-2">
                         <label class="label">
                             <span class="label-text">Year Graduated:</span>
@@ -140,7 +164,7 @@
                     </div>
                   
                 {/if}
-                {#if req == "Undergrad"}
+                {#if req == "lastYear"}
                     <div class="form-control mt-2">
                         <label class="label">
                             <span class="label-text">Last Academic Year Attended:</span>
@@ -149,7 +173,7 @@
                     </div>
                  
                 {/if}
-                {#if req == "YearSem"}
+                {#if req == "yearSem"}
                 <div class="form-control mt-2 flex">
                     <div class="dropdown dropdown-top">
                       
@@ -169,7 +193,7 @@
                 </div>
                 
                 {/if}
-                {#if req == "Certification"}
+                {#if req == "certification"}
                 <div class="form-control mt-2 flex">
                     <div class="dropdown dropdown-top">
                       
@@ -189,7 +213,7 @@
                     
                 </div>
                 {/if}
-                {#if req == "Authentication"}
+                {#if req == "authentication"}
                 {/if}
                 <div class="form-control mt-2 flex flex-row gap-2">
                   <label class="label">
@@ -199,6 +223,27 @@
                     <input type="date" min={today} class="input bordered w-3/4  items-center flex" max={maxx} bind:value={sched}/>
                     
                 </div>
+                <div class="flex flex-row gap-4">
+                <div class="form-control">
+                  <label class="label cursor-pointer gap-4">
+                    <span class="label-text">Cash</span> 
+                    <input type="radio" on:change={()=>mop="Cash"} name="radio-10" class="radio checked:bg-blue-500" checked />
+                  </label>
+                </div>
+                <div class="form-control">
+                  <label class="label cursor-pointer gap-4">
+                    <span class="label-text">Gcash/Maya</span> 
+                    <input type="radio" on:change={()=>mop="Online"} name="radio-10" class="radio checked:bg-green-500" />
+                  </label>
+                </div>
+                <div class="form-control">
+                  <label class="label gap-10">
+                    <span class="label-text">Price</span> 
+                    <span class=" font-bold ">{price}</span>
+                  </label>
+                </div>
+                
+              </div>
                 <div class="form-control my-5 items-end">
                   <button class="btn bg-blue-900 w-60 text-white hover:text-black text-xl glass" on:click={RequestDocBtn}>
                     {#if authenticating}
@@ -210,7 +255,14 @@
                 </div>
                
               </form>
-        
+          
+              {/if}
+              {#if authenticating2}
+              <div class="h-full flex justify-center items-center">
+                <span class="h-14 w-10 loading loading-dots loading-md "></span>
+              </div>
+              {/if}
+              
     </div>
     {#if error}
     <div class="absolute bottom-10 w-full flex items-center justify-center">

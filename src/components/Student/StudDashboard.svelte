@@ -37,6 +37,7 @@ async function fetchData() {
             tnum: doc.id,
             name: data.doc_ID,
             date: data.sched_Claim,
+            price: data.price,
             status: data.status
           };
         });
@@ -95,8 +96,10 @@ fetchData();
                             <th></th>
                             <th on:click={sort("tnum")}>Transaction Number</th>
                             <th on:click={sort("name")}>Document</th>
+                            <th on:click={sort("price")}>Price</th>
                             <th on:click={sort("date")}>Date</th>
                             <th on:click={sort("status")}>Status</th>
+                           
                         </tr>
                       </thead>
                       <tbody>
@@ -108,6 +111,7 @@ fetchData();
                               <td class="font-bold">{index + 1}</td>
                               <td>{doc.tnum}</td>
                               <td class="font-bold">{doc.name}</td>
+                              <td class="font-bold">{doc.price}</td>
                               <td class="font-bold">{doc.date}</td>
                               <td>
                               {#if doc.status == 2}
