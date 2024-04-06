@@ -9,7 +9,6 @@
 
 <SectionWrapper>
     <Header />
-    <StudRfBtn/>
     <StudDbBtn />
     <main class="flex flex-col
     items-center mt-5 mb-8">

@@ -83,8 +83,8 @@ fetchData();
    <StudRfBtn />
    <StudToBtn />
     <main class="flex flex-col
-    items-center mt-5">
-        <div class="card card-compact w-3/4 shadow-xl items-center bg-white">
+    items-start px-5 mt-5">
+        <div class="card card-compact w-[90%] shadow-xl items-center bg-white h-[600px]">
             <p></p>
             <h2 class="card-title text-4xl w-full bg-slate-700 rounded-t-xl p-5 text-white glass">DASHBOARD</h2>
             
@@ -114,23 +114,21 @@ fetchData();
                               <td class="font-bold">{doc.price}</td>
                               <td class="font-bold">{doc.date}</td>
                               <td>
-                              {#if doc.status == 2}
+                              {#if doc.status == 1}
                               <ul class="steps w-full">
-                                  <li class="step step-success"></li>
-                                  <li class="step step-success"></li>
-                                  <li class="step step-success font-bold">Completed</li>
-                              </ul>
-                              {:else if doc.status == 1}
-                              <ul class="steps w-full">
-                                  <li class="step step-warning"></li>
-                                  <li class="step step-warning font-bold">Claiming</li>
-                                  <li class="step"></li>
-                              </ul>
+                                <li data-content="!" class="step step-warning font-bold">Claiming</li>
+                                <li data-content="✓" class="step step-neutral"></li>
+                            </ul>
+                              
+                              {:else if doc.status == 2}
+                              <ul class="steps w-full">    
+                                <li data-content="✓" class="step step-success font-bold">Completed</li>
+                            </ul>
                               {:else}
                               <ul class="steps w-full">
-                                  <li class="step step-info font-bold">Confirmation</li>
-                                  <li class="step"></li>
-                                  <li class="step"></li>
+                                  <li data-content="?" class="step step-info font-bold">Pending</li>
+                                  <li data-content="!" class="step step-neutral"></li>
+                               
                               </ul>
                               {/if}
                               </td>
