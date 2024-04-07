@@ -8,15 +8,16 @@
   import StudToBtn from "./StudToBtn.svelte";
   import { getAuth } from "firebase/auth";
   import { db } from "$lib/firebase/firebase";
+  
 
   let docsRequests = [];
     let sortBy = {col: "id", ascending: true};
     // Check if there is a current user before accessing their UID
-const auth = getAuth();
-const user = auth.currentUser;
+
 let authenticating = true;
 async function fetchData() {
-  
+  const auth = getAuth(); 
+  const user = auth.currentUser;
   if (user !== null) {
     let stud_no = "";
     const docRef = doc(db, "students", user.uid);

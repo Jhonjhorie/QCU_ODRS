@@ -9,9 +9,9 @@
 </script>
 <SectionWrapper>
   <main class=" flex flex-col">
-  <div class="absolute top-24 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">Good Life Start Here!</p></div>
-  <div class="absolute top-56 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">#QCU1</p></div>
-  <div class="absolute top-40 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">#1 Local University of Employable Graduates</p></div>
+  <div class="absolute top-28 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">Good Life Start Here!</p></div>
+  <div class="absolute top-44 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">#1QCU</p></div>
+  <div class="absolute top-10 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">#1 Local University of Employable Graduates</p></div>
   <div class="hero h-[97vh] bg-cover" style="background-image: url('QCU CAMPUS.jpg');">
     <div class="hero-overlay bg-opacity-60"></div>
     <div class="hero-content text-center text-neutral-content gap-10">
