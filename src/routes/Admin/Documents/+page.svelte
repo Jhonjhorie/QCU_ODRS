@@ -22,6 +22,7 @@
     let deleting = false;
     let updating = false;
     let documentToDelete = null;
+    let reqData = '';
     /**
    * @type {{ id: any; doc_ID: any; price: any; description: any; requirements: any; } | null}
    */
@@ -30,7 +31,7 @@
     let authenticating = false;
     let updated = false;
     
-
+    const Requirements_data = ['yearGrad', 'lastYear', 'yearSem', 'certification', 'authentication'];
     //display data ahahah
     const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, 'document'));
@@ -179,6 +180,17 @@
                                 <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Price :</span>
                                 </div>
                                 <input bind:value={documentToUpdate.price}  type="number" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                              </label>
+                              <label class="flex w-full max-w-xs pt-3">
+                                <div class="label">
+                                <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Reqdata :</span>
+                                </div>
+                                <select bind:value={documentToUpdate.reqData}  class="select select-bordered w-full max-w-xs text-black bg-slate-300 shadow-sm border-[0.5px] border-[#0a0a0a2b]" >
+                                  <option value="" disabled selected hidden class="text-slate-600 ">Select requirement data</option>
+                                  {#each Requirements_data as Reqdata}
+                                    <option>{Reqdata}</option>
+                                  {/each}
+                                </select>
                               </label>
                             </div>
 

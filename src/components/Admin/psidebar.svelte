@@ -16,7 +16,7 @@
 
     // @ts-ignore
     if(user) {
-        const docRef = doc(db, "user", "eE9jR4SfvXVZ01Wh0gkprf5ErWv1");
+        const docRef = doc(db, "user", "ytjPJgatWTTwBmGrmYaCfBzRqlW2");
         getDoc(docRef).then((snapshot) => {
             let docSnap = snapshot;
             if (docSnap.exists()) {
@@ -51,7 +51,6 @@
     function gotoAdminEdit () {
                 goto('/Admin/Accedit')
     }
-    
 
 </script>
 
