@@ -17,7 +17,7 @@
     <div class="hero-content text-center text-neutral-content gap-10">
       <img src="QCULOGO.png" class=" w-64 rounded-lg shadow-3xl p-5 bg-white bg-opacity-30" alt="" />
       <div class="text-left max-w-xl">
-        <h1 class="mb-5 text-5xl font-bold">I LOVE YOU MAAM MACEH</h1>
+        <h1 class="mb-5 text-5xl font-bold">DOCHUB</h1>
         <p class="mb-5">For Students and Graduates of QCU San Bartolomeo (Main) <br />
           (Bachelor Degree / Traditional Undergrad) <br/>
           For Concerns, email us at registrar@qcu.edu.ph</p>
