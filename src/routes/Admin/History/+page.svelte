@@ -1,7 +1,36 @@
 <script>
-        import PHeader from '../../../components/Admin/pHeader2.svelte';
-        import Psidebar from '../../../components/Admin/psidebar.svelte';
-        
+
+
+    import PHeader from '../../../components/Admin/pHeader2.svelte';
+    import Psidebar from '../../../components/Admin/psidebar.svelte';
+    import { onMount } from 'svelte';
+    import { db } from "$lib/firebase/firebase";
+    import { collection, getDocs} from "firebase/firestore";
+
+
+    /**
+   * @type {any[]}
+   */
+    let data = [];
+    
+
+    const fetchData = async () => {
+    const querySnapshot = await getDocs(collection(db, 'docRequests'));
+    data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    };
+    // @ts-ignore
+    const timestampToDate = (timestamp) => {
+    if (timestamp && timestamp.toDate) {
+        return timestamp.toDate().toLocaleString(); 
+    } else {
+        return ""; 
+    }
+};
+   
+   
+
+    onMount(fetchData);
+
 </script>
 <style>
     tr:nth-child(even){
@@ -15,6 +44,9 @@ th {
 }
 td {
   color: black
+}
+.expired {
+  color: red;
 }
 </style>
 <div class="h-[105vh] w-full bg-slate-300">
@@ -32,116 +64,44 @@ td {
             <tr >
             <th></th> 
             <th class="text-white">Name</th> 
-            <th class="text-white">College</th> 
-            <th class="text-white">Registrar</th> 
+            <th class="text-white">Course</th> 
             <th class="text-white">Document</th> 
-            <th class="text-white">Request date </th> 
+            <th class="text-white">Request date </th>
+            <th class="text-white">Registrar</th>  
             <th class="text-white">Status</th>
             </tr>
         </thead> 
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>CCS</td>
-                <td>Jane Smith</td>
-                <td>Transcript</td>
-                <td>2024-03-01</td>
-                <td>Completed</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Alice Johnson</td>
-                <td>CBAA</td>
-                <td>Michael Brown</td>
-                <td>Degree Certificate</td>
-                <td>2024-02-28</td>
-                <td>Pending</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>David Lee</td>
-                <td>COE</td>
-                <td>Emily Davis</td>
-                <td>Recommendation Letter</td>
-                <td>2024-03-02</td>
-                <td>In Progress</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Sarah Thompson</td>
-                <td>EDUK</td>
-                <td>Christopher Wilson</td>
-                <td>Transcript</td>
-                <td>2024-03-03</td>
-                <td>Completed</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Michael Anderson</td>
-                <td>CCS</td>
-                <td>Emma Taylor</td>
-                <td>Degree Certificate</td>
-                <td>2024-03-05</td>
-                <td>Pending</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>Lisa Martinez</td>
-                <td>CBAA</td>
-                <td>David Rodriguez</td>
-                <td>Recommendation Letter</td>
-                <td>2024-03-06</td>
-                <td>In Progress</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>James White</td>
-                <td>COE</td>
-                <td>Olivia Moore</td>
-                <td>Transcript</td>
-                <td>2024-03-08</td>
-                <td>Completed</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>Emily Harris</td>
-                <td>EDUK</td>
-                <td>Daniel Jackson</td>
-                <td>Degree Certificate</td>
-                <td>2024-03-09</td>
-                <td>Pending</td>
-              </tr>
-              <tr>
-                <td>9</td>
-                <td>William Clark</td>
-                <td>CCS</td>
-                <td>Isabella Garcia</td>
-                <td>Recommendation Letter</td>
-                <td>2024-03-10</td>
-                <td>In Progress</td>
-              </tr>
-              <tr>
-                <td>10</td>
-                <td>Emma Wright</td>
-                <td>CBAA</td>
-                <td>Nathan Martinez</td>
-                <td>Transcript</td>
-                <td>2024-03-10</td>
-                <td>Completed</td>
-              </tr>
-           
-           
+          {#each data as request, index}
+          <tr>
+            <td>{index + 1}</td>
+            <td>{request.student_Name}</td>
+            <td>{request.dept_Title}</td>
+            <td>{request.doc_ID}</td>
+            <td>{timestampToDate(request.date_Req)}</td>
+            <td>Jhorie</td>
+            <td>{#if request.status == 1}
+                Pending
+              {:else if request.status == 2}
+                For Validation
+              {:else if request.status == 3}
+                Completed 
+              {:else}
+                Error / Cancelled 
+              {/if}
+            </td>
+          </tr>
+          {/each}
         </tbody> 
       
         </table>
+      </div>
     </div>
-</div>
-        </div>
+  </div>
         
   
      
       
-    </div>
+  </div>
 </div>
   

@@ -181,7 +181,7 @@
                   <span class="label-text text-black text-[15px] font-medium">Department:</span>
                 </div>
                   <select id="depart"  bind:value={dept} class="select select-bordered w-full max-w-xs text-black bg-slate-300 shadow-sm border-[0.5px] border-[#0a0a0a2b]" >
-                    <option disabled selected class="text-slate-600">Select department</option>
+                    <option value="" disabled selected hidden class="text-slate-600">Select department</option>
                     {#each departments as department}
                       <option>{department}</option>
                     {/each}

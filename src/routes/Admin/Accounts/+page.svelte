@@ -1,12 +1,16 @@
 <script>
-// @ts-nocheck
+
   import PHeader from '../../../components/Admin/pHeader2.svelte';
   import Psidebar from '../../../components/Admin/psidebar.svelte';
   import PBoxesaccounts from '../../../components/Admin/pBoxesaccounts.svelte';
   import { onMount } from 'svelte';
-  import { db } from "$lib/firebase/firebase";
-  import { collection, getDocs, deleteDoc, doc  } from "firebase/firestore";
+  import { auth, db } from "$lib/firebase/firebase";
+  import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+  import { getAuth, signInWithEmailAndPassword, updatePassword } from "firebase/auth";
 
+  
+
+  let newPassword = '';
 
 // Variable
     /**0
@@ -38,7 +42,6 @@
       await deleteDoc(doc(db, 'registrar', selectedUser.id));
       // @ts-ignore
       data = data.filter(user => user.id !== selectedUser.id);
-      // Close the modal
       showModal = false;
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -49,10 +52,44 @@
     console.error("Invalid user ID:", selectedUser); 
   }
 };
-  
+async function updateRegistrarInformation() {
+    try {
+        // Authenticate the admin
+        await signInWithEmailAndPassword(auth, "admin@example.com", "admin123");
+        
+        // Get the current user
+        const user = auth.currentUser;
+        
+        // Check if the user is authenticated
+        if (user) {
+            // Ensure newPassword is not empty
+            if (!newPassword) {
+                console.error("New password is empty.");
+                return;
+            }
+
+            // Update the password
+            await updatePassword(user, newPassword);
+
+            console.log("Password updated successfully");
+        } else {
+            console.error("User is not authenticated.");
+        }
+    } catch (error) {
+        console.error("Error updating user password:", error);
+    }
+}
+
+
+
 
   onMount(fetchData);
 
+
+
+  function getASecureRandomPassword() {
+    throw new Error('Function not implemented.');
+  }
 </script>
 
 
@@ -140,12 +177,21 @@
                           </div>
                           <input bind:value={selectedUser.department_name}  type="text" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
                         </label>
+                        <label class="flex w-full max-w-xs pt-3">
+                          <div class="label">
+                          <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Password :</span>
+                          </div>
+                          <input bind:value={newPassword} type="password" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                        </label>
                     {/if}
  
 
                  
                     </div>
                     <div class="modal-action">
+                      <button on:click={updateRegistrarInformation} class="w-[100px] hover:bg-green-600  bg-slate-700 hover:text-slate-100  p-1 px-2 rounded-sm duration-200 shadow-md h-[40px]">
+                        Update 
+                      </button>
                       <form method="dialog">
                         {#if deleting}
                         <span>Loading...</span>

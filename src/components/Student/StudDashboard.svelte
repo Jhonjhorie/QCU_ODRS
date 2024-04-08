@@ -8,15 +8,17 @@
   import StudToBtn from "./StudToBtn.svelte";
   import { getAuth } from "firebase/auth";
   import { db } from "$lib/firebase/firebase";
+  
 
   let docsRequests = [];
     let sortBy = {col: "id", ascending: true};
     // Check if there is a current user before accessing their UID
-const auth = getAuth();
-const user = auth.currentUser;
+
 let authenticating = true;
 
 async function fetchData() {
+  const auth = getAuth(); 
+  const user = auth.currentUser;
   if (user !== null) {
     let stud_no = "";
     const docRef = doc(db, "students", user.uid);
@@ -36,6 +38,8 @@ async function fetchData() {
           return {
             tnum: doc.id,
             name: data.doc_ID,
+            date: data.sched_Claim,
+            price: data.price,
             status: data.status
           };
         });
@@ -81,8 +85,8 @@ fetchData();
    <StudRfBtn />
    <StudToBtn />
     <main class="flex flex-col
-    items-center mt-5">
-        <div class="card card-compact w-3/4 shadow-xl items-center bg-white">
+    items-start px-5 mt-5">
+        <div class="card card-compact w-[90%] shadow-xl items-center bg-white h-[600px]">
             <p></p>
             <h2 class="card-title text-4xl w-full bg-slate-700 rounded-t-xl p-5 text-white glass">DASHBOARD</h2>
             
@@ -94,7 +98,10 @@ fetchData();
                             <th></th>
                             <th on:click={sort("tnum")}>Transaction Number</th>
                             <th on:click={sort("name")}>Document</th>
+                            <th on:click={sort("price")}>Price</th>
+                            <th on:click={sort("date")}>Date</th>
                             <th on:click={sort("status")}>Status</th>
+                           
                         </tr>
                       </thead>
                       <tbody>
@@ -106,24 +113,24 @@ fetchData();
                               <td class="font-bold">{index + 1}</td>
                               <td>{doc.tnum}</td>
                               <td class="font-bold">{doc.name}</td>
+                              <td class="font-bold">{doc.price}</td>
+                              <td class="font-bold">{doc.date}</td>
                               <td>
-                              {#if doc.status == 2}
+                              {#if doc.status == 1}
                               <ul class="steps w-full">
-                                  <li class="step step-success"></li>
-                                  <li class="step step-success"></li>
-                                  <li class="step step-success font-bold">Completed</li>
-                              </ul>
-                              {:else if doc.status == 1}
-                              <ul class="steps w-full">
-                                  <li class="step step-warning"></li>
-                                  <li class="step step-warning font-bold">Claiming</li>
-                                  <li class="step"></li>
-                              </ul>
+                                <li data-content="!" class="step step-warning font-bold">Claiming</li>
+                                <li data-content="✓" class="step step-neutral"></li>
+                            </ul>
+                              
+                              {:else if doc.status == 2}
+                              <ul class="steps w-full">    
+                                <li data-content="✓" class="step step-success font-bold">Completed</li>
+                            </ul>
                               {:else}
                               <ul class="steps w-full">
-                                  <li class="step step-info font-bold">Confirmation</li>
-                                  <li class="step"></li>
-                                  <li class="step"></li>
+                                  <li data-content="?" class="step step-info font-bold">Pending</li>
+                                  <li data-content="!" class="step step-neutral"></li>
+                               
                               </ul>
                               {/if}
                               </td>

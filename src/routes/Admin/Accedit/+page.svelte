@@ -15,7 +15,88 @@
     function gotoEditadmin (){
               goto('/Admin/Accedit/editadmin')
     }
+//View
+let email = "loading...";
+    let fn = "loading...";
+    let pass = "hidden"
+    let emaild;
+    let fnd;
+    //Update
+    let submit = "UPDATE";
+    let isSubmitting = false; 
+    let updateSuccess = false;
+    let newPassword = "";
+    let newFullName = "";
+    let oldPassword = "";
+    let oldPasswordError = "";
 
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    // @ts-ignore
+    onMount(async () => {
+    if (user) {
+        const docRef = doc(db, "user", user.uid);
+        const snapshot = await getDoc(docRef);
+        if (snapshot.exists()) {
+            const data = snapshot.data();
+            emaild = data.email;
+            fnd = data.fullname;
+            fn = fnd;
+            email = emaild;
+        }
+    }
+  });
+
+  async function updateUserPassword() {
+    try {
+        if (!user) {
+            throw new Error("User not authenticated");
+        }
+
+        const credential = EmailAuthProvider.credential(user.email, oldPassword);
+        await reauthenticateWithCredential(user, credential);
+
+        if (!newFullName.trim() && !newPassword.trim()) {
+          console.log("Nothing to update");
+        }
+
+        isSubmitting = true;
+        if (newFullName) {
+            await updateDoc(doc(db, "user", user.uid), { fullname: newFullName });
+            console.log("Full name updated successfully!");
+        }
+
+        if (newPassword) {
+            if (!newPassword.trim()) {
+                throw new Error("New password cannot be empty");
+            }
+            await updatePassword(user, newPassword);
+            console.log("Password updated successfully!");
+        }
+
+        updateSuccess = true;
+        isSubmitting = false;
+        newFullName = "";
+        newPassword = "";
+        oldPassword = "";
+
+        
+    } catch (error) {
+        console.error("Error updating password: ", error);
+        isSubmitting = false; 
+        if (error.code === "auth/wrong-password") {
+            oldPasswordError = "Incorrect old password.";
+        } else if (oldPassword.trim() === "") {
+            oldPasswordError = "Old password cannot be empty.";
+        } else {
+            oldPasswordError = "An error occurred. Please try again later.";
+        }
+        setTimeout(() => {
+            oldPasswordError = "";
+        }, 3000);         
+    }           
+}
 
 </script>
 <style>
@@ -59,19 +140,19 @@
                           <div class="label">
                             <span class="label-text text-black text-[15px] font-medium ">New Fullname:</span>
                           </div>
-                          <input type="text" placeholder="type new fullname (optional)"  class=" text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" required />
+                          <input bind:value={newFullName} type="text" placeholder="type new fullname (optional)"  class=" text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" required />
                         </label>
                         <label class="form-control w-full max-w-xs ">
                           <div class="label">
                             <span class="label-text text-black text-[15px] font-medium  ">Old Password:</span>
                           </div>
-                          <input  type="password" placeholder="type old password (required)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
+                          <input bind:value={oldPassword} type="password" placeholder="type old password (required)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
                         </label>  
                         <label class="form-control w-full max-w-xs ">
                           <div class="label">
                             <span class="label-text text-black text-[15px] font-medium  ">New Password:</span>
                           </div>
-                          <input  type="password" placeholder="type new password (optional)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
+                          <input bind:value={newPassword} type="password" placeholder="type new password (optional)"  class="  text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a36]" />
                         </label>   
                          
                         <div class="label">
@@ -79,7 +160,7 @@
                         </div>
                        
                           
-                          <button  class="h-12 rounded-md w-[93%] bg-slate-900 hover:bg-slate-800 text-slate-200">
+                          <button on:click={updateUserPassword}  class="h-12 rounded-md w-[93%] bg-slate-900 hover:bg-slate-800 text-slate-200">
                             {#if isSubmitting}
                             <span class="loading loading-dots loading-sm bg-slate-300 w-[18px] "></span>
                         {:else}
@@ -107,14 +188,14 @@
                               <span class="label-text text-black text-[15px] font-medium ">Full name:</span>
                             </div>
                             <div ></div>
-                            <input  type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" required />
+                            <input bind:value={fn} type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]" required />
                           </label>
             
                           <label class="form-control w-full max-w-xs pt-4 mx-auto">
                             <div class="label">
                               <span class="label-text text-black text-[15px] font-medium">Email:</span>
                             </div>
-                            <input  type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b] " />
+                            <input bind:value={email} type="text" placeholder=""  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b] " />
                           </label>
 
                           <label class="form-control w-full max-w-xs  pt-4  mx-auto">
