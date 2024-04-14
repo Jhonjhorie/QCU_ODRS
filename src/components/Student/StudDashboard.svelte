@@ -6,8 +6,9 @@
     import { doc, collection, query, where, getDocs, getDoc } from "firebase/firestore";
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudToBtn from "./StudToBtn.svelte";
-  import { getAuth } from "firebase/auth";
+  import { getAuth, onAuthStateChanged } from "firebase/auth";
   import { db } from "$lib/firebase/firebase";
+  import { onMount } from "svelte";
   
 
   let docsRequests = [];
@@ -15,14 +16,15 @@
     // Check if there is a current user before accessing their UID
 
 let authenticating = true;
-async function fetchData() {
-  const auth = getAuth(); 
+const auth = getAuth();
+
+const fetchData = async () => {
   const user = auth.currentUser;
   if (user !== null) {
     let stud_no = "";
     const docRef = doc(db, "students", user.uid);
-    if (docRef !== null) {
-      try {
+    try {
+      if (docRef !== null) {
         const snapshot = await getDoc(docRef);
         let docSnap = snapshot;
         if (docSnap.exists()) {
@@ -32,30 +34,36 @@ async function fetchData() {
           const q = query(collection(db, "docRequests"), where("student_Num", "==", stud_no));
           const querySnapshot = await getDocs(q);
           console.log('data user exists doc');
-          docsRequests = querySnapshot.docs.map(doc => {
-          const data = doc.data();
-          return {
+          docsRequests = querySnapshot.docs.map(doc => ({
             tnum: doc.id,
-            name: data.doc_ID,
-            date: data.sched_Claim,
-            price: data.price,
-            status: data.status
-          };
-        });
+            name: doc.data().doc_ID,
+            date: doc.data().sched_Claim,
+            price: doc.data().price,
+            status: doc.data().status
+          }));
         } else {
           console.log('no doc ref');
         }
-      } catch (error) {
-        console.error("Error getting document:", error);
-      } finally {
-        authenticating = false;
+      } else {
+        console.log("No authenticated user found");
       }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      authenticating = false;
     }
-  } else {
-    console.log("No authenticated user found");
   }
-}
-fetchData();
+};
+
+onMount(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      fetchData();
+    }
+    unsubscribe(); 
+  });
+});
+
      $: sort = (column) => {
 		
 		if (sortBy.col == column) {
