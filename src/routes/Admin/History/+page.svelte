@@ -67,7 +67,7 @@ td {
             <th class="text-white">Course</th> 
             <th class="text-white">Document</th> 
             <th class="text-white">Request date </th>
-            <th class="text-white">Registrar</th>  
+            <th class="text-white">Claiming date</th>  
             <th class="text-white">Status</th>
             </tr>
         </thead> 
@@ -79,15 +79,13 @@ td {
             <td>{request.dept_Title}</td>
             <td>{request.doc_ID}</td>
             <td>{timestampToDate(request.date_Req)}</td>
-            <td>Jhorie</td>
-            <td>{#if request.status == 1}
+            <td>{request.sched_Claim}</td>
+            <td>{#if request.status == 0}
                 Pending
-              {:else if request.status == 2}
-                For Validation
-              {:else if request.status == 3}
-                Completed 
+              {:else if request.status == 1}
+                Claiming
               {:else}
-                Error / Cancelled 
+                Completed 
               {/if}
             </td>
           </tr>
