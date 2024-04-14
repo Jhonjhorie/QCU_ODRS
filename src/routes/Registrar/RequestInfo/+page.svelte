@@ -18,6 +18,8 @@
   }
 
   let status = "select";
+  let nstatus;
+  let pstatus;
   let requestId;
   let requestDetails = {};
 
@@ -32,6 +34,8 @@
       if (docSnap.exists()) {
         requestDetails = docSnap.data();
         status = requestDetails.status || "select";
+        pstatus = requestDetails.payment_status;
+
       } else {
         console.log("No such document exists!");
       }
@@ -49,10 +53,27 @@
       setTimeout(() => {
         toastMessage = "";
         gotoRequests();
-      }, 3000); // Hide toast after 3 seconds and redirect
+      }, 2000); 
     } catch (error) {
       console.error("Error updating status:", error);
     }
+  }
+  async function editpaymentStatus(newStatus) {
+    try {
+      const docRef = doc(db, "docRequests", requestId);
+      await updateDoc(docRef, { payment_status: newStatus });
+      status = newStatus;
+      toastMessage = "Payment status updated successfully!";
+      setTimeout(() => {
+        toastMessage = "";
+      }, 2000); 
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  }
+  function submit(nStatus,pStatus){
+    editpaymentStatus(pStatus)
+    editStatus(parseInt(nStatus))
   }
 </script>
 
@@ -61,11 +82,11 @@
     <Header />
     <div class="px-60 pt-5">
       <div class="bg-base-300">
-        <h1 class="p-5 font-bold">REQUEST FOR DIPLOMA</h1>
+        <h1 class="p-5 font-bold">REQUEST DETAILS</h1>
 
         <div class="flex justify-center bg-slate-200">
           <div class="flex flex-col">
-            <h1 class="p-1 pt-2 font-bold">SOFT COPY</h1>
+            <h1 class="p-1 pt-2 font-bold text-black">REQUEST FOR {requestDetails.doc_ID || ''}</h1>
             <div class="flex flex-row gap-20">
               <label class="form-control w-full max-w-xs">
                 <div class="label">
@@ -118,28 +139,45 @@
                   value={requestDetails.doc_ID || ''}
                 />
               </label>
+              
             </div>
 
+            <div class="flex flex-row gap-20">
+              <label class="form-control w-full max-w-xs">
+                <div class="label">
+                  <span class="label-text">Payment Method: {requestDetails.payment}</span>
+                </div>
+                <select class="select select-bordered w-full max-w-xs" bind:value={pstatus}>
+                  <option value="" selected>Set Payment Status</option>
+                  <option value="Not Paid">Not Paid</option>
+                  <option value="Paid">Paid</option>
+                </select>
+              </label>
+
+
+              <label class="form-control w-full max-w-xs">
+                <div class="label">
+                  <span class="label-text">Select Status:</span>
+                </div>
+                <select class="select select-bordered w-full max-w-xs" bind:value={nstatus}>
+                  <option value="" selected>Set Request Status</option>
+                  <option value=0>Mark as Pending</option>
+                  <option value=1>Mark as to Claim</option>
+                  <option value=2>Mark as Complete</option>
+                </select>
+              </label>
+            </div>
+
+            
             <hr />
 
             <div class="flex flex-row gap-20">
 
 
-              <!-- svelte-ignore a11y-label-has-associated-control -->
-              <label class="form-control w-full max-w-xs ">
-                <div class="label">
-                  <span class="label-text">Select Status</span>
-                </div>       
-                <div class="flex flex-row gap-20">
-                  <button class="btn btn-success hover" on:click={() => editStatus("Complete")}>Mark as Complete</button>
-                  <button class="btn btn-warning hover" on:click={() => editStatus("Pending")}>Mark as Pending</button>
-                  <button class="btn btn-error hover" on:click={() => editStatus("Error")}>Mark as Error</button>
-                </div>
-              </label>
             </div>
 
             <div class="flex flex-row gap-20 py-5 justify-center">
-              <button class="btn hover" on:click={gotoHistory}>Submit</button>
+              <button class="btn btn-success hover" on:click={submit(nstatus,pstatus)}>Submit</button>
               <button class="btn hover" on:click={gotoRequests}>Cancel</button>
             </div>
             {#if toastMessage}

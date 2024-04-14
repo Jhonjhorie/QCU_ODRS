@@ -30,27 +30,34 @@
 
   
   function gotoInfo() {
-    goto("/Registrar/RequestInfo");
+    goto("/Registrar/Request");
   }
-
+  function gotoHistory() {
+    goto("/Registrar/Request");
+  }
 
   /**
    * @type {any[]}
    */
   
   let requests = [];
-  let numDocumentsRequested = 0; // Initialize to 0
+  let numDocumentsRequested = 0; 
   let numCompleteDocReq = 0;
+  let numPendingDocReq = 0;
   async function fetchRequests() {
     const q = query(collection(db, 'docRequests'), 
-                    where('dept_Title', '==', 'Bachelor Of Science In Computer Science'));
+                    where('status', '==', 0));
+    const qpending = query(collection(db, 'docRequests'), 
+                    where('status', '==', 1));    
     const qcomplete = query(collection(db, 'docRequests'), 
-                    where('dept_Title', '==', 'Bachelor Of Science In Computer Science'),
-                    where('status', '==', 'Complete'));    
+                    where('status', '==', 2));    
     try {
       const querySnapshot = await getDocs(q);
       requests = querySnapshot.docs.map(doc => doc.data());
-      numDocumentsRequested = requests.length; 
+      numDocumentsRequested = requests.length;
+      const PendingDocReq = await getDocs(qpending);
+      requests = PendingDocReq.docs.map(doc => doc.data());
+      numPendingDocReq = requests.length;  
       const CompletedDocReq = await getDocs(qcomplete);
       requests = CompletedDocReq.docs.map(doc => doc.data());
       numCompleteDocReq = requests.length; 
@@ -103,8 +110,9 @@
           <div class="card w-96 bg-base-100 shadow-xl">
             <div class="card-body items-center text-center">
               <h2 class="card-title">Scheduled Request</h2>
-              <p>0</p>
+              <p>{numPendingDocReq}</p>
             </div>
+            
           </div>
         </div>
       </div>
