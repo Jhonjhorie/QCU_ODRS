@@ -1,5 +1,6 @@
 <script>
 // @ts-nocheck
+
   import Header from "../../../components/Registrar/RegistrarHeader.svelte";
   import { goto } from "$app/navigation";
   import SectionWrapper from "../../../components/SectionWrapper.svelte";
@@ -7,7 +8,9 @@
   import { db } from "$lib/firebase/firebase";
   import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
+  // Declare variables and functions
   let toastMessage = "";
+  let imageUrl = ""; 
 
   function gotoRequests() {
     goto("/Registrar/Requests");
@@ -35,7 +38,7 @@
         requestDetails = docSnap.data();
         status = requestDetails.status || "select";
         pstatus = requestDetails.payment_status;
-
+        imageUrl = requestDetails.imageUrl || ""; 
       } else {
         console.log("No such document exists!");
       }
@@ -58,6 +61,7 @@
       console.error("Error updating status:", error);
     }
   }
+
   async function editpaymentStatus(newStatus) {
     try {
       const docRef = doc(db, "docRequests", requestId);
@@ -71,6 +75,7 @@
       console.error("Error updating status:", error);
     }
   }
+
   function submit(nStatus,pStatus){
     editpaymentStatus(pStatus)
     editStatus(parseInt(nStatus))
@@ -80,11 +85,11 @@
 <main class="flex flex-col">
   <SectionWrapper>
     <Header />
-    <div class="px-60 pt-5">
+    <div class="px-80 pt-5">
       <div class="bg-base-300">
-        <h1 class="p-5 font-bold">REQUEST DETAILS</h1>
+        <h3 class="p-5 font-bold">REQUEST DETAILS</h3>
 
-        <div class="flex justify-center bg-slate-200">
+        <div class="flex w-auto justify-center bg-slate-200">
           <div class="flex flex-col">
             <h1 class="p-1 pt-2 font-bold text-black">REQUEST FOR {requestDetails.doc_ID || ''}</h1>
             <div class="flex flex-row gap-20">
@@ -145,7 +150,7 @@
             <div class="flex flex-row gap-20">
               <label class="form-control w-full max-w-xs">
                 <div class="label">
-                  <span class="label-text">Payment Method: {requestDetails.payment}</span>
+                  <p class="label-text">Payment Method: <span class="font-bold">{requestDetails.payment}</span>   </p>
                 </div>
                 <select class="select select-bordered w-full max-w-xs" bind:value={pstatus}>
                   <option value="" selected>Set Payment Status</option>
@@ -153,7 +158,16 @@
                   <option value="Paid">Paid</option>
                 </select>
               </label>
-
+              <label class="form-control w-full max-w-xs">
+                <div class="label">
+                  <span class="label-text">Proof of Payment:</span>
+                </div>
+                {#if imageUrl}
+                <img src={imageUrl} alt="Request Image" class="w-auto h-40" />
+                {:else}
+                  <p>No image available</p>
+                {/if}
+              </label>
 
               <label class="form-control w-full max-w-xs">
                 <div class="label">
