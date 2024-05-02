@@ -10,6 +10,7 @@
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
   import { goto } from "$app/navigation";
+  import { getStorage, ref, uploadBytes,  getDownloadURL } from 'firebase/storage';
     
 
     let ReqDoc = "";
@@ -48,11 +49,13 @@
     let studNum = "Loading...";
     let fullName = "Loading...";
     let dept;
-    let reqValue = "Select One";
+    let reqValue;
     let phone = "Loading...";
     let error = false;
+    let errorD = false;
  
     let authenticating = false;
+    let authenticatingD = false;
     let mop = "Cash";
     
     const Year = ["1st Year, 1st Sem","1st Year, 2nd Sem", "2nd Year, 1st Sem", "2nd Year, 2nd Sem", "3rd Year, 1st Sem","3rd Year, 2nd Sem", "4th Year, 1st Sem", "4th Year, 2nd Sem", "Irregular"];
@@ -71,8 +74,11 @@
     let image;
     let placeholder;
 	  let showImage = false;
+    
+    // Initialize Firebase Storage
+    const storage = getStorage();
 
-    function onChange() {
+    async function onChange() {
       const file = input.files[0];
       
       if (file) {
@@ -114,43 +120,95 @@
       console.error("Error getting document:", error);
     });
     }
-
+    let schedF;
     async function RequestDocBtn() {
-      if(authenticating){
-      return;
-      }
-      authenticating = true; 
+      
+      authenticating = true;
+      
+      if(sched != null){
       let schedA = sched.split('-')
-      let schedF = schedA[1]+'-'+schedA[2]+'-'+schedA[0];
-      if(mop == "Online"){
-        authenticating = false;
-        model_online.showModal();
+      schedF = schedA[1]+'-'+schedA[2]+'-'+schedA[0];
       }
-      else{
+      if (schedF && reqValue) { // Check if schedF and reqValue are not null or undefined
+    if (mop == "Online") {
+      authenticating = false;
+      model_online.showModal();
+    } else {
       try {
         const docReq = await addDoc(collection(db, "docRequests"), {
-        doc_ID: ReqDoc,
-        dept_Title: dept,
-        student_Num: studNum,
-        student_Name: fullName,
-        phone_num: phone,
-        req_data: reqValue,
-        status: 0,
-        date_Req: Timestamp.fromDate(new Date()),
-        sched_Claim: schedF,
-        payment: mop,
-        payment_status:"Not Paid",
-        price:price,
+          doc_ID: ReqDoc,
+          dept_Title: dept,
+          student_Num: studNum,
+          student_Name: fullName,
+          phone_num: phone,
+          req_data: reqValue,
+          status: 0,
+          date_Req: Timestamp.fromDate(new Date()),
+          sched_Claim: schedF,
+          payment: mop,
+          payment_status: "Not Paid",
+          price: price,
         });
-      } catch (err) {
-        console.log("There was an auth error", err);
-        error = true;
-      } finally {
         authenticating = false;
         goto(`/Student/Dashboard`);
+      } catch (err) {
+        console.log("There was an auth error", err);
+        authenticating = false;
+        error = true;
       }
     }
+      } else {
+        console.log("sched or reqValue is null, cannot proceed.");
+        authenticating = false;
+        error = true;
+      }
     }
+
+    async function RequestDocBtnOnline() {
+      authenticatingD = true;
+      if(sched != null){
+      let schedA = sched.split('-')
+      schedF = schedA[1]+'-'+schedA[2]+'-'+schedA[0];
+      }
+      try {
+        
+        const docReqData = {
+          doc_ID: ReqDoc,
+          dept_Title: dept,
+          student_Num: studNum,
+          student_Name: fullName,
+          phone_num: phone,
+          req_data: reqValue,
+          status: 0,
+          date_Req: Timestamp.fromDate(new Date()),
+          sched_Claim: schedF,
+          payment: mop,
+          payment_status: "Not Paid",
+          price: price,
+        };
+
+        // Check if an image file is selected and the payment method is "Online"
+        if (mop == "Online" && input.files.length > 0) {
+          const file = input.files[0];
+          const storageRef = ref(storage, `images/${file.name}`);
+          await uploadBytes(storageRef, file);
+
+          const imageUrl = await getDownloadURL(storageRef);
+
+         
+          docReqData.imageUrl = imageUrl;
+        }
+
+        const docReq = await addDoc(collection(db, "docRequests"), docReqData);
+        authenticatingD = false;
+        goto(`/Student/Dashboard`);
+      } catch (err) {
+        console.log("There was an auth error", err);
+        authenticatingD = false;
+        errorD = true;
+      }
+    }
+
 
     let btnColor = "bg-blue-900";
     
@@ -356,11 +414,26 @@
       <form method="dialog">
         <!-- if there is a button in form, it will close the modal -->
         <button class="btn btn-error">Cancel</button>
-        <button class="btn btn-success">Submit</button>
+        <button class="btn btn-success" on:click={RequestDocBtnOnline}>
+          {#if authenticatingD}
+          <span class="loading loading-dots loading-md"></span>
+          {:else}
+          Submit
+          {/if}
+        </button>
       </form>
     </div>
-  </div>
+  </div>  
 </div>
+
 </dialog>
+{#if errorD}
+    <div class="absolute bottom-10 w-full flex items-center justify-center">
+    <div role="alert" class="alert alert-warning w-1/2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+      <span>Please Provide a Picture!</span>
+    </div>
+  </div>
+    {/if}
     </main>
 </SectionWrapper>

@@ -1,6 +1,7 @@
 <script>
   // @ts-nocheck
 
+  import { writable, derived } from "svelte/store";
   import { goto } from "$app/navigation";
   import { db } from "$lib/firebase/firebase";
   import {
@@ -13,50 +14,58 @@
     orderBy,
   } from "firebase/firestore";
 
-  let requests = [];
-  let loading = true;
-  let searchText = "";
+  let searchText = writable("");
+  let requests = derived(searchText, ($searchText, set) => {
+    if ($searchText === "") return;
+    const fetchRequests = async () => {
+      const q = query(
+        collection(db, "docRequests"),
+        where("student_Num", "==", $searchText)
+      );
 
-  async function fetchRequests() {
-    const q = query(
-      collection(db, "docRequests"),
-      where("dept_Title", "==", "Bachelor Of Science In Computer Science"),
-      where("status", "!=", 2),
-      orderBy("date_Req", "desc")
-    );
-
-    try {
-      const querySnapshot = await getDocs(q);
-      requests = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-    } catch (error) {
-      console.error("Error fetching requests:", error);
-    } finally {
-      loading = false;
-    }
-  }
+      try {
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        set(data);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    };
+    fetchRequests();
+  });
 
   function gotoInfo(id) {
     goto(`/Registrar/RequestInfo?id=${id}`);
   }
 
-
-  fetchRequests();
+  function search() {
+    searchText.set($searchText);
+  }
 </script>
 
 
 
+      <div class="flex flex-col flex-1 mx-auto w-full">
 
-        {#if loading}
-          <div class="flex justify-center items-center h-[70vh]">
+        <div class="flex mr-4 items-center gap-2">
+          <h2 class="p-3 text-xl text-black">Search:</h2>
+          <input
+            type="text"
+            class="p-2 my-2 rounded-md border border-gray-400"
+            placeholder="Input Student ID..."
+            bind:value={$searchText}
+            on:input={search}/>
+      </div>
+        {#if $requests === undefined}
+          <div class="flex justify-center flex=col items-center h-[70vh] pb-40">
+            <h1>Waiting for Input</h1>
             <span class="h-14 w-10 loading loading-dots loading-md"></span>
           </div>
         {:else}
-          <div
-            class="h-[70vh] w-auto p-2 bg-slate-100 rounded-md shadow-lg mr-4"
-          >
+          <div class="h-[70vh] w-auto p-2 bg-slate-100 rounded-md shadow-lg mr-4">
             <div class="overflow-x-auto w-auto h-[67.5vh] bg-slate-200">
               <table class="table table-xs">
                 <!-- head -->
@@ -73,7 +82,7 @@
                 </thead>
                 <!-- body -->
                 <tbody>
-                  {#each requests as request, index}
+                  {#each $requests as request, index}
                     <tr
                       class="hover:bg-gray-400"
                       on:click={() => gotoInfo(request.id)}
@@ -107,7 +116,9 @@
                           </ul>
                         {:else}
                           <ul class="steps w-full">
-                            <li class="step step-info font-bold">Pending</li>
+                            <li class="step step-info font-bold">
+                              Confirmation
+                            </li>
                             <li class="step"></li>
                             <li class="step"></li>
                           </ul>
@@ -120,8 +131,8 @@
             </div>
           </div>
         {/if}
-
-      
+      </div>
+  
 
 <style>
   th {
