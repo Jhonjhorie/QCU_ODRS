@@ -27,7 +27,6 @@
     }
   }
 
-  fetchRequests();
 
   function gotoInfo(id) {
     goto(`/Registrar/RequestInfo?id=${id}`);
@@ -38,6 +37,11 @@
       request.student_Num.toLowerCase().includes(searchText.toLowerCase())
     );
   }
+
+
+  fetchRequests();
+
+
 </script>
 
 <main class="flex flex-col">

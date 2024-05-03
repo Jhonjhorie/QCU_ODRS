@@ -24,7 +24,7 @@
   let depterror = false;
   let missingpasserror = false;
 
-  const departments = ['BECEd', 'BSIE', 'BSECE', 'BS Entrep', 'BSA', 'BSIT', 'BSIS', 'BSCS'];
+  const departments = ['CCS', 'CBAA', 'COE', 'COED'];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   async function handleAuthentication() {

@@ -30,7 +30,14 @@
   let error = false;
   let authenticating = false;
 
-  let progs = ['Bachelor Of Early Childhood Education (BECEd)', 'Bachelor Of Science In Industrial Engineering (IE)','Electronics Engineering (BSECE)','Bachelor Of Science In Entrepreneurship (BS Entrep)','Bachelor Of Science In Accountancy (BSA)','Bachelor Of Science In Information Technology','Bachelor Of Science In Information Systems','Bachelor Of Science In Computer Science']
+  let progs = [ 'Bachelor Of Early Childhood Education (BECEd)', 
+                'Bachelor Of Science In Industrial Engineering (IE)',
+                'Electronics Engineering (BSECE)',
+                'Bachelor Of Science In Entrepreneurship (BS Entrep)',
+                'Bachelor Of Science In Accountancy (BSA)',
+                'Bachelor Of Science In Information Technology',
+                'Bachelor Of Science In Information Systems',
+                'Bachelor Of Science In Computer Science']
 
   async function handleAuthentication() {  
     if(authenticating){
