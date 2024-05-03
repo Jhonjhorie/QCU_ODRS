@@ -164,18 +164,18 @@
   <StudDbBtn/>
 
   <main class="flex flex-col
-  items-center mt-5">
-        <div class="card card-compact justify-center w-3/4 bg-slate-200 mt-3 ">
-        <div class=" bg-slate-900 rounded-md px-5 py-5 text-white glass w-full flex flex-row items-center justify-between">
-            <h2 class="card-title">ACCOUNT</h2>
+  items-center mt-2.5 sm:mt-5">
+        <div class="card card-compact justify-center w-full sm:px-0 px-1 sm:w-3/4  bg-slate-200 ">
+        <div class=" bg-slate-900 rounded-md h-15 sm:p-5 p-2 text-white glass w-full flex flex-row items-center justify-between">
+            <h2 class="card-title text-sm sm:text-xl">ACCOUNT</h2>
             {#if !edit}
-            <div class="btn btn-success glass text-white w-40" on:click={edits}>
-                <box-icon name='edit' type='solid' color='#ffffff' ></box-icon>
+            <div class="btn btn-success glass text-white w-40 text-xs sm:text-md p-0.5 sm:p-3" on:click={edits}>
+                <box-icon name='edit' type='solid' color='#ffffff' class="scale-75 sm:scale-100" ></box-icon>
                 Edit Profile
               </div>
               {:else}
-              <div class="btn btn-error text-white w-40" on:click={cancel}>
-                <box-icon name='window-close' type='solid' color='#ffffff' ></box-icon>
+              <div class="btn btn-error text-white w-40 text-xs sm:text-md p-0.5 sm:p-3" on:click={cancel}>
+                <box-icon name='window-close' type='solid' color='#ffffff' class="scale-75 sm:scale-100" ></box-icon>
                 Cancel Edit
             </div>
               {/if}
@@ -183,70 +183,74 @@
             
             
         </div>
-        <div class="flex flex-row py-5 px-10 shadow-2xl rounded-2xl">
+        <div class="flex flex-col sm:flex-row sm:py-5 sm:px-10 py-2 px-5 shadow-2xl rounded-2xl">
             <div class="flex flex-col gap-1 w-full">
                 <div class="form-control">
                   <!-- svelte-ignore a11y-label-has-associated-control -->
                   <label class="label">
-                    <span class="label-text font-semibold">Last Name:</span>
+                    <span class="label-text text-xs sm:text-sm font-semibold">Last Name:</span>
                   </label>
 
-                  <input bind:value={ln} type="text" class="{bg} {color} text-sm rounded-md p-3 w-3/4 ml-5 transition duration-300 ease-in-out
-                  " disabled={edit ? false : true}>
+                  <input bind:value={ln} type="text" class="{bg} {color} text-sm rounded-md p-3 sm:w-3/4 w-[90%] ml-5 transition duration-300 ease-in-out
+                  " disabled={edit ? false : true} required>
                   </div>
                   <div class="form-control">
                     <!-- svelte-ignore a11y-label-has-associated-control -->
                     <label class="label">
-                      <span class="label-text font-semibold">First Name:</span>
+                      <span class="label-text text-xs sm:text-sm  font-semibold">First Name:</span>
                     </label>
-                    <input bind:value={fn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out w-3/4 ml-5
-                    " disabled={edit ? false : true} />
+                    <input bind:value={fn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5
+                    " disabled={edit ? false : true} required/>
                     </div>
                     <div class="form-control">
                         <!-- svelte-ignore a11y-label-has-associated-control -->
                         <label class="label">
-                          <span class="label-text font-semibold">Middle Name:</span>
+                          <span class="label-text text-xs sm:text-sm  font-semibold">Middle Name:</span>
                         </label>
-                        <input bind:value={mn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out w-3/4 ml-5
-                        " disabled={edit ? false : true} />
+                        <input bind:value={mn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5
+                        " disabled={edit ? false : true} required />
                     </div>
                     <div class="form-control">
-                            <!-- svelte-ignore a11y-label-has-associated-control -->
-                            <label class="label">
-                              <span class="label-text font-semibold">Address:</span>
-                            </label>
-                            <input bind:value={addr} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out w-3/4 ml-5
-                            " disabled={edit ? false : true} />
+                      <!-- svelte-ignore a11y-label-has-associated-control -->
+                      <label class="label">
+                        <span class="label-text  text-xs sm:text-sm font-semibold">Address:</span>
+                      </label>
+                      <textarea 
+                      bind:value={addr} 
+                      class="{bg} {color} text-xs sm:text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5" 
+                      disabled={edit ? false : true} required 
+                      rows="4" 
+                      ></textarea>
                     </div>
                     <div class="form-control">
                         <!-- svelte-ignore a11y-label-has-associated-control -->
                         <label class="label">
-                          <span class="label-text font-semibold">Phone Number:</span>
+                          <span class="label-text text-xs sm:text-sm font-semibold">Phone Number:</span>
                         </label>
-                        <input bind:value={phn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out w-3/4 ml-5
-                        " disabled={edit ? false : true} />
+                        <input bind:value={phn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5
+                        " disabled={edit ? false : true} required />
                 </div>
             </div> 
             <div class="flex flex-col gap-1 w-full">
                 <div class="form-control">
                     <!-- svelte-ignore a11y-label-has-associated-control -->
                     <label class="label">
-                      <span class="label-text font-semibold">Student:</span>
+                      <span class="label-text text-xs sm:text-sm font-semibold">Student Number:</span>
                     </label>
-                    <input bind:value={stdn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out w-3/4 ml-5
-                    " disabled={edit ? false : true} />
+                    <input bind:value={stdn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5
+                    " disabled={edit ? false : true} required />
                 </div>
                 <div class="form-control">
                     <div class="dropdown dropdown-top">
                       <!-- svelte-ignore a11y-label-has-associated-control -->
                       <label class="label">
-                        <span class="label-text font-semibold">Status: </span>
+                        <span class="label-text font-semibold text-xs sm:text-sm">Status: </span>
                       </label>
-                      <div tabindex="0" role="button" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out w-3/4 ml-5" disabled={edit ? false : true}>{status}</div>
+                      <div tabindex="0" role="button" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5" disabled={edit ? false : true} required>{status}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                       {#if edit}
-                      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96"> 
+                      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-70 sm:w-96"> 
                         <li><a on:click={(event) => status = event.target.innerText}>Graduated</a></li>
                         <li><a on:click={(event) => status = event.target.innerText}>Not Graduated</a></li>
                       </ul>
@@ -259,13 +263,13 @@
                       <div class="dropdown dropdown-top">
                         <!-- svelte-ignore a11y-label-has-associated-control -->
                       <label class="label">
-                        <span class="label-text font-semibold">Program: </span>
+                        <span class="label-text text-xs sm:text-sm font-semibold">Program: </span>
                       </label>
-                      <div tabindex="0" role="button" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out w-3/4 ml-5" disabled={edit ? false : true}>{prog}</div>
+                      <div tabindex="0" role="button" class="{bg} {color} text-xs sm:text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5" disabled={edit ? false : true} required>{prog}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
                       {#if edit}
-                      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96"> 
+                      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-xs sm:text-sm rounded-box w-70 sm:w-96"> 
                         {#each progs as progv}
                           <li><a on:click={() => prog = progv}>{progv}</a></li>
                         {/each}
@@ -273,17 +277,17 @@
                       {/if}
                       </div>
                     </div>
-                    <div class="form-control justify-center mt-8 ml-5 items-end">
+                    <div class="form-control justify-center sm:mt-5 mt-2 ml-5 items-end">
                       <!-- svelte-ignore a11y-label-has-associated-control -->
-                      <div class="btn bg-blue-800 glass   text-white group hover:text-black w-60" onclick="my_modal_1.showModal()">
-                        <box-icon name='edit' type='solid' color='#ffffff' class="bg-transparent group-hover:bg-black p-1 w-8 h-8 rounded transition duration-300" ></box-icon>
+                      <div class="btn bg-blue-800 glass text-white group hover:text-black sm:w-60 w-[12.5rem] text-xs sm:text-sm" onclick="my_modal_1.showModal()">
+                        <box-icon name='edit' type='solid' color='#ffffff' class="bg-transparent group-hover:bg-black p-1 w-8 h-8 rounded transition duration-300 scale-90 sm:scale-100" ></box-icon>
                          Edit Login Credentials
                      </div>
                   </div>
                 {#if edit}
-                <div class="flex flex-col gap-1 w-full items-end justify-center mt-5">
-                  <div class="btn bg-slate-800 btn-success glass text-white w-60" on:click={saveUpdate}>
-                     <box-icon name='edit' type='solid' color='#ffffff' ></box-icon>
+                <div class="flex flex-col gap-1 w-full items-end justify-center sm:mt-5 mt-1.5">
+                  <div class="btn bg-slate-800 btn-success glass text-white sm:w-60 w-[12.5rem] text-xs sm:text-sm" on:click={saveUpdate}>
+                     <box-icon name='edit' type='solid' color='#ffffff' class="scale-90 sm:scale-100"></box-icon>
                       Update Profile
                   </div>
                 </div>
@@ -299,30 +303,30 @@
 <dialog id="my_modal_1" class="modal">
   <div class="modal-box">
     <div class="absolute right-5 p-0 w-10 flex items-center btn" onclick="my_modal_1.close()"><box-icon name='x' type='solid' size='sm'></box-icon></div>
-          <form class="card-body flex flex-col gap-3">
+          <form class="card-body flex flex-col gap-2 sm:gap-3 p-2 sm:p-5">
             <h3>Change Login Credentials</h3>
             <label class="label">
-              <span class="label-text">Old Password:</span>
+              <span class="label-text text-xs sm:text-sm">Old Password:</span>
             </label>
             <div class="form-control">
-              <input bind:value={oldpass} type="password" placeholder="Current Password" class="input input-bordered"  /> 
+              <input bind:value={oldpass} type="password" placeholder="Current Password" class="input input-bordered" required /> 
             </div>
             <div class="form-control">
               <label class="label">
-                <span class="label-text">New Password:</span>
+                <span class="label-text text-xs sm:text-sm">New Password:</span>
               </label>
-              <input bind:value={pass} type="password" placeholder="New Password" class="input input-bordered"  />   
+              <input bind:value={pass} type="password" placeholder="New Password" class="input input-bordered" required />   
             </div> 
             <div class="form-control">
               <label class="label">
-                <span class="label-text">Confirm New Password:</span>
+                <span class="label-text text-xs sm:text-sm">Confirm New Password:</span>
               </label>
-              <input bind:value={cpass} type="password" placeholder="Confirm New Password" class="input input-bordered"  />
+              <input bind:value={cpass} type="password" placeholder="Confirm New Password" class="input input-bordered" required />
             </div>
             <div class="form-control mt-2">
-              <button class="btn bg-blue-900 text-white hover:text-black text-xl" on:click={handleOldPass}>
+              <button class="btn bg-blue-900 text-white hover:text-black text-md sm:text-xl" on:click={handleOldPass}>
                 {#if authenticating}
-                <span class="loading loading-dots loading-md"></span>
+                <span class="loading loading-dots loading-sm sm:loading-md "></span>
                 {:else}
                 Change Login Credentials
                 {/if}
@@ -333,21 +337,22 @@
         
     </div>
     {#if errorA}
-    <div class="absolute bottom-10 w-full flex items-center justify-center">
-    <div role="alert" class="alert alert-warning w-1/2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-      <span>The Information you have entered is not correct!</span>
+    <div class="absolute bottom-8 sm:bottom-10 w-full flex items-center justify-center">
+      <div role="alert" class="alert alert-warning sm:w-1/2 w-[90%] text-xs sm:text-md flex items-center gap-2 p-2 sm:p-4 sm:rounded-xl rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        <span class="text-[0.65rem] sm:text-md">The Information you have entered is not correct!</span>
+        <button class="btn p-0 sm:w-6 w-5  absolute right-2" on:click={() => errorA = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
+      </div>
     </div>
-  </div>
     {/if}
     {#if succF}
-    <div class="absolute bottom-10 w-full flex items-center justify-center">
-    <div role="alert" class="alert alert-success w-1/2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-      <span>Login Credentials Successfully updated</span>
-      <button class="btn" onclick="my_modal_1.close()" on:click={() => succF = false}>Close</button>
+    <div class="absolute bottom-8 sm:bottom-10 w-full flex items-center justify-center">
+      <div role="alert" class="alert alert-success sm:w-1/2 w-[90%] text-xs sm:text-md flex items-center gap-2 p-2 sm:p-4 sm:rounded-xl rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        <span class="text-[0.65rem] sm:text-md">Login Credentials Successfully updated</span>
+        <button class="btn" onclick="my_modal_1.close()" on:click={() => succF = false}>Close</button>
+      </div>
     </div>
-  </div>
     {/if}
 
 </dialog>

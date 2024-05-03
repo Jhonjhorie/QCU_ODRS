@@ -9,6 +9,7 @@
   import { createUserWithEmailAndPassword } from "firebase/auth";
   import { doc, setDoc } from 'firebase/firestore';
   import { db } from "$lib/firebase/firebase";
+  import HeaderBase from "../HeaderBase.svelte";
   
   function gotoLogin() {
 		goto('/Login');
@@ -68,25 +69,7 @@
 </script>
 
 <SectionWrapper>
-  <header class="flex flex-col relative z-20 bg-white w-full">
-    <div
-      class="max-w-[1400px] mx-auto w-full flex items-center justify-between p-4 pt-4"
-    >
-      <div class="flex justify-center items-center gap-5">
-        <a href="/">
-          <div class="h-[70px] w-[70px]">
-            <img class="bg-contain" src="/QCULOGO.png" alt="Quezon City University" />
-          </div>
-        </a>
-        <div>
-          <h3 class="text-2xl font-medium">Quezon City University</h3>
-          <p class="text-sm italic">Good Life Start Here!</p>
-        </div>
-      </div>
-    </div>
-    
-  </header>
-  <div class="w-full h-2 bg-blue-900 drop-shadow-md"></div>
+<HeaderBase></HeaderBase>
     <div class="flex flex-col justify-center items-center h-[80vh]">
       <div role="tablist" class="tabs tabs-lifted">
         <a role="tab" class="tab font-semibold" on:click={gotoLogin}>Login</a>
@@ -122,7 +105,10 @@
                 <label class="label">
                   <span class="label-text">Address: </span>
                 </label>
-                <input bind:value={addr} type="text" placeholder="Address" class="input input-bordered" required />
+                <textarea 
+                bind:value={addr} 
+                class="input input-bordered" 
+                rows="4" ></textarea required>
                 <p class="label-text-alt text-right text-xs text-thin text-slate-500 mt-1">No. | Street | Barangay | City | Zip Code</p>
    
               </div>
@@ -152,10 +138,10 @@
                 <label class="label">
                   <span class="label-text">Program: </span>
                 </label>
-                <div tabindex="0" role="button" class="btn w-96">{prog}</div>
+                <div tabindex="0" role="button" class="btn w-70 sm:w-96">{prog}</div>
              
                 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
+                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box text-xs sm:text-sm btn w-70 sm:w-96">
                   {#each progs as progv}
                   <li><a on:click={() => prog = progv}>{progv}</a></li>
                   {/each}

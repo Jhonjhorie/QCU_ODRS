@@ -24,6 +24,21 @@ export const authHandlers = {
     },
     logout: async () => {
         await signOut(auth)
+    },
+    changePassword: async (oldpass, pass, cpass) => {
+        try {
+            const response = await fetch('/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ oldpass, pass, cpass })
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw error; 
+        }
     }
 
 }
