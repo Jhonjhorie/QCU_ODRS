@@ -219,7 +219,6 @@
         break;
     }
   }
-
 </script>
 
 <main class="flex flex-col">
