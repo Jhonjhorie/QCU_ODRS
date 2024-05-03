@@ -2,7 +2,7 @@
   import PHeader from '../../../components/Admin/pHeader2.svelte';
   import Psidebar from '../../../components/Admin/psidebar.svelte';
   import PBoxesaccounts from '../../../components/Admin/pBoxesaccounts.svelte';
-  import { doc, setDoc, collection } from 'firebase/firestore';
+  import { doc, setDoc, collection, addDoc } from 'firebase/firestore';
   import { auth } from "$lib/firebase/firebase";
   import { createUserWithEmailAndPassword } from 'firebase/auth';
   import { db } from "$lib/firebase/firebase";
@@ -28,6 +28,10 @@
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   async function handleAuthentication() {
+    if (!auth.currentUser) {
+        console.log("No user signed in.");
+        return;
+    }
     if(authenticating){
       return;
     }
@@ -93,7 +97,7 @@
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, un, pass);
-      console.log("userCredential:", userCredential); 
+      //console.log("userCredential:", userCredential); 
        const user = userCredential.user;
 
        await Promise.all([
@@ -114,10 +118,9 @@
       } catch (err) {
       console.log("There was an auth error", err);
       error = true;
-  
-    } finally {
-      authenticating = false;
-    }
+      } finally {
+        authenticating = false;
+      }
   
   }
 
@@ -158,7 +161,7 @@
 
               <label class="form-control w-full max-w-xs pt-4 ">
                 <div class="label">
-                  <span class="label-text text-black text-[15px] font-medium">Username:</span>
+                  <span class="label-text text-black text-[15px] font-medium">Email address:</span>
                 </div>
                 <input bind:value={un} id="emad" type="text" placeholder="name@educ.com"  class="text-black bg-slate-300 input w-full max-w-xs shadow-sm border-[0.5px] border-[#0a0a0a2b]  " required />
                 <div class="label">

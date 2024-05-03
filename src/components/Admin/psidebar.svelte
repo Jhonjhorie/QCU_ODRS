@@ -16,7 +16,7 @@
 
     // @ts-ignore
     if(user) {
-        const docRef = doc(db, "user", "ytjPJgatWTTwBmGrmYaCfBzRqlW2");
+        const docRef = doc(db, "user", "cHxJxP1NwobZ7afjGWTGI1kMDXJ2");
         getDoc(docRef).then((snapshot) => {
             let docSnap = snapshot;
             if (docSnap.exists()) {
@@ -56,7 +56,7 @@
 
 <div class=" h-full w-[300px] bg-white z-20 shadow-xl fixed " >
     <div class="pt-7">
-        <img on:click={gotoAdminEdit}  src="/cute.jpg"  class="cursor-pointer w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
+        <img on:click={gotoAdminEdit} src="/cute.jpg"  class="cursor-pointer w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto" alt="pao" />
     </div>
        
     
