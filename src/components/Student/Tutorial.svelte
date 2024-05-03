@@ -16,10 +16,57 @@
     
         <h2 class="card-title text-md sm:text-4xl w-full bg-green-700 sm:rounded-t-xl rounded-t-md glass sm:p-5 p-2 text-white">Tutorial</h2>
         <div role="tablist" class="tabs tabs-lifted w-full  glass max-h-[30rem] sm:max-h-[32rem] overflow-y-auto rounded-b-2xl">
-            <input type="radio" name="my_tabs_2" role="tab" class="tab font-semibold text-sm sm:text-md mr-8 sm:mr-10 p-4 hover:bg-green-200" aria-label="Requesting" />
-            <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-6 ">Tab content 1</div>
+
+            <input type="radio" name="my_tabs_2" role="tab" class="tab font-semibold text-sm sm:text-md mr-8 sm:mr-10 p-4 hover:bg-green-200" aria-label="Requesting" checked />
+            <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-6 ">
+            <div class="flex flex-col sm:flex-row">
+              <div>    
+                Only with 4 Steps
+                <ul class="steps steps-vertical">
+                  
+                  <li class="step step-success">
+                    <div class="flex flex-row justify-center gap-5 items-center">
+                    Click Request Tab
+                    <img src="../reqbtn.png" class="h-28 w-28" alt="reqbtn"> 
+                    or in header, 
+                    <img src="../reqbtn2.png" class="h-28 w-28" alt="reqbtn">
+                    </div>
+                  </li>
+                  <li class="step step-success">
+                    <div class="flex flex-row justify-center gap-5 items-center">
+                    Select the Document,
+                    <img src="../reqDoc.png" class="h-28 w-28" alt="reqbtn"> 
+                     in mobile just swipe from the left to the right
+                    <img src="../reqDoc2.png" class="h-28 w-28" alt="reqbtn">
+                    </div>
+                  </li>
+                  <li class="step step-success">
+                    <div class="flex flex-row justify-center gap-5 items-center">
+                      Fill Up the Required Information and Schedule Claiming
+                      <img src="../reqValue.png" class="h-24 w-96" alt="reqbtn"> 
+                  </li>
+                  <li class="step step-success">
+                    <div class="flex flex-row justify-center gap-5 items-center">
+                      Choose the Mode of Payment
+                      <img src="../modeofPay.png" class="h-20 w-96" alt="reqbtn"> 
+                  </li>
+                  HAHAHAH
+                  <li class="step">
+                    <div class="flex flex-row justify-center gap-5 items-center">
+                      Submit,
+                      <img src="../submit.png" class="h-24 w-96" alt="reqbtn"> 
+                       or if online, Submit Proof of Payment
+                      <img src="../submitonline.png" class="h-40 w-52" alt="reqbtn">
+                      </div>
+                  </li>
+                  <li class="step">Confess your sins and Claim it in the day of judgement!</li>
+                </ul>
+              </div>
+              
+            </div>
+            </div>
           
-            <input type="radio" name="my_tabs_2" role="tab" class="tab font-semibold text-sm sm:text-md mr-8 sm:mr-10 p-4 hover:bg-green-200" aria-label="FAQ" checked />
+            <input type="radio" name="my_tabs_2" role="tab" class="tab font-semibold text-sm sm:text-md mr-8 sm:mr-10 p-4 hover:bg-green-200" aria-label="FAQ" />
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-6">
 
               <div class="collapse collapse-arrow bg-base-200 ">
