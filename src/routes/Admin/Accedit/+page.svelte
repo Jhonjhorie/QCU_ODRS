@@ -1,34 +1,28 @@
 <script>
-// @ts-nocheck
-
-   
+// @ts-nocheck   
     import PHeader from '../../../components/Admin/pHeader2.svelte';
     import Psidebar from '../../../components/Admin/psidebar.svelte';
     import { EmailAuthProvider, getAuth, reauthenticateWithCredential, updatePassword  } from "firebase/auth";
-    
     import { onMount } from 'svelte';
     // @ts-ignore
     import { doc, getDoc, updateDoc } from 'firebase/firestore';
     import { db } from "$lib/firebase/firebase";
-    import { goto } from '$app/navigation';
 
-    function gotoEditadmin (){
-              goto('/Admin/Accedit/editadmin')
-    }
 //View
-let email = "loading...";
-    let fn = "loading...";
-    let pass = "hidden"
-    let emaild;
-    let fnd;
-    //Update
-    let submit = "UPDATE";
-    let isSubmitting = false; 
-    let updateSuccess = false;
-    let newPassword = "";
-    let newFullName = "";
-    let oldPassword = "";
-    let oldPasswordError = "";
+
+  let email = "loading...";
+  let fn = "loading...";
+  let emaild;
+  let fnd;
+
+  let submit = "UPDATE";
+  let isSubmitting = false;
+  let updateSuccess = false;
+  let newPassword = "";
+  let newFullName = "";
+  let oldPassword = "";
+  let oldPasswordError = "";
+    
 
     const auth = getAuth();
     const user = auth.currentUser;
@@ -36,7 +30,7 @@ let email = "loading...";
     // @ts-ignore
     onMount(async () => {
     if (user) {
-        const docRef = doc(db, "user", user.uid);
+        const docRef = doc(db, "user", "cHxJxP1NwobZ7afjGWTGI1kMDXJ2");
         const snapshot = await getDoc(docRef);
         if (snapshot.exists()) {
             const data = snapshot.data();
@@ -59,12 +53,16 @@ let email = "loading...";
 
         if (!newFullName.trim() && !newPassword.trim()) {
           console.log("Nothing to update");
+          oldPasswordError = "Nothing to update.";
+          return;
         }
 
         isSubmitting = true;
         if (newFullName) {
             await updateDoc(doc(db, "user", user.uid), { fullname: newFullName });
             console.log("Full name updated successfully!");
+            
+           
         }
 
         if (newPassword) {
@@ -73,24 +71,33 @@ let email = "loading...";
             }
             await updatePassword(user, newPassword);
             console.log("Password updated successfully!");
+          
         }
-
+        document.getElementById("my_modal_3").close();
         updateSuccess = true;
+        
         isSubmitting = false;
         newFullName = "";
         newPassword = "";
         oldPassword = "";
-
+        setTimeout(() => {
+          updateSuccess = false;
+        }, 3000); 
         
     } catch (error) {
-        console.error("Error updating password: ", error);
+       // console.error("Error updating password: ", error);
         isSubmitting = false; 
         if (error.code === "auth/wrong-password") {
             oldPasswordError = "Incorrect old password.";
-        } else if (oldPassword.trim() === "") {
+        }
+          else  if (!newFullName.trim() && !newPassword.trim()) {
+          console.log("Nothing to update");
+          oldPasswordError = "Nothing to update.";
+        }
+         else if (oldPassword.trim() === "") {
             oldPasswordError = "Old password cannot be empty.";
         } else {
-            oldPasswordError = "An error occurred. Please try again later.";
+          oldPasswordError = "Incorrect old password.";
         }
         setTimeout(() => {
             oldPasswordError = "";
@@ -101,7 +108,7 @@ let email = "loading...";
 </script>
 <style>
     ::placeholder {
-        font-size: 13px;;
+        font-size: 13px;
         color: rgba(0, 0, 0, 0.411);
     }
     :disabled {

@@ -5,12 +5,14 @@
   import PBoxesaccounts from '../../../components/Admin/pBoxesaccounts.svelte';
   import { onMount } from 'svelte';
   import { auth, db } from "$lib/firebase/firebase";
-  import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
-  import { getAuth, signInWithEmailAndPassword, updatePassword } from "firebase/auth";
+  import { collection, getDocs, deleteDoc, doc, updateDoc, getDoc } from "firebase/firestore";
+  import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from "firebase/auth";
 
   
 
-  let newPassword = '';
+  let newpass = '';
+  let adminPassword = '';
+  let nothingerror = false;
 
 // Variable
     /**0
@@ -24,9 +26,17 @@
   let showModal = false;
   let deleting = false;
 
-  const fetchData = async () => {
+ /* const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, 'registrar'));
     data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  };*/
+  const fetchData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'registrar'));
+      data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
   const showUserDetails = (/** @type {{ fullname: any; 
     email: any; department_name: any; department_name: any; } 
@@ -34,11 +44,11 @@
     selectedUser = user;
     showModal = true;
   };
-  const deleteRegistrarAccount = async () => {
-  if (selectedUser && typeof selectedUser.id) { 
+  const deleteRegistrarAccount = async () => {// @ts-ignore
+  if (selectedUser && typeof selectedUser.id) { // @ts-ignore
     console.log("Deleting user with ID:", selectedUser.id); 
     deleting = true;
-    try {
+    try {// @ts-ignore
       await deleteDoc(doc(db, 'registrar', selectedUser.id));
       // @ts-ignore
       data = data.filter(user => user.id !== selectedUser.id);
@@ -52,33 +62,61 @@
     console.error("Invalid user ID:", selectedUser); 
   }
 };
-async function updateRegistrarInformation() {
-    try {
-        // Authenticate the admin
-        await signInWithEmailAndPassword(auth, "admin@example.com", "admin123");
-        
-        // Get the current user
-        const user = auth.currentUser;
-        
-        // Check if the user is authenticated
-        if (user) {
-            // Ensure newPassword is not empty
-            if (!newPassword) {
-                console.error("New password is empty.");
-                return;
-            }
 
-            // Update the password
-            await updatePassword(user, newPassword);
+  const updateRegistrarInformation = async () => {
+      try {
+          console.log("Updating registrar information...");
 
-            console.log("Password updated successfully");
-        } else {
-            console.error("User is not authenticated.");
-        }
-    } catch (error) {
-        console.error("Error updating user password:", error);
-    }
-}
+          if (!selectedUser) {
+              console.error("selectedUser is not available.");
+              return;
+          }
+          const docRef = doc(db, "registrar", selectedUser.id);
+          const docSnap = await getDoc(docRef);
+          const existingData = docSnap.data();
+
+          //check if the data doesn't change
+          // @ts-ignore
+          if (selectedUser.fullname === existingData.fullname &&
+          // @ts-ignore
+              selectedUser.email === existingData.email &&
+              // @ts-ignore
+              selectedUser.department_name === existingData.department_name) {
+              console.log("Selected user's data matches the data in the Firestore document. No update required.");
+              nothingerror = true;
+              setTimeout(() => {
+                nothingerror = false;
+              }, 3000);
+              return;
+          }
+          
+          // Update registrar information in Firestore
+          await updateDoc(doc(db, "registrar", selectedUser.id), {
+              fullname: selectedUser.fullname,
+              email: selectedUser.email,
+              department_name: selectedUser.department_name,
+          });
+          console.log("Registrar information updated in Firestore.");
+          location.reload();
+
+        
+
+          // Close the modal
+          showModal = false;
+      } catch (error) {
+          console.error("Error updating registrar information:", error.message);
+      }
+  };
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -86,10 +124,6 @@ async function updateRegistrarInformation() {
   onMount(fetchData);
 
 
-
-  function getASecureRandomPassword() {
-    throw new Error('Function not implemented.');
-  }
 </script>
 
 
@@ -159,59 +193,71 @@ async function updateRegistrarInformation() {
                     <div class="">
                      
                         {#if selectedUser}
+                        <form on:submit|preventDefault={updateRegistrarInformation}>
                         <label class="flex w-full max-w-xs pt-3">
                           <div class="label">
                           <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Fullname :</span>
                           </div>
-                          <input bind:value={selectedUser.fullname} type="text" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                          <input bind:value={selectedUser.fullname} type="text" placeholder="" class="bg-slate-300 input input-bordered w-auto max-w-xs border-slate-400 text-black" />  
                         </label>
                         <label class="flex w-full max-w-xs pt-3">
                           <div class="label">
                           <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Email :</span>
                           </div>
-                          <input bind:value={selectedUser.email}  type="email" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                          <input bind:value={selectedUser.email}  type="email" placeholder="" class="bg-slate-300 input input-bordered w-auto max-w-xs border-slate-400 text-black" />  
                         </label>
                         <label class="flex w-full max-w-xs pt-3">
                           <div class="label">
                           <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Department :</span>
                           </div>
-                          <input bind:value={selectedUser.department_name}  type="text" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
+                          <input bind:value={selectedUser.department_name}  type="text" placeholder="" class="bg-slate-300 input input-bordered w-auto max-w-xs border-slate-400 text-black" />  
                         </label>
-                        <label class="flex w-full max-w-xs pt-3">
-                          <div class="label">
-                          <span class="label-text text-black font-medium text-[15px] w-[8vw] ">Password :</span>
+                        {#if nothingerror}
+                          <div id="" class="nochanges text-sm text-red-600 font-normal w-full m-2">
+                            <div class="text-center">Nothing to update!</div> 
                           </div>
-                          <input bind:value={newPassword} type="password" placeholder="" class="bg-slate-300 input input-bordered w-[18vw] max-w-xs border-slate-400 text-black" />  
-                        </label>
+                        {/if}
+                       
+                        </form>
                     {/if}
  
 
                  
                     </div>
-                    <div class="modal-action">
-                      <button on:click={updateRegistrarInformation} class="w-[100px] hover:bg-green-600  bg-slate-700 hover:text-slate-100  p-1 px-2 rounded-sm duration-200 shadow-md h-[40px]">
-                        Update 
-                      </button>
-                      <form method="dialog">
-                        {#if deleting}
-                        <span>Loading...</span>
-                       {:else}
-                       <button 
-                       on:click={() => {
-                         const confirmDelete = confirm("Are you sure you want to delete this Registrar Account?");
-                         if (confirmDelete) {
-                          deleteRegistrarAccount(selectedUser.id);
-                           showModal = false; 
-                         }
-                       }} 
-                       class="hover:text-slate-100 hover:bg-red-600 p-1 px-2 rounded-sm duration-200 shadow-md h-[40px]"
-                      >
-                        Delete
-                      </button>
-                       {/if}
+                    <div class="modal-action flex justify-around">
+                      <div class="">
+                        <button onclick="my_modal_pass.showModal()" class=" hover:bg-green-600  bg-slate-700 hover:text-slate-100  p-1 px-2 rounded-sm duration-200 shadow-md h-[40px]">Update Password</button>
+                      </div>
+                      <div class="">
+                        <button on:click={updateRegistrarInformation} class="w-[100px] hover:bg-green-600  bg-slate-700 hover:text-slate-100  p-1 px-2 rounded-sm duration-200 shadow-md h-[40px]">
+                          Update 
+                        </button>
+                      </div>
+                      <div class="">
+                          <form method="dialog">
+                            {#if deleting}
+                            <span>Loading...</span>
+                          {:else}
+                          <button 
+                          on:click={() => {
+                            const confirmDelete = confirm("Are you sure you want to delete this Registrar Account?");
+                            if (confirmDelete) {// @ts-ignore
+                              deleteRegistrarAccount(selectedUser.id);
+                              showModal = false; 
+                            }
+                          }} 
+                          class="hover:text-slate-100 hover:bg-red-600 p-1 px-2  rounded-sm duration-300 shadow-md h-[40px]"
+                          >
+                            Delete
+                          </button>
+                      
+                        {/if}
+                        
+                        </form>
+                      </div>
+                      <div class="">
                         <button on:click={() => showModal = false} class="w-[100px]  bg-slate-700 hover:text-slate-100 hover:bg-slate-500 p-1 px-2 rounded-sm duration-200 shadow-md h-[40px] ">Cancel</button>
-                      </form>
-                    </div>
+                      </div>
                   </div>
                 </dialog>
 
@@ -221,6 +267,26 @@ async function updateRegistrarInformation() {
      
               {/each}
             </tbody>
+      
+       <dialog id="my_modal_pass" class="modal bg-black bg-opacity-85  ">
+                <div class="modal-box bg-slate-300">
+                  <h3 class="font-bold text-lg text-black">UPDATE REGISTRAR PASSWORD</h3>
+                
+                  <br>
+                  <div class="text-sm font-medium text-black">Enter admin password:</div>
+                  <input type="password" class="w-full p-3 bg-slate-200 border border-slate-600 rounded-md" placeholder="Enter admin password">
+                  <div class="text-sm font-medium mt-4 text-black">Enter new password:</div>
+                  <input type="text" class="w-full p-3 bg-slate-200 border border-slate-600 rounded-md" placeholder="input new user password">
+
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button  class="btn hover:bg-green-600 text-white ">Update</button>
+                      <button class="btn text-white">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            
             <!-- foot -->     
           </table>
         </div>  
