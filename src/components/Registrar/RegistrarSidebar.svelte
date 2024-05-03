@@ -28,7 +28,6 @@
     let dept = "" ;
     let name = "Loading...";
     const auth = getAuth();
-    let asd = "asdasd";
     onMount(async () => {
       user = auth.currentUser;
       
