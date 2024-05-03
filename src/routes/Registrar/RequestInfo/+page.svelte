@@ -75,7 +75,11 @@
       console.error("Error updating status:", error);
     }
   }
+  let showPreview = false;
 
+  function togglePreview() {
+    showPreview = !showPreview;
+  }
   function submit(nStatus,pStatus){
     editpaymentStatus(pStatus)
     editStatus(parseInt(nStatus))
@@ -158,14 +162,23 @@
                   <option value="Paid">Paid</option>
                 </select>
               </label>
-              <label class="form-control w-full max-w-xs">
+              <label class="form-control w-full max-w-xs" on:click={togglePreview}>
                 <div class="label">
                   <span class="label-text">Proof of Payment:</span>
                 </div>
                 {#if imageUrl}
-                <img src={imageUrl} alt="Request Image" class="w-auto h-40" />
+                  <img src={imageUrl} alt="Request Image" class="w-auto h-40 cursor-pointer" />
                 {:else}
                   <p>No image available</p>
+                {/if}
+              
+                {#if showPreview}
+                  <div class="fixed top-10 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+                    <div class="relative">
+                      <button class="absolute top-0 right-0 text-white px-2 py-1" on:click={togglePreview}>Close</button>
+                      <img src={imageUrl} alt="Request Image" class="max-w-lg max-h-lg" />
+                    </div>
+                  </div>
                 {/if}
               </label>
 

@@ -13,9 +13,10 @@
     orderBy,
   } from "firebase/firestore";
 
+
   let requests = [];
   let loading = true;
-
+  
   async function CCSfetchRequests() {
     const q = query(
       collection(db, "docRequests"),
@@ -125,8 +126,6 @@
   
   CCSfetchRequests();
 </script>
-
-
 
 <div class="h-[70vh] w-auto p-2 bg-slate-100 rounded-md shadow-lg mr-4">
   <div class="overflow-x-auto w-auto h-[67.5vh] bg-slate-200">
