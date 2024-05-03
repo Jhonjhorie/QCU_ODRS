@@ -1,9 +1,9 @@
 <script>
 // @ts-nocheck
 
-    import SectionWrapper from "../SectionWrapper.svelte";
-    import Header from "../Header.svelte";
-    import { doc, collection, query, where, getDocs, getDoc } from "firebase/firestore";
+  import SectionWrapper from "../SectionWrapper.svelte";
+  import Header from "../Header.svelte";
+  import { doc, collection, query, where, getDocs, getDoc } from "firebase/firestore";
   import StudRfBtn from "./StudRFBtn.svelte";
   import StudToBtn from "./StudToBtn.svelte";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -12,7 +12,7 @@
   
 
   let docsRequests = [];
-    let sortBy = {col: "id", ascending: true};
+  let sortBy = {col: "id", ascending: true};
     // Check if there is a current user before accessing their UID
 
 let authenticating = true;
@@ -92,12 +92,12 @@ onMount(() => {
    <StudRfBtn />
    <StudToBtn />
     <main class="flex flex-col
-    items-start px-5 mt-5">
-        <div class="card card-compact w-[90%] shadow-xl items-center bg-white h-[600px]">
-            <p></p>
-            <h2 class="card-title text-4xl w-full bg-slate-700 rounded-t-xl p-5 text-white glass">DASHBOARD</h2>
+    items-start sm:px-5 px-0.5 sm:mt-5 mt-2.5">
+        <div class="card card-compact sm:w-[90%] w-full shadow-xl items-center bg-white h-[540px] sm:h-[600px]">
+           
+            <h2 class="card-title sm:text-4xl text-sm w-full bg-slate-700 rounded-t-xl sm:p-5 p-2.5 text-white glass">DASHBOARD</h2>
             
-                <div class="px-2 pb-3 overflow-x-auto w-full">
+                <div class="sm:px-2 px-0.5 sm:pb-3 pb-3  overflow-x-auto w-full">
                     <table class="table">
                       <!-- head -->
                       <thead>
@@ -117,25 +117,25 @@ onMount(() => {
                         {#if docsRequests != null}
                           {#each docsRequests as doc, index}
                           <tr class="hover:bg-slate-200">
-                              <td class="font-bold">{index + 1}</td>
-                              <td>{doc.tnum}</td>
-                              <td class="font-bold">{doc.name}</td>
-                              <td class="font-bold">{doc.price}</td>
-                              <td class="font-bold">{doc.date}</td>
+                              <td class="font-bold text-xs sm:text-sm">{index + 1}</td>
+                              <td class="text-xs sm:text-sm">{doc.tnum}</td>
+                              <td class="text-xs sm:text-sm">{doc.name}</td>
+                              <td class="text-xs sm:text-sm">{doc.price}</td>
+                              <td class="font-bold text-xs sm:text-sm">{doc.date}</td>
                               <td>
                               {#if doc.status == 1}
                               <ul class="steps w-full">
-                                <li data-content="!" class="step step-warning font-bold">Claiming</li>
+                                <li data-content="!" class="step step-warning">Claiming</li>
                                 <li data-content="✓" class="step step-neutral"></li>
                             </ul>
                               
                               {:else if doc.status == 2}
                               <ul class="steps w-full">    
-                                <li data-content="✓" class="step step-success font-bold">Completed</li>
+                                <li data-content="✓" class="step step-success">Completed</li>
                             </ul>
                               {:else}
                               <ul class="steps w-full">
-                                  <li data-content="?" class="step step-info font-bold">Pending</li>
+                                  <li data-content="?" class="step step-info">Pending</li>
                                   <li data-content="!" class="step step-neutral"></li>
                                
                               </ul>
@@ -151,8 +151,8 @@ onMount(() => {
                       
                     </table>
                     {#if authenticating}
-                    <div class="h-full flex justify-center items-center">
-                      <span class="h-14 w-10 loading loading-dots loading-md "></span>
+                    <div class="h-full flex justify-center items-center mt-[-15px]">
+                      <span class="sm:h-14 sm:w-10 h-7 w-5 loading loading-dots loading-md "></span>
                     </div>
                     {/if}
                   </div>
