@@ -7,23 +7,29 @@
 		goto('/Login');
 	}
 </script>
-<SectionWrapper>
-  <main class=" flex flex-col">
-  <div class="absolute top-28 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">Good Life Start Here!</p></div>
-  <div class="absolute top-44 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">#1QCU</p></div>
-  <div class="absolute top-10 right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg"><p class="text-md italic text-white">#1 Local University of Employable Graduates</p></div>
-  <div class="hero h-[97vh] bg-cover" style="background-image: url('QCU CAMPUS.jpg');">
-    <div class="hero-overlay bg-opacity-60"></div>
-    <div class="hero-content text-center text-neutral-content gap-10">
-      <img src="QCULOGO.png" class=" w-64 rounded-lg shadow-3xl p-5 bg-white bg-opacity-30" alt="" />
-      <div class="text-left max-w-xl">
-        <h1 class="mb-5 text-5xl font-bold">DOCHUB</h1>
-        <p class="mb-5">For Students and Graduates of QCU San Bartolomeo (Main) <br />
-          (Bachelor Degree / Traditional Undergrad) <br/>
-          For Concerns, email us at registrar@qcu.edu.ph</p>
-		<button class="btn btn-outline btn-error" on:click={goToLog}>Get Started</button>
+  <main class="h-full flex flex-col justify-center items-center">
+    <div class="hero h-[calc(100vh-23px)] sm:h-[97vh] bg-cover" style="background-image: url('QCU CAMPUS.jpg');">
+      <div class="hero-overlay bg-opacity-60">
       </div>
+        <div class="hero-content flex-col-reverse sm:flex-row flex text-center text-neutral-content gap-10">
+          <img src="QCULOGO.png" class=" sm:w-64 w-48  shadow-3xl p-5 bg-white bg-opacity-30  rounded-full drop-shadow-2xl" alt="" />
+          <div class="text-left max-w-xl">
+            <h1 class="mt-16 sm:mt-0 mb-3 sm:mb-5 text-white text-4xl sm:text-5xl font-bold">DOCHUB</h1>
+            <p class="sm:mb-5 mb-3 sm:text-sm text-xs sm:w-auto w-[80%]">For Students and Graduates of QCU San Bartolomeo (Main) <br />
+              (Bachelor Degree / Traditional Undergrad) <br/>
+              For Concerns, email us at registrar@qcu.edu.ph</p>
+        <button class="btn btn-outline btn-error  sm:p-3 p-2 sm:text-sm text-xs" on:click={goToLog}>Get Started</button>
+        
+          </div>
+        </div>
     </div>
-  </div>
+    <div class="absolute top-28 right-5 sm:right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg">
+      <p class="text-xs sm:text-lg italic text-white">Good Life Start Here!</p>
+    </div>
+    <div class="absolute top-44 right-5 sm:right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg">
+      <p class="text-xs sm:text-lg italic text-white">#1QCU</p>
+    </div>
+    <div class="absolute top-10 right-5 sm:right-20 bg-slate-100 bg-opacity-30 p-2 rounded-lg">
+      <p class="text-xs sm:text-lg italic text-white">#1 Local University of Employable Graduates</p>
+    </div>
 </main>
-</SectionWrapper>

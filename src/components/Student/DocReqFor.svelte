@@ -51,11 +51,11 @@
     let studNum = "Loading...";
     let fullName = "Loading...";
     let dept;
-    let reqValue;
+    let reqValue = "Select One";
     let phone = "Loading...";
     let error = false;
     let errorD = false;
- 
+  
     let authenticating = false;
     let authenticatingD = false;
     let mop = "Cash";
@@ -125,14 +125,17 @@
     }
     let schedF;
     async function RequestDocBtn() {
+    if(req == "authentication"){
+      reqValue = "N/A"
+    }
       
       authenticating = true;
       
-      if(sched != null){
+      if(sched != null ){
       let schedA = sched.split('-')
       schedF = schedA[1]+'-'+schedA[2]+'-'+schedA[0];
       }
-      if (schedF && reqValue) { // Check if schedF and reqValue are not null or undefined
+      if (schedF && reqValue && reqValue != "Select One") { // Check if schedF and reqValue are not null or undefined
     if (mop == "Online") {
       authenticating = false;
       model_online.showModal();
@@ -191,7 +194,7 @@
         };
 
         // Check if an image file is selected and the payment method is "Online"
-        if (mop == "Online" && input.files.length > 0) {
+        if (mop == "Online" && input.files.length > 0 && input != null) {
           const file = input.files[0];
           const storageRef = ref(storage, `images/${file.name}`);
           await uploadBytes(storageRef, file);
@@ -199,12 +202,17 @@
           const imageUrl = await getDownloadURL(storageRef);
 
          
-          docReqData.imageUrl = imageUrl;
-        }
-
+        docReqData.imageUrl = imageUrl;
         const docReq = await addDoc(collection(db, "docRequests"), docReqData);
         authenticatingD = false;
         goto(`/Student/Dashboard`);
+        }else{
+        console.log("There was an auth error", err);
+        authenticatingD = false;
+        errorD = true;
+        }
+
+        
       } catch (err) {
         console.log("There was an auth error", err);
         authenticatingD = false;
@@ -242,64 +250,64 @@
 
     <StudRfBtn />
     <main class="flex flex-col
-    items-center mt-5">
-    <div class="card card-compact w-1/3 bg-slate-100 mt-3">
+    items-center sm:mt-5 mt-2.5">
+    <div class="card card-compact w-full sm:px-1 px-0.5 sm:w-1/3 bg-slate-100">
       {#if !authenticating2}
-        <h2 class="card-title bg-slate-900 rounded-md px-5 py-5 text-white glass">Request For {ReqDoc}</h2>
+        <h2 class="card-title bg-slate-900 rounded-md sm:p-5 p-2.5 text-sm sm:text-xl text-white glass">Request For {ReqDoc}</h2>
         
-            <form class="card-body px-5 py-10">
+            <form class="card-body px-2 py-5 sm:py-10">
               <div class="flex flex-row gap-2">
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Student ID:</span>
                       </label>
-                  <input type="text" bind:value={studNum} placeholder="Student ID" class="input input-bordered w-3/4" disabled />
+                  <input type="text" bind:value={studNum} placeholder="Student ID" class="input input-bordered w-full text-sm sm:text-md" disabled />
                 </div>
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Phone Number:</span>
                       </label>
-                    <input type="text" bind:value={phone} placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered w-3/4" disabled />
+                    <input type="text" bind:value={phone} placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered w-full text-sm sm:text-md" disabled />
                 </div>
               </div>
-                <div class="form-control mt-2">
+                <div class="form-control sm:mt-2 mt-1">
                     <label class="label">
                         <span class="label-text">Full Name:</span>
                       </label>
-                    <input type="text" bind:value={fullName} placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered" disabled />
+                    <input type="text" bind:value={fullName} placeholder="ex: Last Name, First Name Middle Initial" class="input input-bordered text-sm sm:text-md" disabled />
                 </div>
                 
 
                 {#if req == "yearGrad"}
-                    <div class="form-control mt-2">
+                    <div class="form-control sm:mt-2 mt-1">
                         <label class="label">
                             <span class="label-text">Year Graduated:</span>
                         </label>
-                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered"  />
+                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered text-sm sm:text-md"  />
                     </div>
                   
                 {/if}
                 {#if req == "lastYear"}
-                    <div class="form-control mt-2">
+                    <div class="form-control sm:mt-2 mt-1">
                         <label class="label">
-                            <span class="label-text">Last Academic Year Attended:</span>
+                            <span class="label-text text-sm sm:text-md">Last Academic Year Attended:</span>
                         </label>
-                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered"  />
+                        <input type="number" bind:value={reqValue} placeholder="ex: 2020" class="input input-bordered text-sm sm:text-md"  />
                     </div>
                  
                 {/if}
                 {#if req == "yearSem"}
-                <div class="form-control mt-2 flex">
+                <div class="form-control sm:mt-2 mt-1 flex">
                     <div class="dropdown dropdown-top">
                       
                       <!-- svelte-ignore a11y-label-has-associated-control -->
                       <label class="label">
-                        <span class="label-text">Year and Sem: </span>
+                        <span class="label-text text-sm sm:text-md">Year and Sem: </span>
                       </label>
-                      <div tabindex="0" role="button" class="btn w-full">{reqValue}</div>
+                      <div tabindex="0" role="button" class="btn w-full text-sm sm:text-md">{reqValue}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
+                      <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-96">
                         {#each Year as item}
                         <li><a on:click={() => reqValue = item}>{item}</a></li>
                         {/each}
@@ -309,17 +317,17 @@
                 
                 {/if}
                 {#if req == "certification"}
-                <div class="form-control mt-2 flex">
+                <div class="form-control sm:mt-2 mt-1 flex">
                     <div class="dropdown dropdown-top">
                       
                       <!-- svelte-ignore a11y-label-has-associated-control -->
                       <label class="label">
-                        <span class="label-text">Certification: </span>
+                        <span class="label-text text-sm sm:text-md">Certification: </span>
                       </label>
-                      <div tabindex="0" role="button" class="btn w-full">{reqValue}</div>
+                      <div tabindex="0" role="button" class="btn w-full text-sm sm:text-md">{reqValue}</div>
                    
                       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96">
+                      <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-96">
                         {#each Cert as item}
                         <li><a on:click={() => reqValue = item}>{item}</a></li>
                         {/each}
@@ -330,55 +338,59 @@
                 {/if}
                 {#if req == "authentication"}
                 {/if}
-                <div class="form-control mt-2 flex flex-row gap-2">
+                <div class="form-control sm:mt-2 mt-1 flex flex-row gap-1 sm:gap-2 justify-between">
                   <label class="label">
-                    <span class="label-text">Date to Claim: </span>
+                    <span class="label-text text-xs sm:text-md">Date to Claim: </span>
                   </label>
          
-                    <input type="date" min={today} class="input bordered w-3/4  items-center flex" max={maxx} bind:value={sched}/>
+                    <input type="date" min={today} class="input bordered sm:w-3/4 w-4/6 items-center flex text-xs sm:text-md" max={maxx} bind:value={sched}/>
                     
                 </div>
-                <div class="flex flex-row gap-4">
-                <div class="form-control">
-                  <label class="label cursor-pointer gap-4">
-                    <span class="label-text">Cash</span> 
+                <div class="flex flex-row gap-2 sm:gap-8">
+                <div class="form-control flex-2">
+                  <label class="label cursor-pointer gap-2 sm:gap-4gap-4">
+                    <span class="label-text text-xs sm:text-md">Cash</span> 
                     <input type="radio" on:change={()=>{mop="Cash", btnColor = "bg-blue-900"}} name="radio-10" class="radio checked:bg-blue-500" checked />
                   </label>
                 </div>
-                <div class="form-control">
-                  <label class="label cursor-pointer gap-4">
-                    <span class="label-text">Gcash/Maya</span> 
+                <div class="form-control flex-2">
+                  <label class="label cursor-pointer gap-2 sm:gap-4">
+                    <span class="label-text text-xs sm:text-md">Gcash/Maya</span> 
                     <input type="radio" on:change={()=>{mop="Online", btnColor = "bg-green-700"}} name="radio-10" class="radio checked:bg-green-500" />
                   </label>
                 </div>
-                <div class="form-control">
-                  <label class="label gap-10">
-                    <span class="label-text">Price</span> 
+                <div class="form-control flex-1">
+                  <label class="label gap-5 flex  flex-row justify-between">
+                    <span class="label-text text-xs sm:text-md">Price</span> 
                     <span class=" font-bold ">{price}</span>
                   </label>
                 </div>
-                
               </div>
-                <div class="form-control my-4 h-14 justify-end items-center flex flex-row gap-1">
+                <div class="form-control mt-1 sm:my-4 h-14 justify-end items-center flex flex-row gap-1">
                   {#if mop=="Online"}
                   <label class="label flex flex-col items-end">
+
                     <span class="label-text text-xs">Gcash/Maya:</span>
                    
                     <span class="font-bold text-green-500 mb-2">
                       <span id="updatedPhoneNumber">{#if wallets.length > 0}{wallets[0].number}{/if}</span> - Timothy O.
                     </span>
              
+
+                    <span class="label-text text-xs text-end">Gcash/Maya:</span>
+                    <span class="font-bold text-green-500 mb-2 text-xs sm:text-md text-end">09193629016 - Timothy O.</span>
+
                   </label>
                   {:else}
                   <label class="label flex flex-col items-end">
-                    <span class="label-text text-xs"></span>
-                    <span class="font-bold text-[#677ab0]">Pay as you Claim</span>
+                    <span class="label-text text-xs font-bold text-[#677ab0] text-end">Pay as you Claim</span>
+                  
                   </label>
                   {/if}
 
-                  <button class="btn {btnColor} w-60 text-white hover:text-black text-xl glass" on:click={RequestDocBtn}>
+                  <button class="btn {btnColor} w-32 sm:w-60 text-white hover:text-black sm:text-xl text-md glass" on:click={RequestDocBtn}>
                     {#if authenticating}
-                    <span class="loading loading-dots loading-md"></span>
+                    <span class="loading loading-dots loading-sm sm:loading-md"></span>
                     {:else}
                     {#if mop == "Cash"}
                     Submit
@@ -400,66 +412,86 @@
               
     </div>
     {#if error}
-    <div class="absolute bottom-10 w-full flex items-center justify-center">
-    <div role="alert" class="alert alert-warning w-1/2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-      <span>The Information you have entered is not correct!</span>
+    <div class="absolute bottom-9 sm:bottom-10 w-full flex justify-center">
+      <div role="alert" class="alert alert-warning sm:w-1/2 w-[90%] text-xs sm:text-md flex items-center gap-2 p-2 sm:p-4 sm:rounded-xl rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        <span class="text-[0.65rem] sm:text-md">Please provide required information!</span>
+      </div>
+      <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => error = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
+
     </div>
-  </div>
     {/if}
     <!-- Open the modal using ID.showModal() method -->
-<dialog id="model_online" class="modal modal-bottom sm:modal-middle sm:w-full min-h-3/4 py-2 sm:p-2">
-  <div class="modal-box w-full min-h-full flex flex-col justify-between">
-    <div>
-    <h3 class="font-bold text-2xl">Confirmation</h3>
-    <input
-      bind:this={input}
-      on:change={onChange}
-      type="file"
-      class="w-3/4 mb-2 mt-3"
-    />
-    <div class="w-full h-3/4 overflow-auto">
-      <div bind:this={container} class="w-full h-[520px] border-2 border-[#ddd] mt-3 flex items-center justify-center">
-        {#if showImage}
-          <img bind:this={image} src="" alt="Preview" class="w-full" />
-        {:else}
-          <span bind:this={placeholder}>Image Preview</span>
-        {/if}
+<dialog id="model_online" class="modal modal-bottom sm:modal-middle w-full min-h-full pt-2 sm:px-1 sm:pt-1">
+    <div class="modal-box w-full min-h-[75%] flex flex-col gap-1 sm:gap-2 p-3 sm:p-4">
+        <h3 class="font-bold text-md sm:text-2xl">Proof of Payment</h3>
+        <div class="flex flex-row justify-center items-center w-full">
+          <div class="sm:w-[243px] sm:h-[432px] w-[180px] h-[320px] overflow-auto flex items-center justify-center">
+              <div bind:this={container} class="w-full h-full border-2 border-[#ddd] flex items-center justify-center">
+                {#if showImage}
+                  <img bind:this={image} src="" alt="Preview" class="w-full" />
+                {:else}
+                  <span bind:this={placeholder}>Image Preview</span>
+                {/if}
+              </div>
+          </div>
+        </div>
+        <label class="form-control w-full my-0 py-0">
+          <div class="label">
+            <span class="label-text text-xs sm:text-sm">Image</span>
+            <span class="label-text-alt text-xs sm:text-sm"></span>
+          </div>
+          <input
+          bind:this={input}
+          on:change={onChange}
+          type="file"
+          class="w-full h-[30px] file-input file-input-bordered text-xs sm:text-sm"
+          accept="image/*"
+          required
+        />
+          <div class="label">
+            <span class="label-text-alt text-xs sm:text-sm"></span>
+            <span class="label-text-alt text-xs sm:text-sm">Make sure it is readable</span>
+          </div>
+        </label>
+        
+      <div class="flex flex-row justify-between items-end py-0 my-0">
+        <div>
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <label class="label flex flex-col justify-end items-start">
+            <span class="label-text text-[0.65rem] sm:text-xs">Gcash/Maya:</span>
+            <span class="font-bold text-green-500 text-xs sm:text-sm">09193629016 - Timothy O.</span>
+          </label>
+        </div>
+        <div class="modal-action flex flex-col items-end gap-2">
+        
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-error text-xs sm:text-sm p-2 sm:p-3">Cancel</button>
+            <button class="btn btn-success text-xs sm:text-sm p-2 sm:p-3" on:click={RequestDocBtnOnline}>
+              {#if authenticatingD}
+              <span class="loading loading-dots loading-md"></span>
+              {:else}
+              Submit
+              {/if}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="flex flex-row justify-between items-end">
-    <div>
-      <label class="label flex flex-col justify-end items-start">
-        <span class="label-text text-xs">Gcash/Maya:</span>
-        <span class="font-bold text-green-500 mb-2">09193629016 - Timothy O.</span>
-      </label>
-    </div>
-    <div class="modal-action flex flex-col items-end gap-2">
-      <span class="label-text text-green-800">Make sure it is readable</span>
-      <form method="dialog">
-        <!-- if there is a button in form, it will close the modal -->
-        <button class="btn btn-error">Cancel</button>
-        <button class="btn btn-success" on:click={RequestDocBtnOnline}>
-          {#if authenticatingD}
-          <span class="loading loading-dots loading-md"></span>
-          {:else}
-          Submit
-          {/if}
-        </button>
-      </form>
-    </div>
-  </div>  
-</div>
-
+    
 </dialog>
 {#if errorD}
-    <div class="absolute bottom-10 w-full flex items-center justify-center">
-    <div role="alert" class="alert alert-warning w-1/2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-      <span>Please Provide a Picture!</span>
+
+    <div class="absolute bottom-9 sm:bottom-10 w-full flex items-center justify-center">
+      <div role="alert" class="alert alert-warning sm:w-1/2 w-[90%] text-xs sm:text-md flex items-center gap-2 p-2 sm:p-4 sm:rounded-xl rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        <span class="text-[0.65rem] sm:text-md">Please Provide a Picture</span>
+       
     </div>
+   
   </div>
+  <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => errorD = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
     {/if}
     </main>
 </SectionWrapper>

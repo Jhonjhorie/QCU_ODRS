@@ -25,16 +25,9 @@
    * @type {import("@firebase/firestore").DocumentData | null}
    */
     let userData = null;
-    /**
-   * @type {any}
-   */
     let dept = "" ;
-    /**
-   * @type {any}
-   */
     let name = "Loading...";
     const auth = getAuth();
-  
     onMount(async () => {
       user = auth.currentUser;
       
@@ -47,7 +40,7 @@
           if (snapshot.exists()) {
             console.log('Document exists');
             const data = snapshot.data();
-            console.log('User Department:', data.Dept);
+            console.log('User Department:', data.department_name);
             userData = data;
             dept = data.department_name;
             name = data.fullname;
@@ -63,7 +56,6 @@
     });
 </script>
 
-  
 
 <div class="h-screen w-[300px] bg-white z-20 shadow-xl" >
     <h1 class="text-black font-semibold text-[25px] text-center pt-2">REGISTRAR</h1>

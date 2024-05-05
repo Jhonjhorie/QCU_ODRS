@@ -46,17 +46,17 @@ fetchData();
     <StudDbBtn />
     <StudToBtn />
     <main class="flex flex-col
-    items-center mt-5">
-        <div class="card w-3/4 h-28 shadow-xl image-full">
-            <figure><img src="/QCU-Build.png" class="w-full h-full" /></figure>
-            <div class="card-body flex justify-center items-center">
-            <h1 class="card-title text-5xl font-light italic">ONLINE DOCUMENT REQUEST SYSTEM</h1>
+    items-center  sm:mt-5 mt-2.5">
+        <div class="card sm:w-3/4 w-[95%] h-10 sm:h-28 shadow-xl image-full">
+            <figure><img src="/QCU-Build.png" class="w-full h-full" alt="QCU" /></figure>
+            <div class="card-body flex justify-center items-center p-2 sm:p-8">
+            <h1 class="card-title sm:text-5xl text-sm font-light italic">ONLINE DOCUMENT REQUEST SYSTEM</h1>
             
             </div>
         </div>
-        <div class="card card-compact w-3/4  bg-slate-100 mt-3">
+        <div class="card card-compact sm:w-3/4 w-[90%] bg-slate-100 mt-1 sm:mt-3">
     
-            <h2 class="card-title bg-slate-900 rounded-md p-2 text-white glass">AVAILABLE DOCUMENTS</h2>
+            <h2 class="card-title text-md sm:text-xl bg-slate-900 rounded-md p-1.5 sm:p-2 text-white glass">AVAILABLE DOCUMENTS</h2>
             <div class="overflow-x-auto pb-3">
                 <table class="table">
                   <!-- head -->
@@ -74,12 +74,13 @@ fetchData();
                     {#each docs as doc}
                     <tr class="hover:bg-slate-200">
                       
-                        <td>{doc.name}</td>
-                        <td>{doc.req}</td>
-                        <td>{doc.price}</td>
-                        <button class="btn btn-success my-2 glass text-black w-full" on:click={() => goto(`/Student/DocumentRequest/${doc.id}`)}>
+                        <td class="text-xs sm:text-sm">{doc.name}</td>
+                        <td class="text-[0.65rem] sm:text-sm">{doc.req}</td>
+                        <td class="text-xs sm:text-sm font-bold">{doc.price}</td>
+                        <td><button class="btn btn-success glass text-black w-full text-xs sm:text-sm" on:click={() => goto(`/Student/DocumentRequest/${doc.id}`)}>
                           <box-icon name='mail-send' ></box-icon>
-                          Request</button>
+                          Request</button></td>
+                        
                     </tr>
                     {/each}
                     {/if}
