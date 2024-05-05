@@ -139,6 +139,7 @@
                   <span class="label-text  text-xs sm:text-sm">Student Number:</span>
                 </label>
                 <input bind:value={stdn} type="text" placeholder="Student Number" class="input input-bordered  text-xs sm:text-sm" required />
+                <p class="label-text-alt text-right  text-[0.65rem] sm:text-xs text-thin  text-slate-500 mt-1">Student Number Cannot be change</p>
               </div>
               <div class="form-control mt-2">
               <div class="dropdown dropdown-top">

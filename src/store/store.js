@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { auth } from "$lib/firebase/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { writable } from "svelte/store";
 
 export const authStore = writable({
@@ -39,6 +39,15 @@ export const authHandlers = {
         } catch (error) {
             throw error; 
         }
+    },
+    ForgetPass: async (email) => {
+        sendPasswordResetEmail(auth, email).then(()=>{
+            alert("A Password Reset Link has sent to your email")
+        }).catch((error)=>{
+            alert(error.message)
+            console.log(error.code);
+            console.log(error.message)
+        })
     }
 
 }
