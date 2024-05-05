@@ -44,8 +44,29 @@
     if(authenticating){
       return;
     }
+
+
+
+    if (!/^\d{10,11}$/.test(phn)) {
+      alert("Phone number must be numeric and have 11 digits.");
+      return;
+    }
+    if (!/^\d{2}-\d{4}$/.test(stdn)) {
+      alert("Student number must be valid (xx-xxxx format).");
+      return;
+    }
+    if (prog === "Select Course"){
+      alert("Please Select Course");
+      return;
+    }
+    if (pass !== cpass) {
+      alert("Passwords do not match.");
+      return;
+    }  
+
+
+
     authenticating = true; 
-    
     try {
       await createUserWithEmailAndPassword(auth,email, pass).then((userCredential) => {
         const user = userCredential.user;
@@ -74,6 +95,7 @@
   
   }
 
+
 </script>
 
 <SectionWrapper>
@@ -99,6 +121,7 @@
                 <label class="label">
                   <span class="label-text text-xs sm:text-sm">First Name:</span>
                 </label>
+                
                 <input bind:value={fn} type="text" placeholder="First Name" class="input input-bordered text-xs sm:text-sm" required />
               </div>
               <div class="form-control mt-2">
@@ -106,18 +129,14 @@
                 <label class="label">
                   <span class="label-text text-xs sm:text-sm">Middle Name:</span>
                 </label>
-                <input bind:value={mn} type="text" placeholder="Middle Name" class="input input-bordered  text-xs sm:text-sm" required />
+                <input bind:value={mn} type="text" placeholder="Middle Name" class="input input-bordered  text-xs sm:text-sm" />
               </div>
               <div class="form-control mt-2">
                 <!-- svelte-ignore a11y-label-has-associated-control -->
                 <label class="label">
                   <span class="label-text  text-xs sm:text-sm">Address: </span>
                 </label>
-                <textarea 
-                bind:value={addr} 
-                class="input input-bordered resize-none h-20" 
-                
-                rows="4" ></textarea required>
+                <textarea bind:value={addr} class="input input-bordered resize-none h-20" rows="4" required/>
                 <p class="label-text-alt text-right  text-[0.65rem] sm:text-xs text-thin  text-slate-500 mt-1">No. | Street | Barangay | City | Zip Code</p>
    
               </div>
@@ -130,7 +149,7 @@
                 <label class="label">
                   <span class="label-text  text-xs sm:text-sm">Phone Number:</span>
                 </label>
-                <input bind:value={phn} type="text" placeholder="Phone Number" class="input input-bordered no-arrow  text-xs sm:text-sm" required />
+                <input bind:value={phn} type="number" placeholder="Phone Number" class="input input-bordered no-arrow text-xs sm:text-sm" required />
               </div>
             
               <div class="form-control mt-2">
@@ -138,7 +157,7 @@
                 <label class="label">
                   <span class="label-text  text-xs sm:text-sm">Student Number:</span>
                 </label>
-                <input bind:value={stdn} type="text" placeholder="Student Number" class="input input-bordered  text-xs sm:text-sm" required />
+                <input bind:value={stdn} type="text" placeholder="xx-xxxx" class="input input-bordered text-xs sm:text-sm" required />
               </div>
               <div class="form-control mt-2">
               <div class="dropdown dropdown-top">

@@ -100,7 +100,7 @@
           "Bachelor Of Science In Information Technology",
           "Bachelor Of Science In Information Systems",
         ]),
-        where("status", "==", 2),
+        where("status", "in", [2,3]),
         orderBy("date_Req", "desc")
       );
   
@@ -125,7 +125,7 @@
           "Electronics Engineering (BSECE)",
           "Bachelor Of Science In Industrial Engineering (IE)",
         ]),
-        where("status", "==", 2),
+        where("status", "in", [2,3]),
         orderBy("date_Req", "desc")
       );
   
@@ -151,7 +151,7 @@
           "==",
           "Bachelor Of Early Childhood Education (BECEd)"
         ),
-        where("status", "==", 2),
+        where("status", "in", [2,3]),
         orderBy("date_Req", "desc")
       );
   
@@ -176,7 +176,7 @@
           "Bachelor Of Science In Entrepreneurship (BS Entrep)",
           "Bachelor Of Science In Accountancy (BSA)",
         ]),
-        where("status", "==", 2),
+        where("status", "in", [2,3]),
         orderBy("date_Req", "desc")
       );
   
