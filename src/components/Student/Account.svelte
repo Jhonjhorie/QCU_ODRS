@@ -5,7 +5,7 @@
   import SectionWrapper from "../SectionWrapper.svelte";
   import Header from "../Header.svelte";
   import StudDbBtn from "./StudDbBtn.svelte";
-  import { getAuth, updateEmail, updatePassword } from "firebase/auth";
+  import { getAuth, updatePassword } from "firebase/auth";
   import { doc, getDoc, updateDoc } from 'firebase/firestore';
   import { db } from "$lib/firebase/firebase";
   import { error, text } from "@sveltejs/kit";
@@ -237,8 +237,8 @@
                     <label class="label">
                       <span class="label-text text-xs sm:text-sm font-semibold">Student Number:</span>
                     </label>
-                    <input bind:value={stdn} type="text" class="{bg} {color} text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5
-                    " disabled={edit ? false : true} required />
+                    <input bind:value={stdn} type="text" class="text-white bg-blue-900 text-sm rounded-md p-3 transition duration-300 ease-in-out sm:w-3/4 w-[90%] ml-5
+                    " disabled required />
                 </div>
                 <div class="form-control">
                     <div class="dropdown dropdown-top">

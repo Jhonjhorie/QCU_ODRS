@@ -458,8 +458,9 @@
         <span class="text-[0.65rem] sm:text-md">Please Provide a Picture</span>
        
     </div>
-    <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => errorD = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
+   
   </div>
+  <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => errorD = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
     {/if}
     </main>
 </SectionWrapper>

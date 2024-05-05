@@ -21,45 +21,55 @@
             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-6 ">
             <div class="flex flex-col sm:flex-row">
               <div>    
-                Only with 4 Steps
+                Only with 5 Steps
                 <ul class="steps steps-vertical">
                   
                   <li class="step step-success">
-                    <div class="flex flex-row justify-center gap-5 items-center">
+                    <div class="flex justify-start gap-5 items-center text-xs sm:text-base flex-col sm:flex-row w-full">
+                      <div class="flex-row flex items-center gap-5">
                     Click Request Tab
                     <img src="../reqbtn.png" class="h-28 w-28" alt="reqbtn"> 
+                  </div>
+                  <div class="flex-row flex items-center gap-5">
                     or in header, 
                     <img src="../reqbtn2.png" class="h-28 w-28" alt="reqbtn">
+                  </div>
                     </div>
                   </li>
                   <li class="step step-success">
-                    <div class="flex flex-row justify-center gap-5 items-center">
+                    <div class="flex justify-start gap-5 items-center text-xs sm:text-base flex-col sm:flex-row w-full">
+                      <div class="flex-row flex items-center gap-5">
                     Select the Document,
                     <img src="../reqDoc.png" class="h-28 w-28" alt="reqbtn"> 
+                  </div>
+                  <div class=" justify-start flex items-center gap-5">
                      in mobile just swipe from the left to the right
                     <img src="../reqDoc2.png" class="h-28 w-28" alt="reqbtn">
+                  </div>
                     </div>
                   </li>
                   <li class="step step-success">
-                    <div class="flex flex-row justify-center gap-5 items-center">
+                    <div class="flex justify-start gap-5 items-center text-xs sm:text-base flex-col sm:flex-row w-full">
                       Fill Up the Required Information and Schedule Claiming
                       <img src="../reqValue.png" class="h-24 w-96" alt="reqbtn"> 
                   </li>
                   <li class="step step-success">
-                    <div class="flex flex-row justify-center gap-5 items-center">
+                    <div class="flex justify-start gap-5 items-center text-xs sm:text-base flex-col sm:flex-row w-full">
                       Choose the Mode of Payment
                       <img src="../modeofPay.png" class="h-20 w-96" alt="reqbtn"> 
                   </li>
-                  HAHAHAH
-                  <li class="step">
-                    <div class="flex flex-row justify-center gap-5 items-center">
-                      Submit,
+                  <li class="step step-success">
+                    <div class="flex justify-start gap-5 items-center text-xs sm:text-base flex-col sm:flex-row w-full">
+                      <div class="flex-row flex items-center gap-5">
+                      Submit
                       <img src="../submit.png" class="h-24 w-96" alt="reqbtn"> 
+                    </div>       <div class="flex-row flex items-center gap-5">
                        or if online, Submit Proof of Payment
                       <img src="../submitonline.png" class="h-40 w-52" alt="reqbtn">
+                    </div>
                       </div>
                   </li>
-                  <li class="step">Confess your sins and Claim it in the day of judgement!</li>
+
                 </ul>
               </div>
               
