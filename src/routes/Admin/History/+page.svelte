@@ -84,7 +84,7 @@ td {
   
     <div class="ml-[300px] p-5 ">
       <div class="flex justify-between">
-        <h1 class="pl-0 text-[30px] text-black font-bold">HISTORY LOG</h1>
+        <h1 class="pl-0 text-[30px] text-black font-bold">REQUEST LOG</h1>
         <div class="-mt-3">
           <select bind:value={selectedCourse} on:change={filterRequests} class="mt-3 bg-slate-200  text-slate-900 text-sm  border border-gray-300 rounded px-3 py-2">
             <option value="" selected>All</option>

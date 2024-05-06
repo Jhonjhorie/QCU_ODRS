@@ -200,6 +200,7 @@ function validatePassword() {
                   <span class="label-text  text-xs sm:text-sm">Student Number:</span>
                 </label>
                 <input bind:value={stdn} type="text" placeholder="xx-xxxx" class="input input-bordered text-xs sm:text-sm" required />
+
               </div>
               <div class="form-control mt-2">
               <div class="dropdown dropdown-top">

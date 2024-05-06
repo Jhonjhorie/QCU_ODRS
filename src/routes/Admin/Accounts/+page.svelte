@@ -227,9 +227,7 @@
                  
                     </div>
                     <div class="modal-action flex justify-around">
-                      <div class="">
-                        <button onclick="my_modal_pass.showModal()" class=" hover:bg-green-600  bg-slate-700 hover:text-slate-100  p-1 px-2 rounded-sm duration-200 shadow-md h-[40px]">Update Password</button>
-                      </div>
+              
                       <div class="">
                         <button on:click={updateRegistrarInformation} class="w-[100px] hover:bg-green-600  bg-slate-700 hover:text-slate-100  p-1 px-2 rounded-sm duration-200 shadow-md h-[40px]">
                           Update 
@@ -270,7 +268,7 @@
               {/each}
             </tbody>
       
-       <dialog id="my_modal_pass" class="modal bg-black bg-opacity-85  ">
+      <!-- <dialog id="my_modal_pass" class="modal bg-black bg-opacity-85  ">
                 <div class="modal-box bg-slate-300">
                   <h3 class="font-bold text-lg text-black">UPDATE REGISTRAR PASSWORD</h3>
                 
@@ -287,7 +285,7 @@
                     </form>
                   </div>
                 </div>
-              </dialog>
+              </dialog>-->
             
             <!-- foot -->     
           </table>

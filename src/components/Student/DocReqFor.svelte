@@ -11,6 +11,8 @@
   import StudDbBtn from "./StudDbBtn.svelte";
   import { goto } from "$app/navigation";
   import { getStorage, ref, uploadBytes,  getDownloadURL } from 'firebase/storage';
+  //ito inadd ko 
+  import { onMount } from 'svelte';
     
 
     let ReqDoc = "";
@@ -57,6 +59,7 @@
     let authenticating = false;
     let authenticatingD = false;
     let mop = "Cash";
+    let wallets = [];
     
     const Year = ["1st Year, 1st Sem","1st Year, 2nd Sem", "2nd Year, 1st Sem", "2nd Year, 2nd Sem", "3rd Year, 1st Sem","3rd Year, 2nd Sem", "4th Year, 1st Sem", "4th Year, 2nd Sem", "Irregular"];
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
@@ -221,7 +224,26 @@
 
 
     let btnColor = "bg-blue-900";
-    
+    //ito din
+    const fetchData2 = async () => {
+    try {
+      const docRef = doc(db, 'wallet', "mXUA8IQeVxN70i8fJRaF");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        wallets = [{ id: docSnap.id, ...docSnap.data() }];
+        console.log("Wallets data:", wallets);
+        console.log("Wallets number field:", docSnap.data().number);
+      } else {
+        wallets = [];
+      }
+    } catch (error) {
+      console.error("Error fetching wallet document:", error);
+    }
+  };
+
+  // tas ito
+  onMount(fetchData2);
 </script>
 
 <SectionWrapper>
@@ -349,8 +371,17 @@
                 <div class="form-control mt-1 sm:my-4 h-14 justify-end items-center flex flex-row gap-1">
                   {#if mop=="Online"}
                   <label class="label flex flex-col items-end">
+
+                    <span class="label-text text-xs">Gcash/Maya:</span>
+                   
+                    <span class="font-bold text-green-500 mb-2">
+                      <span id="updatedPhoneNumber">{#if wallets.length > 0}{wallets[0].number}{/if}</span> - Timothy O.
+                    </span>
+             
+
                     <span class="label-text text-xs text-end">Gcash/Maya:</span>
                     <span class="font-bold text-green-500 mb-2 text-xs sm:text-md text-end">09193629016 - Timothy O.</span>
+
                   </label>
                   {:else}
                   <label class="label flex flex-col items-end">
@@ -460,8 +491,9 @@
         <span class="text-[0.65rem] sm:text-md">Please Provide a Picture</span>
        
     </div>
-    <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => errorD = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
+   
   </div>
+  <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => errorD = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
     {/if}
     </main>
 </SectionWrapper>
