@@ -124,6 +124,8 @@
     });
     }
     let schedF;
+
+    
     async function RequestDocBtn() {
     if(req == "authentication"){
       reqValue = "N/A"

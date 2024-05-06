@@ -191,6 +191,8 @@
                       <option value=0>Mark as Pending</option>
                       <option value=1>Mark as to Claim</option>
                       <option value=2>Mark as Complete</option>
+                      <option value=3>Mark as Canceled</option>
+
                     </select>
                   </label>
                 </div>
