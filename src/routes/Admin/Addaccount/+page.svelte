@@ -102,10 +102,10 @@
 
        await Promise.all([
         setDoc(doc(db,'user', user.uid), {
-          role: "admin",
+          role: "registrar",
           email: un,
         }),
-        setDoc(doc(db, 'admin', user.uid), {
+        setDoc(doc(db, 'registrar', user.uid), {
           email: un,
           fullname: fn,
           department_name: dept,
