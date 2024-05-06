@@ -4,5 +4,5 @@
     <div class="h-[0.4px] bg-slate-400">
 
     </div>
-<p class="sm:text-sm text-xs ">© 2024 Quezon City University </p>
+<p class="sm:text-sm text-xs ">© 2024 Quezon City University. All Rights reserved. </p>
 </footer>

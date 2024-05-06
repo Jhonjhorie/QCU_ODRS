@@ -16,7 +16,7 @@
 
     // @ts-ignore
     if(user) {
-        const docRef = doc(db, "user", "cHxJxP1NwobZ7afjGWTGI1kMDXJ2");
+        const docRef = doc(db, "user", "TGbEHK4YxGNrvVvGXOeuFaGB9vl2");
         getDoc(docRef).then((snapshot) => {
             let docSnap = snapshot;
             if (docSnap.exists()) {

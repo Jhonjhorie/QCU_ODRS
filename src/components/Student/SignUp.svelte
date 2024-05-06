@@ -285,7 +285,7 @@ function validatePassword() {
     </div>
     <dialog id="terms_modal" class="modal modal-bottom sm:modal-middle w-full min-h-full pt-2 sm:px-1 sm:pt-1">
       <div class="modal-box w-full min-h-[75%] flex flex-col gap-1 sm:gap-2 p-3 sm:p-4">
-          <h3 class="font-bold text-md sm:text-2xl">Proof of Payment</h3>
+          <h3 class="font-bold text-md sm:text-2xl">Privacy and Terms</h3>
           <div class="overflow-y-auto">
           <div class="flex flex-col justify-center items-center w-full px-3 sm:px-3">
             <p class="text-xs sm:text-sm text-justify">
@@ -326,13 +326,13 @@ function validatePassword() {
               Thank you for choosing the QCU Online Document Request System. We are committed to providing you with a seamless and secure document request experience tailored to the needs of our QCU students and alumni community.<br/><br/>
               
               Warm regards,<br/>
-              <b>Dead Programmer Society</b>
+              <b>QCU-ODRS TEAM</b>
             </p>
             
             <div class="modal-action">
               <form method="dialog">
                 <!-- if there is a button in form, it will close the modal -->
-                <button class="btn w-full">I love you ma'am Maceh</button>
+                <button class="btn w-full">I accept</button>
               </form>
             </div>
           </div>

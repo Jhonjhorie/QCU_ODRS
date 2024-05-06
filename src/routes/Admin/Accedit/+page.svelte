@@ -30,7 +30,7 @@
     // @ts-ignore
     onMount(async () => {
     if (user) {
-        const docRef = doc(db, "user", "cHxJxP1NwobZ7afjGWTGI1kMDXJ2");
+        const docRef = doc(db, "user", "TGbEHK4YxGNrvVvGXOeuFaGB9vl2");
         const snapshot = await getDoc(docRef);
         if (snapshot.exists()) {
             const data = snapshot.data();
