@@ -38,8 +38,44 @@
                 'Bachelor Of Science In Accountancy (BSA)',
                 'Bachelor Of Science In Information Technology',
                 'Bachelor Of Science In Information Systems',
-                'Bachelor Of Science In Computer Science']
+                'Bachelor Of Science In Computer Science'];
 
+                
+function validatePassword() {
+  // Password requirements
+  const minLength = 8;
+  const uppercaseRegex = /[A-Z]/;
+  const lowercaseRegex = /[a-z]/;
+  const numberRegex = /[0-9]/;
+  const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+  // Track which requirements are not met
+  let lackingRequirements = [];
+
+  // Check for each requirement
+  if (pass.length < minLength) {
+    lackingRequirements.push("At least 8 characters long");
+  }
+  if (!uppercaseRegex.test(pass)) {
+    lackingRequirements.push("Contain at least one uppercase letter");
+  }
+  if (!lowercaseRegex.test(pass)) {
+    lackingRequirements.push("Contain at least one lowercase letter");
+  }
+  if (!numberRegex.test(pass)) {
+    lackingRequirements.push("Contain at least one number");
+  }
+  if (!specialCharRegex.test(pass)) {
+    lackingRequirements.push("Contain at least one special character (e.g., !, @, #, $)");
+  }
+
+  // Return the lacking requirements if any
+  if (lackingRequirements.length > 0) {
+    return lackingRequirements;
+  }
+  return true; // Password meets all requirements
+}
+  
   async function handleAuthentication() {  
     if(authenticating){
       return;
@@ -57,6 +93,12 @@
     }
     if (prog === "Select Course"){
       alert("Please Select Course");
+      return;
+    }
+    const result = validatePassword();
+
+    if (result !== true) {
+      alert("Password does not meet the following requirements:\n- " + result.join("\n- "));
       return;
     }
     if (pass !== cpass) {
@@ -211,6 +253,8 @@
                   <span class="label-text text-xs sm:text-sm">Password</span>
                 </label>
                 <input bind:value={pass} type="password" placeholder="Password" class="input input-bordered text-xs sm:text-sm" required />
+                <p class="label-text-alt text-[0.65rem] sm:text-xs text-thin text-slate-500 mt-1">
+                  Password must be At least 8 characters long, One uppercase letter, One lowercase letter, one number   </p>
               </div>
               <div class="form-control mt-2">
                 <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -284,7 +328,7 @@
             <div class="modal-action">
               <form method="dialog">
                 <!-- if there is a button in form, it will close the modal -->
-                <button class="btn w-full">I love you Maceh</button>
+                <button class="btn w-full">I love you ma'am Maceh</button>
               </form>
             </div>
           </div>

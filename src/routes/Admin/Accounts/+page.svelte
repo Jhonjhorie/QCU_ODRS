@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 
   import PHeader from '../../../components/Admin/pHeader2.svelte';
   import Psidebar from '../../../components/Admin/psidebar.svelte';
