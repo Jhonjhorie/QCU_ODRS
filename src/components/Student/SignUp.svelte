@@ -105,9 +105,12 @@ function validatePassword() {
       alert("Passwords do not match.");
       return;
     }  
+    if (!/^\w+@gmail\.com$/.test(email)) {
+      alert("Email must be valid (@gmail.com format).");
+      return;
+    }
 
-
-
+    
     authenticating = true; 
     try {
       await createUserWithEmailAndPassword(auth,email, pass).then((userCredential) => {

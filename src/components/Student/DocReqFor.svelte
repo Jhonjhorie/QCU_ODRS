@@ -11,11 +11,13 @@
   import StudDbBtn from "./StudDbBtn.svelte";
   import { goto } from "$app/navigation";
   import { getStorage, ref, uploadBytes,  getDownloadURL } from 'firebase/storage';
-    
+     //ito inadd ko 
+  import { onMount } from 'svelte';
 
     let ReqDoc = "";
     let req = "";
     let price = "";
+    let wallets = [];
     let authenticating2 = true;
     async function fetchData() {
       authenticating2 = true; 
@@ -221,7 +223,27 @@
 
 
     let btnColor = "bg-blue-900";
+      //ito din
+      const fetchData2 = async () => {
+    try {
+      const docRef = doc(db, 'wallet', "mXUA8IQeVxN70i8fJRaF");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        wallets = [{ id: docSnap.id, ...docSnap.data() }];
+        console.log("Wallets data:", wallets);
+        console.log("Wallets number field:", docSnap.data().number);
+      } else {
+        wallets = [];
+      }
+    } catch (error) {
+      console.error("Error fetching wallet document:", error);
+    }
+  };
+  // tas ito
+  onMount(fetchData2);
     
+
 </script>
 
 <SectionWrapper>
@@ -349,8 +371,14 @@
                 <div class="form-control mt-1 sm:my-4 h-14 justify-end items-center flex flex-row gap-1">
                   {#if mop=="Online"}
                   <label class="label flex flex-col items-end">
-                    <span class="label-text text-xs text-end">Gcash/Maya:</span>
-                    <span class="font-bold text-green-500 mb-2 text-xs sm:text-md text-end">09193629016 - Timothy O.</span>
+
+                    <span class="label-text text-xs">Gcash/Maya:</span>
+                   
+                    <span class="font-bold text-green-500 mb-2">
+                      <span id="updatedPhoneNumber">{#if wallets.length > 0}{wallets[0].number}{/if}</span> - Timothy O.
+                    </span>
+             
+
                   </label>
                   {:else}
                   <label class="label flex flex-col items-end">
