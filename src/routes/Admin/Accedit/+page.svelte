@@ -185,7 +185,7 @@
                   <!--MODAL-->
 
                     <div class="pt-7 pl-[10%]  ">
-                        <img src="/cute.jpg" class=" w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto shadow-xl "  alt="pao" />
+                        <img src="/QCULOGO.png" class=" w-[130px] h-[130px] rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto shadow-xl "  alt="pao" />
                     </div>
                     
                   

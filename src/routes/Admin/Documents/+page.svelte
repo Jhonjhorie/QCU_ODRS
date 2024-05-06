@@ -3,7 +3,7 @@
   import PHeader from '../../../components/Admin/pHeader2.svelte';
   import Psidebar from '../../../components/Admin/psidebar.svelte';
   import { db } from "$lib/firebase/firebase";
-  import { collection, getDocs, deleteDoc, doc, updateDoc }  from "firebase/firestore"; 
+  import { collection, getDocs, deleteDoc, doc, updateDoc, getDoc } from "firebase/firestore";
   import { onMount } from 'svelte';
   import { goto } from "$app/navigation";
 
@@ -30,6 +30,12 @@
     let showModal = false;
     let authenticating = false;
     let updated = false;
+    let updates = false;
+    let wallets = [];
+    let showModal2 = document.getElementById("money");
+    let shown = showModal2;
+    
+   
     
     const Requirements_data = ['yearGrad', 'lastYear', 'yearSem', 'certification', 'authentication'];
     //display data ahahah
@@ -41,6 +47,52 @@
     }));
     };
     
+    function closeModal() {
+      showModal = false
+    }
+  
+  
+    const fetchData2 = async () => {
+    try {
+        const docRef = doc(db, 'wallet', "mXUA8IQeVxN70i8fJRaF");
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+      
+            wallets = [{ id: docSnap.id, ...docSnap.data() }];
+            console.log("Wallets data:", wallets);
+            console.log("Wallets number field:", docSnap.data().number);
+        } else {
+    
+            wallets = []; 
+        }
+    } catch (error) {
+        console.error("Error fetching wallet document:", error);
+    }
+    };
+    async function updatePhoneNumber(event) {
+        event.preventDefault(); 
+
+        try {
+
+            const walletId = wallets[0].id;
+            const newData = {
+                number: event.target.querySelector('input[type="number"]').value
+            };
+            await updateDoc(doc(db, 'wallet', walletId), newData);
+
+            console.log('Phone number updated successfully:', newData.number);
+            const modal = document.getElementById('money');
+            modal.close();
+            updates = true;
+            setTimeout(() => {
+              updates = false;
+            }, 3000);
+        } catch (error) {
+            console.error('Error updating phone number:', error);
+        }
+    }
+
     //onclick edit ahahah
     const editDocument = (/** 
     @type {{ id: any; doc_ID: any; price: any; description: any; requirements: any; } | null}
@@ -109,7 +161,14 @@
 
 
 
-    onMount(fetchData);
+  // Fetch wallet data when the component mounts
+  onMount(() => {
+    fetchData();  
+    fetchData2();
+
+  });
+
+
 
 </script>
 <style>
@@ -129,9 +188,12 @@
     <div class="ml-[300px] p-5 ">
       <h1 class="pl-0 text-[30px] text-black font-bold">MANAGE DOCUMENT</h1>
       
-        <div class="flex w-[100%] ">
+        <div class="flex w-[100%] justify-between ">
           <div class="pt-2 pb-3">
             <button on:click={gotoAdds} class="btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200">ADD DOCUMENT</button>
+          </div>
+          <div class="pt-2 pb-3">
+            <button onclick="money.showModal()" class="ml-2 btn w-[200px] bg-slate-900 hover:bg-slate-800 text-slate-200">E-Wallet<box-icon name='wallet' type='solid' color='#FFAE00' ></box-icon></button>
           </div>
           {#if updated}
           <div class="absolute w-[30%] right-5 ">
@@ -140,8 +202,41 @@
               <span class="text-slate-100 text-[17px] font-semibold pl-3"> Document Updated!</span>
             </div>
           </div>
+          
           {/if}
-      
+          {#if updates}
+          <div class="absolute w-[30%] right-5 ">
+            <div class="w-[100%] bg-green-600 rounded-md flex items-center p-2">
+              <box-icon name='check-circle' class="w-10 h-10 ml-2 fill-white bg-green-900 rounded-full  "></box-icon>
+              <span class="text-slate-100 text-[17px] font-semibold pl-3"> E-wallet Updated!</span>
+            </div>
+          </div>
+          {/if}
+        
+          <dialog id="money" class="modal">
+            <div class="modal-box bg-slate-300">
+              <div class="flex justify-between">
+                <div class="">
+                  <h3 class="font-bold text-lg text-center text-slate-950">Input your E-wallet here</h3>
+                </div>
+               
+              </div>   
+              <p class="py-4 text-slate-950 ">Phone number:</p>
+              {#if wallets.length > 0}
+              <form on:submit|preventDefault={updatePhoneNumber} method="dialog">
+                  <input type="number" bind:value={wallets[0].number} class="w-full h-10 rounded-md text-black p-2 bg-slate-100 border border-black">
+                  <div class="modal-action">
+                      <button id="updatenumber" type="submit" class="p-3 rounded-md text-white bg-green-600">UPDATE</button>
+                  </div>
+              </form>
+          {:else}
+              <input type="number" class="w-full h-10 rounded-md text-black p-2 bg-slate-100 border border-black">
+          {/if}
+            </div>
+            <form method="dialog" class="modal-backdrop">
+              <button>close</button>
+            </form>
+          </dialog>
         </div>
         <div class="w-[100%] h-[65vh] bg-slate-100 shadow-md rounded-md ">
           <div class="overflow-x-auto">

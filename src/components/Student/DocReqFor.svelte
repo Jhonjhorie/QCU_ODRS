@@ -25,7 +25,7 @@
     const docRef2 = doc(db, "document", $page.params.document);
     if(docRef2 !== null){
       getDoc(docRef2)
-    .then((snapshot) => {
+    .then((snapshot) => { 
       let docSnap = snapshot;
       if (docSnap.exists()) {
         console.log('document existt')
@@ -59,6 +59,7 @@
     let authenticating = false;
     let authenticatingD = false;
     let mop = "Cash";
+    let wallets = [];
     
     const Year = ["1st Year, 1st Sem","1st Year, 2nd Sem", "2nd Year, 1st Sem", "2nd Year, 2nd Sem", "3rd Year, 1st Sem","3rd Year, 2nd Sem", "4th Year, 1st Sem", "4th Year, 2nd Sem", "Irregular"];
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
@@ -488,8 +489,9 @@
         <span class="text-[0.65rem] sm:text-md">Please Provide a Picture</span>
        
     </div>
-    <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => errorD = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
+   
   </div>
+  <button class="btn p-0 sm:w-6 w-5 sm:relative absolute right-2" on:click={() => errorD = false}><box-icon name='x' type='solid' size='sm'></box-icon></button>
     {/if}
     </main>
 </SectionWrapper>
