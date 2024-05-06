@@ -59,7 +59,6 @@
     let authenticating = false;
     let authenticatingD = false;
     let mop = "Cash";
-    let wallets = [];
     
     const Year = ["1st Year, 1st Sem","1st Year, 2nd Sem", "2nd Year, 1st Sem", "2nd Year, 2nd Sem", "3rd Year, 1st Sem","3rd Year, 2nd Sem", "4th Year, 1st Sem", "4th Year, 2nd Sem", "Irregular"];
     const Cert = ["Certification of Excellence","Certification of Honors", "Certification of High Honors", "Certification of Highest Honors"];
